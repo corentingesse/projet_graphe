@@ -19,10 +19,10 @@ V,Ecully:A6,11::Musee-des-Confluences;D307,15::V,Lentilly::A6,35::V,Villefranche
 V,Lyon:N7,5::V,Ecully;A7,18::V,Venissieux;N7,112::V,Valence;;
 V,Lentilly:D307,15::V,Ecully;N7,20::Vindry-sur-Turdine;N89,72::V,Saint-Etienne;D76,24::Villefranche-sur-Saone;;
 V,Villeurbanne:N383,13::V,Venissieux;N383,14::L,Parc-de-la-Tete-d-Or;A43,100::V,Chambery;A42,164::V,Annecy;;
-L,Parc-de-la-Tete-d-Or:N383,14::V,Villeurbanne:D48,6::R,Restaurant-Paul-Bocuse;;
-R,Restaurant-Paul-Bocuse:D48,6::L,Parc-de-la-Tete-d-Or;D51,28::V,Villefranche-sur-Saone;D4,36::L,Jonquilles;;
-V,Villefranche-sur-Saone:D76,24::V,Lentilly;A6,35::V,Ecully;D504,73::V,Roanne;D51,28::R,Restaurant-Paul-Bocuse;D933,44::V,Macon;D936,52::V,Bourg-en-Bresse;;
-L,Jonquilles:D4,36::R,Restaurant-Paul-Bocuse;D22,32::V,Bourg-en-Bresse;;
+L,Parc-de-la-Tete-d-Or:N383,14::V,Villeurbanne:D48,6::R,Graphe.ConfigLieu.Restaurant-Paul-Bocuse;;
+R,Graphe.ConfigLieu.Restaurant-Paul-Bocuse:D48,6::L,Parc-de-la-Tete-d-Or;D51,28::V,Villefranche-sur-Saone;D4,36::L,Jonquilles;;
+V,Villefranche-sur-Saone:D76,24::V,Lentilly;A6,35::V,Ecully;D504,73::V,Roanne;D51,28::R,Graphe.ConfigLieu.Restaurant-Paul-Bocuse;D933,44::V,Macon;D936,52::V,Bourg-en-Bresse;;
+L,Jonquilles:D4,36::R,Graphe.ConfigLieu.Restaurant-Paul-Bocuse;D22,32::V,Bourg-en-Bresse;;
 V,Macon:D987,96::V,Roanne;N79,149::V,Vichy;D933,44::Villefranche-sur-Saone;A40,41::V,Bourg-en-Bresse;;
 V,Bourg-en-Bresse:N79,134::V,Roanne;N79,187::V,Vichy;D936,52::V,Villefranche-sur-Saone;D22,32::L,Jonquilles;D19,124::V,Chambery;A40,129::V,Annecy;A40,41::V,Macon;;
 V,Annecy:N201,50::V,Chambery;D1508,3:R,La-Cabane;A42,164::V,Villeurbanne;A40,129::V,Bourg-en-Bresse;;

@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -13,36 +14,16 @@ import java.util.ArrayList;
 public class Sommet {
     private String nom;
     private Character type;
-    private ArrayList <Sommet> listeSommetsVoisins;
-    private ArrayList <Lien> listeLiensVoisins;
+    private HashMap <Sommet, Lien> listeVoisin;
     public Sommet (String newNom, Character newType) {
         nom = newNom;
         type = newType;
+        listeVoisin = new HashMap <Sommet, Lien> ();
     }
 
-    private boolean ajSommetVoisin (Sommet sommetVoisin) {
-        if (sommetVoisin != null) {
-            listeSommetsVoisins.add(sommetVoisin);
-            return true;
-        }
-        else
-            return false;
-    }
-
-    private boolean ajLienVoisin (Lien lienVoisin) {
-        if (lienVoisin != null) {
-            listeLiensVoisins.add(lienVoisin);
-            return true;
-        }
-        else
-            return false;
-    }
-
-    public boolean ajVoisin (Sommet sommetVoisin, Lien lienVoisin) {
-        if (ajSommetVoisin (sommetVoisin) && ajLienVoisin (lienVoisin))
-            return true;
-        else
-            return false;
+    public void ajVoisin (Sommet sommetVoisin, Lien lienVoisin) {
+        if (sommetVoisin != null && lienVoisin != null)
+            listeVoisin.put (sommetVoisin, lienVoisin);
     }
 
     public String getNom () {

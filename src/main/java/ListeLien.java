@@ -23,6 +23,15 @@ public class ListeLien {
         return resultat;
     }
 
+    public Lien chercheSommetListe (String newNom) {
+        int i = 0;
+        while (i < listeLien.size ()) {
+            if (listeLien.get(i).getNom().equals(newNom))
+                return listeLien.get (i);
+        }
+        return null;
+    }
+
     public void ajSommet (Lien newLien) {
         listeLien.add (newLien);
         switch (newLien.getType ()) {

@@ -23,6 +23,43 @@ public class ListeSommet {
         return resultat;
     }
 
+    public Sommet chercheSommetListe (String newNom) {
+        int i = 0;
+        while (i < listeSommets.size ()) {
+            if (listeSommets.get(i).getNom().equals(newNom))
+                return listeSommets.get (i);
+        }
+        return null;
+    }
+
+    public Sommet chercherSommetListeVille (String newNom) {
+        int i = 0;
+        while (i < listeVilles.size ()) {
+            if (listeVilles.get(i).getNom().equals(newNom))
+                return listeVilles.get (i);
+            i = i + 1;
+        }
+        return null;
+    }
+
+    public Sommet chercherSommetListeRestaurant (String newNom) {
+        int i = 0;
+        while (i < listeRestaurants.size ()) {
+            if (listeRestaurants.get(i).getNom().equals(newNom))
+                return listeRestaurants.get (i);
+        }
+        return null;
+    }
+
+    public Sommet chercherSommetListeLoisir (String newNom) {
+        int i = 0;
+        while (i < listeLoisirs.size ()) {
+            if (listeLoisirs.get(i).getNom().equals(newNom))
+                return listeLoisirs.get (i);
+        }
+        return null;
+    }
+
     public void ajSommet (Sommet newSommet) {
         listeSommets.add (newSommet);
         switch (newSommet.getType ()) {

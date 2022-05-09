@@ -1,4 +1,11 @@
+V,Macon:D987,96.0::V,Roanne;N79,149.0::V,Vichy;D933,44.0::Villefranche-sur-Saone;A40,41.0::V,Bourg-en-Bresse;;
+V,Bourg-en-Bresse:N79,134.0::V,Roanne;N79,187.0::V,Vichy;D936,52.0::V,Villefranche-sur-Saone;D22,32.0::L,Jonquilles;D19,124.0::V,Chambery;A40,129.0::V,Annecy;A40,41.0::V,Macon;;
+V,Annecy:N201,50.0::V,Chambery;D1508,3.0::R,La-Cabane;A42,164.0::V,Villeurbanne;A40,129.0::V,Bourg-en-Bresse;;
+L,Jardin-Lecoq:D,1.0::V,Clermont-Ferrand;;
+R,Le-bistrot-de-Pierrot:D,2.0::V,Vichy;;
+L,Musee-de-l-art-et-de-l-industrie:D3,13::V,Firminy;;
+V,Grigny:A7,18.0::V,Vienne;D315,17.0::V,Venissieux;;
 R,P-tit-bouchon:D,0.6::V,Vienne;;
-V,Vindry-sur-Turdine:N7,20::V,Lentilly;A89,64::V,Roanne;;
-L,La-Fontaine-des-Elephants:D,2::V,Chambery;;
-R,La-Cabane:D1508,3::V,Annecy;;
+V,Vindry-sur-Turdine:N7,20::V,Lentilly;A89,64.0::V,Roanne;;
+L,La-Fontaine-des-Elephants:D,2.0::V,Chambery;;
+R,La-Cabane:D1508,3.0::V,Annecy;;

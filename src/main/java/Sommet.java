@@ -41,5 +41,8 @@ public class Sommet {
     public void setType (Character newType) {
         type = newType;
     }
+    public HashMap getHashMap () {
+        return listeVoisin;
+    }
 }
 

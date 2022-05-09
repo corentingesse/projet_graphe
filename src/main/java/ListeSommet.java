@@ -28,6 +28,7 @@ public class ListeSommet {
         while (i < listeSommets.size ()) {
             if (listeSommets.get(i).getNom().equals(newNom))
                 return listeSommets.get (i);
+            i = i + 1;
         }
         return null;
     }
@@ -47,6 +48,7 @@ public class ListeSommet {
         while (i < listeRestaurants.size ()) {
             if (listeRestaurants.get(i).getNom().equals(newNom))
                 return listeRestaurants.get (i);
+            i = i + 1;
         }
         return null;
     }
@@ -56,6 +58,7 @@ public class ListeSommet {
         while (i < listeLoisirs.size ()) {
             if (listeLoisirs.get(i).getNom().equals(newNom))
                 return listeLoisirs.get (i);
+            i = i + 1;
         }
         return null;
     }

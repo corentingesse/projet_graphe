@@ -17,7 +17,7 @@ public class TestProjetGraphe1 {
 
         try {
             // Le fichier d'entrée
-            File file = new File("src/main/ressources/graphe1.csv");
+            File file = new File("src/main/ressources/graphe.csv");
             // Créer l'objet File Reader
             FileReader fr = new FileReader(file);
             // Créer l'objet BufferedReader
@@ -100,7 +100,6 @@ public class TestProjetGraphe1 {
                 if (Objects.equals(line.charAt(compteurCaractere), ',')) {
                     compteurCaractere = compteurCaractere + 1;
                     String lienValeur = "";
-                    compteurCaractere = compteurCaractere + 0;
                     while (Objects.equals(line.charAt(compteurCaractere), ':') != true) {
                         lienValeur = lienValeur + line.charAt(compteurCaractere);
                         compteurCaractere = compteurCaractere + 1;
@@ -157,6 +156,7 @@ public class TestProjetGraphe1 {
                     }
                     else
                         throw new ErreurFichier();
+
             }
             else
                 throw new ErreurFichier();
@@ -180,6 +180,7 @@ public class TestProjetGraphe1 {
                 System.out.println(listeLienLire.get (i).getLienValeur ());
                 i = i + 1;
             }
+            System.out.println(listeSommetLire.get (i - 1).getHashMap ().get (listeSommetLire.get (i - 9)));
             fr.close();
             // System.out.println(sb.toString());
         } catch (IOException e) {

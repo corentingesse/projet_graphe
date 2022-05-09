@@ -100,7 +100,7 @@ public class TestProjetGraphe1 {
                 if (Objects.equals(line.charAt(compteurCaractere), ',')) {
                     compteurCaractere = compteurCaractere + 1;
                     String lienValeur = "";
-                    compteurCaractere = compteurCaractere + 1;
+                    compteurCaractere = compteurCaractere + 0;
                     while (Objects.equals(line.charAt(compteurCaractere), ':') != true) {
                         lienValeur = lienValeur + line.charAt(compteurCaractere);
                         compteurCaractere = compteurCaractere + 1;

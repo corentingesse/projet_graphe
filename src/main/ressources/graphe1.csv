@@ -1,3 +1,10 @@
+V,Lyon:N7,5.0::V,Ecully;A7,18.0::V,Venissieux;N7,112.0::V,Valence;;
+V,Lentilly:D307,15.0::V,Ecully;N7,20.0::Vindry-sur-Turdine;N89,72.0::V,Saint-Etienne;D76,24.0::Villefranche-sur-Saone;;
+V,Villeurbanne:N383,13.0::V,Venissieux;N383,14.0::L,Parc-de-la-Tete-d-Or;A43,100.0::V,Chambery;A42,164.0::V,Annecy;;
+L,Parc-de-la-Tete-d-Or:N383,14.0::V,Villeurbanne:D48,6.0::R,Restaurant-Paul-Bocuse;;
+R,Restaurant-Paul-Bocuse:D48,6.0::L,Parc-de-la-Tete-d-Or;D51,28.0::V,Villefranche-sur-Saone;D4,36.0::L,Jonquilles;;
+V,Villefranche-sur-Saone:D76,24.0::V,Lentilly;A6,35.0::V,Ecully;D504,73.0::V,Roanne;D51,28.0::R,Restaurant-Paul-Bocuse;D933,44.0::V,Macon;D936,52.0::V,Bourg-en-Bresse;;
+L,Jonquilles:D4,36.0::R,Restaurant-Paul-Bocuse;D22,32.0::V,Bourg-en-Bresse;;
 V,Macon:D987,96.0::V,Roanne;N79,149.0::V,Vichy;D933,44.0::Villefranche-sur-Saone;A40,41.0::V,Bourg-en-Bresse;;
 V,Bourg-en-Bresse:N79,134.0::V,Roanne;N79,187.0::V,Vichy;D936,52.0::V,Villefranche-sur-Saone;D22,32.0::L,Jonquilles;D19,124.0::V,Chambery;A40,129.0::V,Annecy;A40,41.0::V,Macon;;
 V,Annecy:N201,50.0::V,Chambery;D1508,3.0::R,La-Cabane;A42,164.0::V,Villeurbanne;A40,129.0::V,Bourg-en-Bresse;;

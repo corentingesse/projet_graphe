@@ -1,5 +1,5 @@
 public class ErreurFichier extends Exception {
-    public ErreurFichier () {
-        super ("le fichier comprend des erreurs ");
+    public ErreurFichier (int nombreLigne, String message) {
+        super ("le fichier comprend des erreurs à la ligne n°" + nombreLigne + message );
     }
 }

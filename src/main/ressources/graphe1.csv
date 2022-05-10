@@ -1,9 +1,9 @@
 V,Saint-Etienne:D1082,96.0::V,Valence;N88,16.0::V,Firminy;N89,72.0::V,Lentilly;;
 V,Firminy:N88,16.0::V,Saint-Etienne;D1082,112.0::V,Valence;D3,13.0::L,Musee-de-l-art-et-de-l-industrie;N88,63::V,Le-Puy-en-Velay;;
 V,Le-Puy-en-Velay:D906,93.0::L,Plan-d-eau-de-Cunlhah;A72,157.0::V,Roanne;N88,63.0::V,Firminy;N102,126.0::V,Clermont-Ferrand;;
-V,Clermont-Ferrand:A89,115.0::V,Roanne;N102,126.0::V,Le-Puy-en-Velay;D,1.0::Jardin-Lecoq;D210,58.0::V,Vichy;;
+V,Clermont-Ferrand:A89,115.0::V,Roanne;N102,126.0::V,Le-Puy-en-Velay;D,1.0::L,Jardin-Lecoq;D210,58.0::V,Vichy;;
 V,Vichy:D906,69.0::L,Plan-d-eau-de-Cunlhah;D210,58.0::V,Clermont-Ferrand;D,2.0::R,Le-bistrot-de-Pierrot;N7,72.0::V,Roanne;N79,187.0::V,Bourg-en-Bresse;N79,149.0::V,Macon;;
-V,Roanne:A89,64.0::V,Vindry-Sur-Turdine;D504,73.0::V,Villefranche-Sur-Saone;N79,134.0::V,Bourg-en-Bresse;D987,96.0::V,Macon;N7,72.0::V,Vichy;A89,115.0::Clermont-Ferrand;A72,157.0::V,Le-Puy-en-Velay;D53,82.0::L,Plan-d-eau-de-Cunlhah;;
+V,Roanne:A89,64.0::V,Vindry-Sur-Turdine;D504,73.0::V,Villefranche-Sur-Saone;N79,134.0::V,Bourg-en-Bresse;D987,96.0::V,Macon;N7,72.0::V,Vichy;A89,115.0::V,Clermont-Ferrand;A72,157.0::V,Le-Puy-en-Velay;D53,82.0::L,Plan-d-eau-de-Cunlhah;;
 L,Plan-d-eau-de-Cunlhah:D996,97.0::V,Saint-Etienne;D906,93.0::V,Le-Puy-en-Velay;D53,82.0::V,Roanne;D906,69.0::V,Vichy;;
 R,Point-B-Montelimar:D,4.0::V,Montelimar;;
 V,Montelimar:D538,150.0::V,Grenoble;N7,49.0::V,Valence;;
@@ -11,6 +11,6 @@ V,Valence:N7,49.0::V,Montelimar;D,2.0::R,La-Cachette;D1082,112.0::V,Firminy;D108
 R,La-Cachette:D,2.0::V,Valence;;
 V,Grenoble:D538,150.0::V,Montelimar;D1082,147.0::V,Saint-Etienne;A49,92.0::V,Valence;A48,94.0::V,Vienne;D512,4.0::L,Fort-de-la-Bastille;D1006,60.0::V,Chambery;;
 L,Fort-de-la-Bastille:D512,4.0::V,Grenoble;;
-V,Vienne:A7,74.0::V,Valence;A48,94.0::V,Grenoble;D,0.6::Au-P-tit-Bouchon;A7,18.0::V,Grigny;;
+V,Vienne:A7,74.0::V,Valence;A48,94.0::V,Grenoble;D,0.6::R,Au-P-tit-Bouchon;A7,18.0::V,Grigny;;
 V,Chambery:D1006,60.0::V,Grenoble;A43,100.0::V,Villeurbanne;D19,124.0::V,Bourg-en-Bresse;D,2.0::L,La-Fontaine-des-Elephants;N201,50.0::V,Annecy;;
 V,Venissieux:A7,15.0::L,Musee-des-Confluences;A7,18.0::V,Lyon;D315,17.0::V,Grigny;N383,13.0::V,Villeurbanne;;

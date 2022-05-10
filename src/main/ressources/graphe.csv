@@ -1,9 +1,9 @@
 V,Saint-Etienne:D1082,96.0::V,Valence;N88,16.0::V,Firminy;N89,72.0::V,Lentilly;;
-V,Firminy:N88,16.0::V,Saint-Etienne;D1082,112.0::V,Valence;D3,13.0::L,Musee-de-l-art-et-de-l-industrie;N88,63::V,Le-Puy-en-Velay;;
+V,Firminy:N88,16.0::V,Saint-Etienne;D1082,112.0::V,Valence;D3,13.0::L,Musee-de-l-art-et-de-l-industrie;N88,63.0::V,Le-Puy-en-Velay;;
 V,Le-Puy-en-Velay:D906,93.0::L,Plan-d-eau-de-Cunlhah;A72,157.0::V,Roanne;N88,63.0::V,Firminy;N102,126.0::V,Clermont-Ferrand;;
 V,Clermont-Ferrand:A89,115.0::V,Roanne;N102,126.0::V,Le-Puy-en-Velay;D,1.0::L,Jardin-Lecoq;D210,58.0::V,Vichy;;
 V,Vichy:D906,69.0::L,Plan-d-eau-de-Cunlhah;D210,58.0::V,Clermont-Ferrand;D,2.0::R,Le-bistrot-de-Pierrot;N7,72.0::V,Roanne;N79,187.0::V,Bourg-en-Bresse;N79,149.0::V,Macon;;
-V,Roanne:A89,64.0::V,Vindry-Sur-Turdine;D504,73.0::V,Villefranche-Sur-Saone;N79,134.0::V,Bourg-en-Bresse;D987,96.0::V,Macon;N7,72.0::V,Vichy;A89,115.0::Clermont-Ferrand;A72,157.0::V,Le-Puy-en-Velay;D53,82.0::L,Plan-d-eau-de-Cunlhah;;
+V,Roanne:A89,64.0::V,Vindry-Sur-Turdine;D504,73.0::V,Villefranche-Sur-Saone;N79,134.0::V,Bourg-en-Bresse;D987,96.0::V,Macon;N7,72.0::V,Vichy;A89,115.0::V,Clermont-Ferrand;A72,157.0::V,Le-Puy-en-Velay;D53,82.0::L,Plan-d-eau-de-Cunlhah;;
 L,Plan-d-eau-de-Cunlhah:D996,97.0::V,Saint-Etienne;D906,93.0::V,Le-Puy-en-Velay;D53,82.0::V,Roanne;D906,69.0::V,Vichy;;
 R,Point-B-Montelimar:D,4.0::V,Montelimar;;
 V,Montelimar:D538,150.0::V,Grenoble;N7,49.0::V,Valence;;
@@ -17,13 +17,13 @@ V,Venissieux:A7,15.0::L,Musee-des-Confluences;A7,18.0::V,Lyon;D315,17.0::V,Grign
 L,Musee-des-Confluences:A4,11.0::V,Ecully;A7,15.0::V,Venissieux;;
 V,Ecully:A6,11.0::L,Musee-des-Confluences;D307,15.0::V,Lentilly::A6,35.0::V,Villefranche-sur-Saone;N7,5.0::V,Lyon;;
 V,Lyon:N7,5.0::V,Ecully;A7,18.0::V,Venissieux;N7,112.0::V,Valence;;
-V,Lentilly:D307,15.0::V,Ecully;N7,20.0::Vindry-sur-Turdine;N89,72.0::V,Saint-Etienne;D76,24.0::Villefranche-sur-Saone;;
+V,Lentilly:D307,15.0::V,Ecully;N7,20.0::V,Vindry-sur-Turdine;N89,72.0::V,Saint-Etienne;D76,24.0::V,Villefranche-sur-Saone;;
 V,Villeurbanne:N383,13.0::V,Venissieux;N383,14.0::L,Parc-de-la-Tete-d-Or;A43,100.0::V,Chambery;A42,164.0::V,Annecy;;
 L,Parc-de-la-Tete-d-Or:N383,14.0::V,Villeurbanne:D48,6.0::R,Restaurant-Paul-Bocuse;;
 R,Restaurant-Paul-Bocuse:D48,6.0::L,Parc-de-la-Tete-d-Or;D51,28.0::V,Villefranche-sur-Saone;D4,36.0::L,Jonquilles;;
 V,Villefranche-sur-Saone:D76,24.0::V,Lentilly;A6,35.0::V,Ecully;D504,73.0::V,Roanne;D51,28.0::R,Restaurant-Paul-Bocuse;D933,44.0::V,Macon;D936,52.0::V,Bourg-en-Bresse;;
 L,Jonquilles:D4,36.0::R,Restaurant-Paul-Bocuse;D22,32.0::V,Bourg-en-Bresse;;
-V,Macon:D987,96.0::V,Roanne;N79,149.0::V,Vichy;D933,44.0::Villefranche-sur-Saone;A40,41.0::V,Bourg-en-Bresse;;
+V,Macon:D987,96.0::V,Roanne;N79,149.0::V,Vichy;D933,44.0::V,Villefranche-sur-Saone;A40,41.0::V,Bourg-en-Bresse;;
 V,Bourg-en-Bresse:N79,134.0::V,Roanne;N79,187.0::V,Vichy;D936,52.0::V,Villefranche-sur-Saone;D22,32.0::L,Jonquilles;D19,124.0::V,Chambery;A40,129.0::V,Annecy;A40,41.0::V,Macon;;
 V,Annecy:N201,50.0::V,Chambery;D1508,3.0::R,La-Cabane;A42,164.0::V,Villeurbanne;A40,129.0::V,Bourg-en-Bresse;;
 L,Jardin-Lecoq:D,1.0::V,Clermont-Ferrand;;

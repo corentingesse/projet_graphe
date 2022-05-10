@@ -186,7 +186,3 @@ public abstract class LireCSV {
                 //fr.close();
             }
         }
-    }
-
-
-}

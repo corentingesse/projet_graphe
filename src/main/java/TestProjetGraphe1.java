@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class TestProjetGraphe1 {
     public static void main(String[] args) throws IOException, ErreurFichier {
-
+        LireCSV.lireCSV ("src/main/ressources/graphe.csv");
     }
 }
 

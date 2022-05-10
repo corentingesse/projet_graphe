@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class LireCSV {
-            ListeSommet listeSommet = new ListeSommet();
-            ListeLien listeLien = new ListeLien();
+            static ListeSommet listeSommet = new ListeSommet();
+            static ListeLien listeLien = new ListeLien();
 
             public LireCSV () {
             }
@@ -12,7 +12,7 @@ public abstract class LireCSV {
             public static void lireCSV (String cheminFile) throws ErreurFichier {
             try {
                 // Le fichier d'entrée
-                File file = new File("src/main/ressources/graphe.csv");
+                File file = new File(cheminFile);
                 // Créer l'objet File Reader
                 FileReader fr = new FileReader(file);
                 // Créer l'objet BufferedReader
@@ -165,8 +165,7 @@ public abstract class LireCSV {
                 throw new RuntimeException(e);
             }
 
-            /*
-
+            int i = 0;
                 ArrayList<Sommet> listeSommetLire = listeSommet.listeLire();
                 i = 0;
                 while (i < listeSommetLire.size()) {
@@ -184,14 +183,9 @@ public abstract class LireCSV {
                     System.out.println(listeLienLire.get (i).getLienValeur ());
                     i = i + 1;
                 }
-                fr.close();
-                // System.out.println(sb.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
+                //fr.close();
             }
         }
-
-             */
     }
 
 

@@ -7,7 +7,7 @@ public class Loisir extends Lieu {
 
     @Override
     public String toString() {
-        return "[Nom : " + super.getNomLieu() + ", Type : Loisir]";
+        return "Nom : " + super.getNomLieu() + ", Type : Loisir";
     }
 
     @Override

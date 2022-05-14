@@ -7,7 +7,7 @@ public class Departementale extends Route{
 
     @Override
     public String toString() {
-        return "[Nom : " + super.getNomRoute() + ", Distance : " + super.getDistanceKm() + "km, Type : Departementale]";
+        return "Nom : " + super.getNomRoute() + ", Distance : " + super.getDistanceKm() + "km, Type : Departementale";
     }
 
     @Override

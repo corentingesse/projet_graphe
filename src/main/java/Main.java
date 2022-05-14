@@ -1,7 +1,5 @@
 import Graphe.ConfigLiaison.Exceptions.ExceptionAjListeGraphe;
-import Graphe.ConfigLiaison.Liaison;
 import Graphe.ConfigLiaison.ListeGraphe;
-import Graphe.ConfigLiaison.ListeLiaison;
 import Graphe.ConfigLieu.*;
 import Graphe.ConfigRoute.*;
 
@@ -10,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ExceptionAjListeGraphe {
         ListeGraphe listeGraphe = new ListeGraphe ();
 
         File file = new File("src/main/resources/graphe.csv");
@@ -65,10 +63,10 @@ public class Main {
                             nouvLieu.setNomLieu(s3.get(index));
                             if(index < 4){
                                 lieuOrigine = nouvLieu;
+                                listeGraphe.ajLieu (lieuOrigine);
                             }
                             else{
                                 try {
-                                    listeGraphe.ajLieu (lieuOrigine);
                                     listeGraphe.ajListeVoisin (lieuOrigine, nouvLieu, nouvRoute);
                                 } catch (ExceptionAjListeGraphe e) {
                                     throw new RuntimeException(e);
@@ -94,7 +92,5 @@ public class Main {
             System.out.println();
         }
         System.out.println (listeGraphe);
-
-        System.out.println (listeGraphe.getListeGraphe ().values ());
     }
 }

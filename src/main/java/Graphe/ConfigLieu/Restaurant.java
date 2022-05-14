@@ -7,7 +7,7 @@ public class Restaurant extends Lieu {
 
     @Override
     public String toString() {
-        return "[Nom : " + super.getNomLieu() + ", Type : Restaurant]";
+        return "Nom : " + super.getNomLieu() + ", Type : Restaurant";
     }
 
     @Override

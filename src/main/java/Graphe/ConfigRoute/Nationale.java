@@ -7,7 +7,7 @@ public class Nationale extends Route {
 
     @Override
     public String toString() {
-        return "[Nom : " + super.getNomRoute() + ", Distance : " + super.getDistanceKm() + "km, Type : Nationale]";
+        return "Nom : " + super.getNomRoute() + ", Distance : " + super.getDistanceKm() + "km, Type : Nationale";
     }
 
     @Override

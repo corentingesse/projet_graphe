@@ -7,7 +7,7 @@ public class Autoroute extends Route {
 
     @Override
     public String toString() {
-        return "[Nom : " + super.getNomRoute() + ", Distance : " + super.getDistanceKm() + "km, Type : Autoroute]";
+        return "Nom : " + super.getNomRoute() + ", Distance : " + super.getDistanceKm() + "km, Type : Autoroute";
     }
 
     @Override

@@ -9,7 +9,7 @@ public class Ville extends Lieu {
 
     @Override
     public String toString() {
-        return "[Nom : " + super.getNomLieu() + ", Type : Ville]";
+        return "Nom : " + super.getNomLieu() + ", Type : Ville";
     }
 
     @Override

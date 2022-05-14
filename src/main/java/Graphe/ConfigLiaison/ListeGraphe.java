@@ -28,8 +28,8 @@ public class ListeGraphe {
     public void ajListeVoisin (Lieu lieuOrigine, Lieu lieu, Route route) throws ExceptionAjListeGraphe {
         if (lieuOrigine != null && lieu != null) {
             ListeVoisin listeVoisin = listeGraphe.get(lieuOrigine);
-            listeVoisin.ajLieu (lieu);
-            listeVoisin.ajRouteVoisin (lieu, route);
+            listeVoisin.ajLieu (lieu, route);
+            listeVoisin.ajLieu (lieu, route);
         }
 
         else
@@ -45,6 +45,7 @@ public class ListeGraphe {
         Lieu lieu = null;
         for (Lieu lieuParcour : listeGraphe.keySet ()) {
             System.out.println("----------------------------------------------------------");
+            System.out.println ("Origine : ");
             System.out.println(lieuParcour);
             System.out.println("liste des voisins : ");
             System.out.println (listeGraphe.get (lieuParcour));

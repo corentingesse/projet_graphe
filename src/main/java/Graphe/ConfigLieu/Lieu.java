@@ -1,6 +1,6 @@
 package Graphe.ConfigLieu;
 
-public class Lieu {
+public class Lieu implements Comparable {
     private String nomLieu;
 
     public Lieu() {
@@ -13,5 +13,11 @@ public class Lieu {
 
     public void setNomLieu(String nomLieu) {
         this.nomLieu = nomLieu;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Lieu o1 = (Lieu) o;
+        return getNomLieu ().compareTo (o1.getNomLieu ());
     }
 }

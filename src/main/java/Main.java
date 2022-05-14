@@ -1,4 +1,6 @@
+import Graphe.ConfigLiaison.Exceptions.ExceptionAjListeGraphe;
 import Graphe.ConfigLiaison.Liaison;
+import Graphe.ConfigLiaison.ListeGraphe;
 import Graphe.ConfigLiaison.ListeLiaison;
 import Graphe.ConfigLieu.*;
 import Graphe.ConfigRoute.*;
@@ -9,7 +11,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        ListeLiaison listeLiaison = new ListeLiaison();
+        ListeGraphe listeGraphe = new ListeGraphe ();
 
         File file = new File("src/main/resources/graphe.csv");
         FileReader fr = new FileReader(file);
@@ -36,9 +38,11 @@ public class Main {
                 s3.addAll(Arrays.asList(l));
             }
 
+            /*
             for (int i = 0; i < s3.size(); i++) {
                 System.out.println(i + " " + s3.get(i));
             }
+            */
 
             int index = 0;
             int limite = 4;
@@ -63,8 +67,12 @@ public class Main {
                                 lieuOrigine = nouvLieu;
                             }
                             else{
-                                Liaison nouvLiaison = new Liaison(lieuOrigine,nouvRoute,nouvLieu);
-                                listeLiaison.ajouter(nouvLiaison);
+                                try {
+                                    listeGraphe.ajLieu (lieuOrigine);
+                                    listeGraphe.ajListeVoisin (lieuOrigine, nouvLieu, nouvRoute);
+                                } catch (ExceptionAjListeGraphe e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                             break;
                         case 2:
@@ -85,7 +93,8 @@ public class Main {
 
             System.out.println();
         }
+        System.out.println (listeGraphe);
 
-        listeLiaison.afficher();
+        System.out.println (listeGraphe.getListeGraphe ().values ());
     }
 }

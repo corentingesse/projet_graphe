@@ -16,7 +16,7 @@ public class ListeLiaison {
     }
 
     public void ajouter(Liaison o){
-        if(o != null && l.contains(o)){
+        if(o != null && !l.contains(o)){
             l.add(o);
         }
     }

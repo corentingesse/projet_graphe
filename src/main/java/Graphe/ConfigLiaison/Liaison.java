@@ -14,8 +14,32 @@ public class Liaison {
         this.lieu2 = lieu2;
     }
 
+    public Lieu getLieu1() {
+        return lieu1;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public Lieu getLieu2() {
+        return lieu2;
+    }
+
+    public void setLieu1(Lieu lieu1) {
+        this.lieu1 = lieu1;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
+    public void setLieu2(Lieu lieu2) {
+        this.lieu2 = lieu2;
+    }
+
     @Override
     public String toString() {
-        return lieu1 + " -- " + route + " --> " + lieu2;
+        return lieu1 + " -- " + route + " -- " + lieu2;
     }
 }

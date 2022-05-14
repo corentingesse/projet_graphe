@@ -4,9 +4,9 @@ public class Route {
     private String nomRoute;
     private int distanceKm;
 
-    public Route(String nomRoute, int distanceKm) {
-        this.nomRoute = nomRoute;
-        this.distanceKm = distanceKm;
+    public Route() {
+        this.nomRoute = null;
+        this.distanceKm = 0;
     }
 
     public String getNomRoute() {

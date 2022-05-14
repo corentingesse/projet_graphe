@@ -1,10 +1,8 @@
 package Graphe.ConfigLieu;
 
-import Graphe.ConfigLieu.Lieu;
-
 public class Ville extends Lieu {
-    public Ville(String nomLieu) {
-        super(nomLieu);
+    public Ville() {
+        super();
     }
 
     @Override

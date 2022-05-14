@@ -1,8 +1,8 @@
 package Graphe.ConfigRoute;
 
 public class Autoroute extends Route {
-    public Autoroute(String nomRoute, int distanceKm) {
-        super(nomRoute, distanceKm);
+    public Autoroute() {
+        super();
     }
 
     @Override

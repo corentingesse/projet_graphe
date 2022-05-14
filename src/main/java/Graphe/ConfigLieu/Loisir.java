@@ -1,8 +1,8 @@
 package Graphe.ConfigLieu;
 
 public class Loisir extends Lieu {
-    public Loisir(String nomLieu) {
-        super(nomLieu);
+    public Loisir() {
+        super();
     }
 
     @Override

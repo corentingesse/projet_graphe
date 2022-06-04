@@ -19,16 +19,16 @@ public class FenetrePrincipale extends JFrame {
 
         }
 
-    public void constrFen () throws IOException, ExceptionAjListeGraphe {
+    public void constrFen() throws IOException, ExceptionAjListeGraphe {
         jFrame.setTitle("Graphe&Plan : trouvez le chemin de vos rêves ! ");
         jFrame.setSize(900, 300);
         jFrame.setLocationRelativeTo(null);
-        ImageIcon imageFond = new ImageIcon("C:\\Users\\cocog\\sae-graphes\\src\\main\\resources\\Graph_Plan.png");
+        ImageIcon imageFond = new ImageIcon("src/main/resources/Graph_Plan.png");
         // setResizable (false);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setVisible(true);
         jFrame.setJMenuBar(jMenuBar());
-        Image iconGraph = Toolkit.getDefaultToolkit().getImage ("C:\\Users\\cocog\\sae-graphes\\src\\main\\resources\\GraphIcone.png");
+        Image iconGraph = Toolkit.getDefaultToolkit().getImage ("src/main/resources/GraphIcone.png");
         jFrame.setIconImage (iconGraph);
         JLabel background = new JLabel(imageFond);
         background.setLayout (new BoxLayout(background, BoxLayout.Y_AXIS));
@@ -52,7 +52,7 @@ public class FenetrePrincipale extends JFrame {
 
     public JPanel constrIcones () throws IOException, ExceptionAjListeGraphe {
         JPanel p = new JPanel ();
-        Icon iconOuverture = new ImageIcon ("C:\\Users\\cocog\\sae-graphes\\src\\main\\resources\\ouverture.png");
+        Icon iconOuverture = new ImageIcon ("src/main/resources/ouverture.png");
         ImageIcon iconOuvrirRedim = new ImageIcon(((ImageIcon) iconOuverture).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT));
         JButton boutonOuverture = new JButton ("Ouvir un fichier ", iconOuvrirRedim);
         p.add (boutonOuverture);
@@ -80,7 +80,7 @@ public class FenetrePrincipale extends JFrame {
         boutonOuverture.setOpaque (false);
         boutonOuverture.setContentAreaFilled (false);
         boutonOuverture.setBorderPainted (false);
-        Icon iconNouveau = new ImageIcon ("C:\\Users\\cocog\\sae-graphes\\src\\main\\resources\\nouveau.png");
+        Icon iconNouveau = new ImageIcon ("src/main/resources/nouveau.png");
         JButton boutonNouveau = new JButton ("Nouveau fichier ", iconNouveau);
         p.add (boutonNouveau);
         boutonNouveau.setForeground(Color.WHITE);
@@ -91,14 +91,14 @@ public class FenetrePrincipale extends JFrame {
         boutonNouveau.setOpaque (false);
         boutonNouveau.setContentAreaFilled (false);
         boutonNouveau.setBorderPainted (false);
-        Icon iconTest = new ImageIcon ("C:\\Users\\cocog\\sae-graphes\\src\\main\\resources\\TestIcone.png");
+        Icon iconTest = new ImageIcon ("src/main/resources/TestIcone.png");
         ImageIcon iconTestRedim = new ImageIcon(((ImageIcon) iconTest).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT));
         JButton boutonTestGraphe = new JButton ("Test avec un graphe ", iconTestRedim);
         p.add (boutonTestGraphe);
         boutonTestGraphe.setForeground(Color.WHITE);
         boutonTestGraphe.addActionListener (event -> {
             try {
-                FenetreGraphe fenetreGraphe = new FenetreGraphe("C:\\Users\\cocog\\sae-graphes\\src\\main\\resources\\graphe.csv",  this);
+                FenetreGraphe fenetreGraphe = new FenetreGraphe("src/main/resources/graphe.csv",  this);
                 jFrame.setVisible (false);
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -109,7 +109,7 @@ public class FenetrePrincipale extends JFrame {
         boutonTestGraphe.setOpaque (false);
         boutonTestGraphe.setContentAreaFilled (false);
         boutonTestGraphe.setBorderPainted (false);
-        Icon iconSortie = new ImageIcon ("C:\\Users\\cocog\\sae-graphes\\src\\main\\resources\\sortieIcone.png");
+        Icon iconSortie = new ImageIcon ("src/main/resources/sortieIcone.png");
         ImageIcon iconSortieRedim = new ImageIcon(((ImageIcon) iconSortie).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT));
         JButton boutonSortie = new JButton ("Sortie ", iconSortieRedim);
         p.add (boutonSortie);
@@ -132,17 +132,17 @@ public class FenetrePrincipale extends JFrame {
 
     public JMenu jMenuFichier () {
         JMenu fichier = new JMenu ("Fichier ");
-        Icon nouveauIcon = new ImageIcon ("C:\\Users\\cocog\\sae-graphes\\src\\main\\resources\\nouveau.png");
+        Icon nouveauIcon = new ImageIcon ("src/main/resources/nouveau.png");
         ImageIcon iconNouveauRedim = new ImageIcon(((ImageIcon) nouveauIcon).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
         JMenuItem nouveau = new JMenuItem ("nouveau ", iconNouveauRedim);
-        Icon iconOuverture = new ImageIcon ("C:\\Users\\cocog\\sae-graphes\\src\\main\\resources\\ouverture.png");
+        Icon iconOuverture = new ImageIcon ("src/main/resources/ouverture.png");
         ImageIcon iconOuvrirRedim = new ImageIcon(((ImageIcon) iconOuverture).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
         JMenuItem ouvrir = new JMenuItem ("ouvrir ", iconOuvrirRedim);
-        Icon enregistrerIcon = new ImageIcon ("C:\\Users\\cocog\\sae-graphes\\src\\main\\resources\\enregistrer.png");
+        Icon enregistrerIcon = new ImageIcon ("src/main/resources/enregistrer.png");
         ImageIcon iconEnregistrerRedim = new ImageIcon(((ImageIcon) enregistrerIcon).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
         JMenuItem enregistrer = new JMenuItem ("enregistrer ", iconEnregistrerRedim);
         JMenuItem enregistrerSous = new JMenuItem ("enregistrer-sous ");
-        Icon fermerIcon = new ImageIcon ("C:\\Users\\cocog\\sae-graphes\\src\\main\\resources\\fermer.png");
+        Icon fermerIcon = new ImageIcon ("src/main/resources/fermer.png");
         ImageIcon iconFermerRedim = new ImageIcon(((ImageIcon) fermerIcon).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
         JMenuItem fermer = new JMenuItem ("fermer ", iconFermerRedim);
         fichier.add (nouveau);

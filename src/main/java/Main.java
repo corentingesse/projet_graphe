@@ -1,7 +1,5 @@
 import Graphe.ConfigListe.Exceptions.ExceptionAjListeGraphe;
 import Graphe.ConfigListe.ListeGraphe;
-import Graphe.CreationGraphe;
-import Graphe.CreationListe;
 import IHM.FenetreCreer;
 import IHM.FenetreGraphe;
 import IHM.FenetrePrincipale;

@@ -6,9 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="sae-graphes" />
-        <module name="sae-graphes - Copie (2)" />
-        <module name="sae-graphe" />
+        <module name="sae-graphes (1)" />
       </profile>
     </annotationProcessing>
   </component>

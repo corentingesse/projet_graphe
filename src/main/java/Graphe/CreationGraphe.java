@@ -16,7 +16,7 @@ import org.graphstream.ui.view.Viewer;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.stream.Stream;
+import java.util.ArrayList;
 
 public class CreationGraphe {
     static ListeGraphe listeGraphe;
@@ -33,10 +33,14 @@ public class CreationGraphe {
         graph = new SingleGraph("embedded");
         SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
 
+
+
         JPanel graphPanel = new JPanel();
 
         DefaultView view = (DefaultView) viewer.addDefaultView(false);
         view.setPreferredSize(new Dimension(980, 460));
+
+        // view.getCamera().setViewPercent(1);
 
         int i = 0;
 
@@ -49,7 +53,7 @@ public class CreationGraphe {
                     n.setAttribute ("ui.style", "fill-color: red; ");
                     break;
                 case "Restaurant":
-                    n.setAttribute ("ui.style", "fill-color: green; ");
+                    n.setAttribute ("ui.style", "fill-color: #0CAF09; ");
                     break;
                 case "Loisir":
                     n.setAttribute ("ui.style", "fill-color: orange; ");
@@ -62,7 +66,7 @@ public class CreationGraphe {
                 if (graph.getNode (lieuParcour.getNomLieu ()).hasEdgeBetween (lieuVoisin.getNomLieu ()) == false) {
                     graph.addEdge(String.valueOf(i), lieuVoisin.getNomLieu(), lieuParcour.getNomLieu());
                     Edge edge = graph.getEdge(String.valueOf(i));
-                    edge.setAttribute("ui.label", listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin ().get (lieuVoisin).getNomRoute ());
+                    edge.setAttribute("ui.label", listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin ().get (lieuVoisin).getNomRoute () + ", " + listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin ().get (lieuVoisin).getDistanceKm() + "km");
                     switch (listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin ().get (lieuVoisin).getClass().getSimpleName()) {
                         case "Nationale":
                             edge.setAttribute ("ui.style", "fill-color: red; ");
@@ -81,8 +85,17 @@ public class CreationGraphe {
 
         graph.setAttribute("ui.stylesheet","node {" +
                 "size: 20px;" +
+                "text-color: white;" +
+                "text-style: bold;" +
                 "}" +
-                "");
+                "edge{" +
+                "text-color: white;" +
+                "text-style: bold;" +
+                "text-alignment: along;" +
+                "}" +
+                "graph{" +
+                "fill-color: black;" +
+                "}");
 
         graphLayout.compute();
 
@@ -154,17 +167,106 @@ public class CreationGraphe {
         return nbNationale /2;
     }
 
-    //public static JPanel creerGraphe () {
+    public static JPanel creerGrapheVoisins (String lieu) {
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
-    //}
+        Layout graphLayout = new SpringBox(false);
+        graph = new SingleGraph("embedded");
+        SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
 
-    public String [] getNoeud () {
+
+
+        JPanel graphPanel = new JPanel();
+
+        DefaultView view = (DefaultView) viewer.addDefaultView(false);
+        view.setPreferredSize(new Dimension(980, 460));
+
+        // view.getCamera().setViewPercent(1);
+
+        int i = 0;
+
+            for(Lieu lieuParcour : listeGraphe.getListeGraphe().keySet ()) {
+                if (lieuParcour.getNomLieu().equals(lieu)) {
+                    graph.addNode(lieuParcour.getNomLieu());
+                    Node n = graph.getNode(lieuParcour.getNomLieu());
+                    n.setAttribute("ui.label", n.getId());
+                    switch (lieuParcour.getClass().getSimpleName()) {
+                        case "Ville":
+                            n.setAttribute("ui.style", "fill-color: red; ");
+                            break;
+                        case "Restaurant":
+                            n.setAttribute("ui.style", "fill-color: #0CAF09; ");
+                            break;
+                        case "Loisir":
+                            n.setAttribute("ui.style", "fill-color: orange; ");
+                            break;
+                    }
+                    for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
+                            graph.addNode(lieuVoisin.getNomLieu ());
+                            Node n1 = graph.getNode(lieuVoisin.getNomLieu ());
+                            n.setAttribute("ui.label", n1.getId());
+                            switch (lieuVoisin.getClass().getSimpleName()) {
+                                case "Ville":
+                                    n1.setAttribute("ui.style", "fill-color: red; ");
+                                    break;
+                                case "Restaurant":
+                                    n1.setAttribute("ui.style", "fill-color: #0CAF09; ");
+                                    break;
+                                case "Loisir":
+                                    n1.setAttribute("ui.style", "fill-color: orange; ");
+                                    break;
+                            }
+                        if (graph.getNode(lieuParcour.getNomLieu()).hasEdgeBetween(lieuVoisin.getNomLieu()) == false) {
+                            graph.addEdge(String.valueOf(i), lieuVoisin.getNomLieu(), lieuParcour.getNomLieu());
+                            Edge edge = graph.getEdge(String.valueOf(i));
+                            edge.setAttribute("ui.label", listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getNomRoute() + ", " + listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getDistanceKm() + "km");
+                            switch (listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getClass().getSimpleName()) {
+                                case "Nationale":
+                                    edge.setAttribute("ui.style", "fill-color: red; ");
+                                    break;
+                                case "Departementale":
+                                    edge.setAttribute("ui.style", "fill-color: yellow; ");
+                                    break;
+                                case "Autoroute":
+                                    edge.setAttribute("ui.style", "fill-color: blue; ");
+                                    break;
+                            }
+                        }
+                        i = i + 1;
+                    }
+                    graph.setAttribute("ui.stylesheet","node {" +
+                            "size: 20px;" +
+                            "text-color: white;" +
+                            "text-style: bold;" +
+                            "}" +
+                            "edge{" +
+                            "text-color: white;" +
+                            "text-style: bold;" +
+                            "text-alignment: along;" +
+                            "}" +
+                            "graph{" +
+                            "fill-color: black;" +
+                            "}");
+
+                    graphLayout.compute();
+
+                    viewer.enableAutoLayout();
+
+                    graphPanel.add(view);
+                    graph.display ();
+                    return graphPanel;
+                }
+                return null;
+        }
+        return null;
+    }
+
+    public ArrayList <String> getNoeud () {
         int i;
-        String [] graphNode = new String[0];
+        ArrayList <String> graphNode = new ArrayList ();
         int indexGraphNode = 1;
-        for (i = 1; graph.getNode (i) != null; i++) {
-            graphNode[i] = graph.getNode(i).getId();
-            indexGraphNode = indexGraphNode + 1;
+        for (Node node : graph) {
+            graphNode.add (node.getId());
         }
         return graphNode;
 

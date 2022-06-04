@@ -204,7 +204,7 @@ public class CreationGraphe {
                     for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
                             graph.addNode(lieuVoisin.getNomLieu ());
                             Node n1 = graph.getNode(lieuVoisin.getNomLieu ());
-                            n.setAttribute("ui.label", n1.getId());
+                            n1.setAttribute("ui.label", n1.getId());
                             switch (lieuVoisin.getClass().getSimpleName()) {
                                 case "Ville":
                                     n1.setAttribute("ui.style", "fill-color: red; ");
@@ -253,12 +253,10 @@ public class CreationGraphe {
                     viewer.enableAutoLayout();
 
                     graphPanel.add(view);
-                    graph.display ();
                     return graphPanel;
                 }
-                return null;
         }
-        return null;
+        return graphPanel;
     }
 
     public ArrayList <String> getNoeud () {
@@ -271,4 +269,131 @@ public class CreationGraphe {
         return graphNode;
 
     }
+
+    public int getNombreVilleVoisin (String lieu) {
+        int nbVille = 0;
+        for(Lieu lieuParcour : listeGraphe.getListeGraphe().keySet ()) {
+            if (lieuParcour.getNomLieu().equals(lieu)) {
+                switch (lieuParcour.getClass().getSimpleName()) {
+                    case "Ville":
+                        nbVille = nbVille + 1;
+                        break;
+                }
+                for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
+                    switch (lieuVoisin.getClass().getSimpleName()) {
+                        case "Ville":
+                            nbVille = nbVille + 1;
+                    }
+                }
+
+                return nbVille;
+            }
+        }
+
+        return 0;
+    }
+
+    public int getNombreLoisirVoisin (String lieu) {
+        int nbLoisir = 0;
+        for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) {
+            if (lieuParcour.getNomLieu().equals(lieu)) {
+                switch (lieuParcour.getClass().getSimpleName()) {
+                    case "Loisir":
+                        nbLoisir = nbLoisir + 1;
+                        break;
+                }
+                for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
+                    switch (lieuVoisin.getClass().getSimpleName()) {
+                        case "Loisir":
+                            nbLoisir = nbLoisir + 1;
+                    }
+                }
+
+                return nbLoisir;
+            }
+        }
+
+        return 0;
+    }
+
+    public int getNombreRestaurantVoisin (String lieu) {
+        int nbRestaurant = 0;
+        for(Lieu lieuParcour : listeGraphe.getListeGraphe().keySet ()) {
+            if (lieuParcour.getNomLieu().equals(lieu)) {
+                switch (lieuParcour.getClass().getSimpleName()) {
+                    case "Restaurant":
+                        nbRestaurant = nbRestaurant + 1;
+                        break;
+                }
+                for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
+                    switch (lieuVoisin.getClass().getSimpleName()) {
+                        case "Restaurant" :
+                            nbRestaurant = nbRestaurant + 1;
+                    }
+                }
+
+                return nbRestaurant;
+            }
+        }
+
+        return 0;
+    }
+
+    public int getNombreNationaleVoisin (String lieu) {
+        int nbNationale = 0;
+        for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) {
+            if (lieuParcour.getNomLieu().equals(lieu)) {
+                for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
+                    switch (listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getClass().getSimpleName()) {
+                        case "Nationale":
+                            nbNationale = nbNationale + 1;
+                            break;
+                    }
+                }
+
+                return nbNationale;
+            }
+        }
+
+        return 0;
+    }
+
+    public int getNombreAutorouteVoisin (String lieu) {
+        int nbAutoroute = 0;
+        for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) {
+            if (lieuParcour.getNomLieu().equals(lieu)) {
+                for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
+                    switch (listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getClass().getSimpleName()) {
+                        case "Autoroute":
+                            nbAutoroute = nbAutoroute + 1;
+                            break;
+                    }
+                }
+
+                return nbAutoroute;
+            }
+        }
+
+        return 0;
+    }
+
+    public int getNombreDepartementaleVoisin (String lieu) {
+        int nbDepartementale = 0;
+        for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) {
+            if (lieuParcour.getNomLieu().equals(lieu)) {
+                for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
+                    switch (listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getClass().getSimpleName()) {
+                        case "Departementale" :
+                            nbDepartementale = nbDepartementale + 1;
+                            break;
+                    }
+                }
+
+                return nbDepartementale;
+            }
+        }
+
+        return 0;
+    }
+
 }

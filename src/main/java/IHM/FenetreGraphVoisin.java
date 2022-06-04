@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import static java.awt.Color.black;
 
-public class FenetreGraphe extends JFrame {
+public class FenetreGraphVoisin extends JFrame {
     FenetrePrincipale fenetrePrincipale;
     JFrame jFrame = new JFrame ();
     private String cheminFile;
@@ -28,8 +28,11 @@ public class FenetreGraphe extends JFrame {
     JLabel background = new JLabel ();
 
     JPanel noeudsVoisins;
-    public FenetreGraphe (String newCheminFile, FenetrePrincipale newFenetrePrincipale) throws IOException, ExceptionAjListeGraphe {
+
+    String noeudVoisin;
+    public FenetreGraphVoisin (String newCheminFile, FenetrePrincipale newFenetrePrincipale, String newNoeudVoisin) throws IOException, ExceptionAjListeGraphe {
         super ();
+        noeudVoisin = newNoeudVoisin;
         cheminFile = newCheminFile;
         fenetrePrincipale = newFenetrePrincipale;
         creationGraphe = new CreationGraphe (cheminFile);
@@ -64,7 +67,7 @@ public class FenetreGraphe extends JFrame {
     public JPanel constrFenVisuel () throws IOException, ExceptionAjListeGraphe {
         System.setProperty("org.graphstream.ui", "swing");
 
-        graph = creationGraphe.creerGraphe();
+        graph = creationGraphe.creerGrapheVoisins (noeudVoisin);
 
         graph.setOpaque (false);
 
@@ -85,7 +88,7 @@ public class FenetreGraphe extends JFrame {
         nombreVilles.setIcon (iconVille);
         nombreVilles.setFont (new Font ("Arial", Font.BOLD, 15));
         nombreVilles.setForeground(Color.WHITE);
-        JLabel nbVilles = new JLabel (String.valueOf(creationGraphe.getNombreVille ()));
+        JLabel nbVilles = new JLabel (String.valueOf(creationGraphe.getNombreVilleVoisin (noeudVoisin)));
         p.add (nbVilles);
         nbVilles.setForeground(Color.WHITE);
         Icon iconRestaurant = new ImageIcon ("src/main/resources/lieuRestaurantIcone.png");
@@ -94,7 +97,7 @@ public class FenetreGraphe extends JFrame {
         nombreRestaurants.setIcon (iconRestaurant);
         nombreRestaurants.setFont (new Font ("Arial", Font.BOLD, 15));
         nombreRestaurants.setForeground(Color.WHITE);
-        JLabel nbRestaurants = new JLabel (String.valueOf(creationGraphe.getNombreRestaurant ()));
+        JLabel nbRestaurants = new JLabel (String.valueOf(creationGraphe.getNombreRestaurantVoisin (noeudVoisin)));
         p.add (nbRestaurants);
         nbRestaurants.setForeground(Color.WHITE);
         Icon iconLoisir = new ImageIcon ("src/main/resources/lieuLoisirIcone.png");
@@ -103,7 +106,7 @@ public class FenetreGraphe extends JFrame {
         nombreLoisirs.setIcon (iconLoisir);
         nombreLoisirs.setFont (new Font ("Arial", Font.BOLD, 15));
         nombreLoisirs.setForeground(Color.WHITE);
-        JLabel nbLoisirs = new JLabel (String.valueOf(creationGraphe.getNombreLoisir ()));
+        JLabel nbLoisirs = new JLabel (String.valueOf(creationGraphe.getNombreLoisirVoisin (noeudVoisin)));
         p.add (nbLoisirs);
         nbLoisirs.setForeground(Color.WHITE);
         p.add (new JLabel (" "));
@@ -113,7 +116,7 @@ public class FenetreGraphe extends JFrame {
         p.add (nombreDeNationales);
         nombreDeNationales.setFont (new Font ("Arial", Font.BOLD, 15));
         nombreDeNationales.setForeground(Color.WHITE);
-        JLabel nbNationales = new JLabel (String.valueOf(creationGraphe.getNombreNationale ()));
+        JLabel nbNationales = new JLabel (String.valueOf(creationGraphe.getNombreNationaleVoisin (noeudVoisin)));
         p.add (nbNationales);
         nbNationales.setForeground(Color.WHITE);
         nombreDeNationales.setIcon (iconNationale);
@@ -122,7 +125,7 @@ public class FenetreGraphe extends JFrame {
         p.add (nombreDeDepartementales);
         nombreDeDepartementales.setFont (new Font ("Arial", Font.BOLD, 15));
         nombreDeDepartementales.setForeground(Color.WHITE);
-        JLabel nbDepartementales = new JLabel (String.valueOf(creationGraphe.getNombreDepartementale ()));
+        JLabel nbDepartementales = new JLabel (String.valueOf(creationGraphe.getNombreDepartementaleVoisin (noeudVoisin)));
         p.add (nbDepartementales);
         nbDepartementales.setForeground(Color.WHITE);
         nbDepartementales.setIcon (iconDepertementale);
@@ -131,7 +134,7 @@ public class FenetreGraphe extends JFrame {
         p.add (nombreDeAutoroutes);
         nombreDeAutoroutes.setFont (new Font ("Arial", Font.BOLD, 15));
         nombreDeAutoroutes.setForeground(Color.WHITE);
-        JLabel nbAutoroutes = new JLabel (String.valueOf(creationGraphe.getNombreAutoroute ()));
+        JLabel nbAutoroutes = new JLabel (String.valueOf (creationGraphe.getNombreAutorouteVoisin (noeudVoisin)));
         p.add (nbAutoroutes);
         nbAutoroutes.setForeground(Color.WHITE);
         nombreDeAutoroutes.setIcon (iconAutoroute);
@@ -267,7 +270,6 @@ public class FenetreGraphe extends JFrame {
             } catch (ExceptionAjListeGraphe e) {
                 throw new RuntimeException(e);
             }
-
             validate();
         });
         p.setOpaque (false);

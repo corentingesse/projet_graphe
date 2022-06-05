@@ -326,8 +326,82 @@ public class FenetreGraphe extends JFrame {
 
                 validate();
             });
-
             Object[] options = new Object[]{};
+            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+                    JOptionPane.QUESTION_MESSAGE,
+                    JOptionPane.DEFAULT_OPTION,
+                    null, options, null);
+
+            fenetreGraphVoisins.add (aProximiteDe);
+            fenetreGraphVoisins.add(listegraphNode);
+            fenetreGraphVoisins.add (aDistanceDe);
+            fenetreGraphVoisins.add (distance);
+            fenetreGraphVoisins.add (visualiser);
+
+            JDialog diag = new JDialog();
+            diag.getContentPane().add(fenetreGraphVoisins);
+            diag.pack();
+            diag.setVisible(true);
+        });
+            chercherRestaurant.addActionListener (event -> {
+                JLabel aProximiteDe = new JLabel ("a proximité de : ");
+                JLabel aDistanceDe = new JLabel ("a distance de : ");
+                String [] aDistance = {"1"};
+                ArrayList <String> graphNode = creationGraphe.getNoeud ();
+                JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
+                JComboBox distance = new JComboBox (aDistance);
+                JButton visualiser = new JButton ("visualiser ");
+                visualiser.addActionListener (event1 -> {
+                    try {
+                        new FenetreGrapheChercher ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Restaurant");
+                        jFrame.setVisible (false);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (ExceptionAjListeGraphe e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    validate();
+                });
+                Object[] options = new Object[]{};
+                JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+                        JOptionPane.QUESTION_MESSAGE,
+                        JOptionPane.DEFAULT_OPTION,
+                        null, options, null);
+
+                fenetreGraphVoisins.add (aProximiteDe);
+                fenetreGraphVoisins.add(listegraphNode);
+                fenetreGraphVoisins.add (aDistanceDe);
+                fenetreGraphVoisins.add (distance);
+                fenetreGraphVoisins.add (visualiser);
+
+                JDialog diag = new JDialog();
+                diag.getContentPane().add(fenetreGraphVoisins);
+                diag.pack();
+                diag.setVisible(true);
+            });
+                chercherLoisir.addActionListener (event -> {
+                    JLabel aProximiteDe = new JLabel ("a proximité de : ");
+                    JLabel aDistanceDe = new JLabel ("a distance de : ");
+                    String [] aDistance = {"1"};
+                    ArrayList <String> graphNode = creationGraphe.getNoeud ();
+                    JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
+                    JComboBox distance = new JComboBox (aDistance);
+                    JButton visualiser = new JButton ("visualiser ");
+                    visualiser.addActionListener (event1 -> {
+                        try {
+                            new FenetreGrapheChercher ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Loisir");
+                            jFrame.setVisible (false);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } catch (ExceptionAjListeGraphe e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        validate();
+                    });
+
+                    Object[] options = new Object[]{};
             JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,

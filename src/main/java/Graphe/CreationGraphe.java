@@ -396,4 +396,114 @@ public class CreationGraphe {
         return 0;
     }
 
+    public static JPanel creerGrapheChercher (String lieu, String lieuCherche) {
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+
+        Layout graphLayout = new SpringBox(false);
+        graph = new SingleGraph("embedded");
+        SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
+
+
+
+        JPanel graphPanel = new JPanel();
+
+        DefaultView view = (DefaultView) viewer.addDefaultView(false);
+        view.setPreferredSize(new Dimension(980, 460));
+
+        // view.getCamera().setViewPercent(1);
+
+        int i = 0;
+
+        for(Lieu lieuParcour : listeGraphe.getListeGraphe().keySet ()) {
+            if (lieuParcour.getNomLieu().equals(lieu)) {
+                graph.addNode(lieuParcour.getNomLieu());
+                Node n = graph.getNode(lieuParcour.getNomLieu());
+                n.setAttribute("ui.label", n.getId());
+                switch (lieuParcour.getClass().getSimpleName()) {
+                    case "Ville":
+                       if ("Ville".equals (lieuCherche))
+                           n.setAttribute ("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                       else
+                            n.setAttribute("ui.style", "fill-color: red; ");
+                        break;
+                    case "Restaurant":
+                        if ("Restaurant".equals (lieuCherche))
+                            n.setAttribute ("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                        else
+                            n.setAttribute("ui.style", "fill-color: #0CAF09; ");
+                        break;
+                    case "Loisir":
+                        if ("Loisir".equals (lieuCherche))
+                            n.setAttribute ("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                        else
+                            n.setAttribute("ui.style", "fill-color: orange; ");
+                        break;
+                }
+                for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
+                    graph.addNode(lieuVoisin.getNomLieu ());
+                    Node n1 = graph.getNode(lieuVoisin.getNomLieu ());
+                    n1.setAttribute("ui.label", n1.getId());
+                    switch (lieuVoisin.getClass().getSimpleName()) {
+                        case "Ville":
+                            if ("Ville".equals (lieuCherche))
+                                n1.setAttribute ("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                            else
+                                n1.setAttribute("ui.style", "fill-color: red; ");
+                            break;
+                        case "Restaurant":
+                            if ("Restaurant".equals (lieuCherche))
+                                n1.setAttribute ("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                            else
+                                n1.setAttribute("ui.style", "fill-color: #0CAF09; ");
+                            break;
+                        case "Loisir":
+                            if ("Ville".equals (lieuCherche))
+                                n1.setAttribute ("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                            else
+                                n1.setAttribute("ui.style", "fill-color: orange; ");
+                            break;
+                    }
+                    if (graph.getNode(lieuParcour.getNomLieu()).hasEdgeBetween(lieuVoisin.getNomLieu()) == false) {
+                        graph.addEdge(String.valueOf(i), lieuVoisin.getNomLieu(), lieuParcour.getNomLieu());
+                        Edge edge = graph.getEdge(String.valueOf(i));
+                        edge.setAttribute("ui.label", listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getNomRoute() + ", " + listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getDistanceKm() + "km");
+                        switch (listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getClass().getSimpleName()) {
+                            case "Nationale":
+                                edge.setAttribute("ui.style", "fill-color: red; ");
+                                break;
+                            case "Departementale":
+                                edge.setAttribute("ui.style", "fill-color: yellow; ");
+                                break;
+                            case "Autoroute":
+                                edge.setAttribute("ui.style", "fill-color: blue; ");
+                                break;
+                        }
+                    }
+                    i = i + 1;
+                }
+                graph.setAttribute("ui.stylesheet","node {" +
+                        "size: 20px;" +
+                        "text-color: white;" +
+                        "text-style: bold;" +
+                        "}" +
+                        "edge{" +
+                        "text-color: white;" +
+                        "text-style: bold;" +
+                        "text-alignment: along;" +
+                        "}" +
+                        "graph{" +
+                        "fill-color: black;" +
+                        "}");
+
+                graphLayout.compute();
+
+                viewer.enableAutoLayout();
+
+                graphPanel.add(view);
+                return graphPanel;
+            }
+        }
+        return graphPanel;
+    }
+
 }

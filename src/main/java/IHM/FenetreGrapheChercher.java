@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import static java.awt.Color.black;
 
-public class FenetreGraphe extends JFrame {
+public class FenetreGrapheChercher extends JFrame {
     FenetrePrincipale fenetrePrincipale;
     JFrame jFrame = new JFrame ();
     private String cheminFile;
@@ -28,8 +28,14 @@ public class FenetreGraphe extends JFrame {
     JLabel background = new JLabel ();
 
     JPanel noeudsVoisins;
-    public FenetreGraphe (String newCheminFile, FenetrePrincipale newFenetrePrincipale) throws IOException, ExceptionAjListeGraphe {
+
+    String noeudVoisin;
+
+    String lieuCherche;
+    public FenetreGrapheChercher (String newCheminFile, FenetrePrincipale newFenetrePrincipale, String newNoeudVoisin, String newLieuCherche) throws IOException, ExceptionAjListeGraphe {
         super ();
+        noeudVoisin = newNoeudVoisin;
+        lieuCherche = newLieuCherche;
         cheminFile = newCheminFile;
         fenetrePrincipale = newFenetrePrincipale;
         creationGraphe = new CreationGraphe (cheminFile);
@@ -64,7 +70,7 @@ public class FenetreGraphe extends JFrame {
     public JPanel constrFenVisuel () throws IOException, ExceptionAjListeGraphe {
         System.setProperty("org.graphstream.ui", "swing");
 
-        graph = creationGraphe.creerGraphe();
+        graph = creationGraphe.creerGrapheChercher (noeudVoisin, lieuCherche);
 
         graph.setOpaque (false);
 
@@ -85,7 +91,7 @@ public class FenetreGraphe extends JFrame {
         nombreVilles.setIcon (iconVille);
         nombreVilles.setFont (new Font ("Arial", Font.BOLD, 15));
         nombreVilles.setForeground(Color.WHITE);
-        JLabel nbVilles = new JLabel (String.valueOf(creationGraphe.getNombreVille ()));
+        JLabel nbVilles = new JLabel (String.valueOf(creationGraphe.getNombreVilleVoisin (noeudVoisin)));
         p.add (nbVilles);
         nbVilles.setForeground(Color.WHITE);
         Icon iconRestaurant = new ImageIcon ("src/main/resources/lieuRestaurantIcone.png");
@@ -94,7 +100,7 @@ public class FenetreGraphe extends JFrame {
         nombreRestaurants.setIcon (iconRestaurant);
         nombreRestaurants.setFont (new Font ("Arial", Font.BOLD, 15));
         nombreRestaurants.setForeground(Color.WHITE);
-        JLabel nbRestaurants = new JLabel (String.valueOf(creationGraphe.getNombreRestaurant ()));
+        JLabel nbRestaurants = new JLabel (String.valueOf(creationGraphe.getNombreRestaurantVoisin (noeudVoisin)));
         p.add (nbRestaurants);
         nbRestaurants.setForeground(Color.WHITE);
         Icon iconLoisir = new ImageIcon ("src/main/resources/lieuLoisirIcone.png");
@@ -103,7 +109,7 @@ public class FenetreGraphe extends JFrame {
         nombreLoisirs.setIcon (iconLoisir);
         nombreLoisirs.setFont (new Font ("Arial", Font.BOLD, 15));
         nombreLoisirs.setForeground(Color.WHITE);
-        JLabel nbLoisirs = new JLabel (String.valueOf(creationGraphe.getNombreLoisir ()));
+        JLabel nbLoisirs = new JLabel (String.valueOf(creationGraphe.getNombreLoisirVoisin (noeudVoisin)));
         p.add (nbLoisirs);
         nbLoisirs.setForeground(Color.WHITE);
         p.add (new JLabel (" "));
@@ -113,7 +119,7 @@ public class FenetreGraphe extends JFrame {
         p.add (nombreDeNationales);
         nombreDeNationales.setFont (new Font ("Arial", Font.BOLD, 15));
         nombreDeNationales.setForeground(Color.WHITE);
-        JLabel nbNationales = new JLabel (String.valueOf(creationGraphe.getNombreNationale ()));
+        JLabel nbNationales = new JLabel (String.valueOf(creationGraphe.getNombreNationaleVoisin (noeudVoisin)));
         p.add (nbNationales);
         nbNationales.setForeground(Color.WHITE);
         nombreDeNationales.setIcon (iconNationale);
@@ -122,7 +128,7 @@ public class FenetreGraphe extends JFrame {
         p.add (nombreDeDepartementales);
         nombreDeDepartementales.setFont (new Font ("Arial", Font.BOLD, 15));
         nombreDeDepartementales.setForeground(Color.WHITE);
-        JLabel nbDepartementales = new JLabel (String.valueOf(creationGraphe.getNombreDepartementale ()));
+        JLabel nbDepartementales = new JLabel (String.valueOf(creationGraphe.getNombreDepartementaleVoisin (noeudVoisin)));
         p.add (nbDepartementales);
         nbDepartementales.setForeground(Color.WHITE);
         nbDepartementales.setIcon (iconDepertementale);
@@ -131,7 +137,7 @@ public class FenetreGraphe extends JFrame {
         p.add (nombreDeAutoroutes);
         nombreDeAutoroutes.setFont (new Font ("Arial", Font.BOLD, 15));
         nombreDeAutoroutes.setForeground(Color.WHITE);
-        JLabel nbAutoroutes = new JLabel (String.valueOf(creationGraphe.getNombreAutoroute ()));
+        JLabel nbAutoroutes = new JLabel (String.valueOf (creationGraphe.getNombreAutorouteVoisin (noeudVoisin)));
         p.add (nbAutoroutes);
         nbAutoroutes.setForeground(Color.WHITE);
         nombreDeAutoroutes.setIcon (iconAutoroute);
@@ -187,8 +193,6 @@ public class FenetreGraphe extends JFrame {
         jMenuBar.setBackground (black);
         jMenuBar.add (jMenuFichier ());
         jMenuBar.add (jMenuAPropos ());
-        jMenuBar.add (jMenuAffichage ());
-        jMenuBar.add (jMenuChercher ());
         return jMenuBar;
     }
 
@@ -243,112 +247,6 @@ public class FenetreGraphe extends JFrame {
         return fichier;
     }
 
-    public JMenu jMenuAffichage () {
-        JMenu affichage = new JMenu ("Affichage ");
-        Icon mapIcone = new ImageIcon ("src/main/resources/mapIcone.png");
-        ImageIcon iconMapRedim = new ImageIcon(((ImageIcon) mapIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-        JMenuItem graphePrincipal = new JMenuItem ("graphe principal ", iconMapRedim);
-        Icon voisinIcone = new ImageIcon ("src/main/resources/voisinIcone.jpg");
-        ImageIcon iconVoisinRedim = new ImageIcon(((ImageIcon) voisinIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-        JMenu grapheVoisin = new JMenu ("graphe des voisins directes d'un lieu ");
-        grapheVoisin.setIcon (iconVoisinRedim);
-        JMenuItem choixNoeudVoisin = new JMenuItem ("Allez à la fenètre dédiée ");
-        affichage.add (graphePrincipal);
-        affichage.add (grapheVoisin);
-        grapheVoisin.add (choixNoeudVoisin);
-        choixNoeudVoisin.addActionListener (event -> {
-            ArrayList <String> graphNode = creationGraphe.getNoeud ();
-            JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
-            JButton visualiser = new JButton ("visualiser ");
-            visualiser.addActionListener (event1 -> {
-                try {
-                    new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString ());
-                    jFrame.setVisible (false);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ExceptionAjListeGraphe e) {
-                    throw new RuntimeException(e);
-                }
-
-                validate();
-            });
-
-            Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
-                    JOptionPane.QUESTION_MESSAGE,
-                    JOptionPane.DEFAULT_OPTION,
-                    null, options, null);
-
-            fenetreGraphVoisins.add(listegraphNode);
-            fenetreGraphVoisins.add (visualiser);
-
-            JDialog diag = new JDialog();
-            diag.getContentPane().add(fenetreGraphVoisins);
-            diag.pack();
-            diag.setVisible(true);
-        });
-
-        affichage.setForeground(Color.WHITE);
-        return affichage;
-    }
-
-    public JMenu jMenuChercher () {
-        JMenu affichage = new JMenu ("Chercher lieu à proximité ");
-        Icon villeIcone = new ImageIcon ("src/main/resources/lieuVilleIcone.png");
-        ImageIcon iconVilleRedim = new ImageIcon(((ImageIcon) villeIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-        JMenuItem chercherVille = new JMenuItem ("Ville ", iconVilleRedim);
-        Icon restaurantIcone = new ImageIcon ("src/main/resources/lieuRestaurantIcone.png");
-        ImageIcon iconRestaurantRedim = new ImageIcon(((ImageIcon) restaurantIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-        JMenuItem chercherRestaurant = new JMenuItem ("Restaurant ", iconRestaurantRedim);
-        Icon loisirIcone = new ImageIcon ("src/main/resources/lieuLoisirIcone.png");
-        ImageIcon iconLoisirRedim = new ImageIcon(((ImageIcon) loisirIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-        JMenuItem chercherLoisir = new JMenuItem ("Restaurant ", iconLoisirRedim);
-        affichage.add (chercherVille);
-        affichage.add (chercherRestaurant);
-        affichage.add (chercherLoisir);
-        chercherVille.addActionListener (event -> {
-            JLabel aProximiteDe = new JLabel ("a proximité de : ");
-            JLabel aDistanceDe = new JLabel ("a distance de : ");
-            String [] aDistance = {"1"};
-            ArrayList <String> graphNode = creationGraphe.getNoeud ();
-            JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
-            JComboBox distance = new JComboBox (aDistance);
-            JButton visualiser = new JButton ("visualiser ");
-            visualiser.addActionListener (event1 -> {
-                try {
-                    new FenetreGrapheChercher ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Ville");
-                    jFrame.setVisible (false);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ExceptionAjListeGraphe e) {
-                    throw new RuntimeException(e);
-                }
-
-                validate();
-            });
-
-            Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
-                    JOptionPane.QUESTION_MESSAGE,
-                    JOptionPane.DEFAULT_OPTION,
-                    null, options, null);
-
-            fenetreGraphVoisins.add (aProximiteDe);
-            fenetreGraphVoisins.add(listegraphNode);
-            fenetreGraphVoisins.add (aDistanceDe);
-            fenetreGraphVoisins.add (distance);
-            fenetreGraphVoisins.add (visualiser);
-
-            JDialog diag = new JDialog();
-            diag.getContentPane().add(fenetreGraphVoisins);
-            diag.pack();
-            diag.setVisible(true);
-        });
-
-        affichage.setForeground(Color.WHITE);
-        return affichage;
-    }
-
     public JPanel noeudsVoisins () throws IOException, ExceptionAjListeGraphe {
         JPanel p = new JPanel ();
         p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -375,7 +273,6 @@ public class FenetreGraphe extends JFrame {
             } catch (ExceptionAjListeGraphe e) {
                 throw new RuntimeException(e);
             }
-
             validate();
         });
         p.setOpaque (false);

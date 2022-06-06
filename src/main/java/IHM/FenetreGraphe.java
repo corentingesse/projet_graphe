@@ -11,6 +11,8 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimerTask;
 
 import static java.awt.Color.black;
 
@@ -47,7 +49,7 @@ public class FenetreGraphe extends JFrame {
         constrPartieVisuel = constrPartieVisuel ();
         noeudsVoisins = noeudsVoisins ();
         background.add (constrPartieVisuel);
-        background.add (noeudsVoisins);
+        background.add (basPanel ());
     }
 
     public JPanel constrPartieVisuel () throws IOException, ExceptionAjListeGraphe {
@@ -57,6 +59,16 @@ public class FenetreGraphe extends JFrame {
         p.add (graph, BorderLayout.CENTER);
         p.add (constrInformationsSurLeGraphe (), BorderLayout.WEST);
         p.add (legende (), BorderLayout.EAST);
+        p.setOpaque (false);
+        return p;
+    }
+
+    public JPanel basPanel () {
+        JPanel p = new JPanel ();
+        p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.add (boutonsDeVisualisation ());
+        p.add (Box.createRigidArea(new Dimension(0, 60)));
+        p.add (noeudsVoisins);
         p.setOpaque (false);
         return p;
     }
@@ -178,6 +190,20 @@ public class FenetreGraphe extends JFrame {
         autoroute.setFont (new Font ("Arial", Font.BOLD, 15));
         autoroute.setForeground(Color.WHITE);
         autoroute.setIcon (legendeAutoroute);
+        p.setOpaque (false);
+        return p;
+    }
+
+    public JPanel boutonsDeVisualisation () {
+        JPanel p = new JPanel ();
+        p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
+        JButton revenirAuGraphePrincipal = new JButton ("Revenir au graphe principal ");
+        p.add (revenirAuGraphePrincipal);
+        revenirAuGraphePrincipal.addActionListener (event -> {
+            JLabel jlabel = new JLabel("Vous êtes déjà sur le graphe principal ");
+            p.add(jlabel);
+            jlabel.setForeground (Color.RED);
+        });
         p.setOpaque (false);
         return p;
     }

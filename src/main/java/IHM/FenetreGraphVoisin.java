@@ -39,7 +39,7 @@ public class FenetreGraphVoisin extends JFrame {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         ImageIcon imageFond = new ImageIcon("src/main/resources/Graph_Plan.png");
         jFrame.setMinimumSize(new Dimension(1650, 1080));
-        jFrame.setVisible(true);
+        jFrame.setExtendedState(this.MAXIMIZED_BOTH);
         jFrame.getContentPane().setLayout(new GridLayout(1, 1));
         Image iconGraph = Toolkit.getDefaultToolkit().getImage ("src/main/resources/GraphIcone.png");
         jFrame.setIconImage (iconGraph);
@@ -51,6 +51,7 @@ public class FenetreGraphVoisin extends JFrame {
         noeudsVoisins = noeudsVoisins ();
         background.add (constrPartieVisuel);
         background.add (basPanel ());
+        jFrame.setVisible(true);
     }
 
     public JPanel constrPartieVisuel () throws IOException, ExceptionAjListeGraphe {

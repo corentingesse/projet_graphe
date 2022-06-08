@@ -38,7 +38,7 @@ public class FenetreGraphe extends JFrame {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         ImageIcon imageFond = new ImageIcon("src/main/resources/Graph_Plan.png");
         jFrame.setMinimumSize(new Dimension(1650, 1080));
-        jFrame.setVisible(true);
+        jFrame.setExtendedState(this.MAXIMIZED_BOTH);
         jFrame.getContentPane().setLayout(new GridLayout(1, 1));
         Image iconGraph = Toolkit.getDefaultToolkit().getImage ("src/main/resources/GraphIcone.png");
         jFrame.setIconImage (iconGraph);
@@ -50,6 +50,7 @@ public class FenetreGraphe extends JFrame {
         noeudsVoisins = noeudsVoisins ();
         background.add (constrPartieVisuel);
         background.add (basPanel ());
+        jFrame.setVisible(true);
     }
 
     public JPanel constrPartieVisuel () throws IOException, ExceptionAjListeGraphe {
@@ -200,9 +201,7 @@ public class FenetreGraphe extends JFrame {
         JButton revenirAuGraphePrincipal = new JButton ("Revenir au graphe principal ");
         p.add (revenirAuGraphePrincipal);
         revenirAuGraphePrincipal.addActionListener (event -> {
-            JLabel jlabel = new JLabel("Vous êtes déjà sur le graphe principal ");
-            p.add(jlabel);
-            jlabel.setForeground (Color.RED);
+            JOptionPane.showMessageDialog(new JFrame(), "Vous êtes déjà sur le graphe principal", "Erreur", JOptionPane.ERROR_MESSAGE);
         });
         p.setOpaque (false);
         return p;

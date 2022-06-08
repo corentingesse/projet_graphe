@@ -30,11 +30,12 @@ public class FenetreCreer extends JFrame {
         // setResizable (false);
         jFrame.setDefaultCloseOperation(jFrame.EXIT_ON_CLOSE);
         jFrame.setContentPane(constrPan());
-        jFrame.setVisible(true);
         jFrame.setJMenuBar (jMenuBar ());
         Image iconGraph = Toolkit.getDefaultToolkit().getImage ("C:\\Users\\cocog\\sae-graphes\\src\\main\\resources\\GraphIcone.png");
         jFrame.setIconImage (iconGraph);
+        jFrame.setVisible(true);
     }
+
     public JPanel constrPan () {
         JPanel p = new JPanel ();
         JLabel formatExplications = new JLabel ("Le format du fichier doit être comme suit : ");

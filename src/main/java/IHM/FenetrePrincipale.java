@@ -26,7 +26,7 @@ public class FenetrePrincipale extends JFrame {
         ImageIcon imageFond = new ImageIcon("src/main/resources/Graph_Plan.png");
         // setResizable (false);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setVisible(true);
+        jFrame.setExtendedState(this.MAXIMIZED_BOTH);
         jFrame.setJMenuBar(jMenuBar());
         Image iconGraph = Toolkit.getDefaultToolkit().getImage ("src/main/resources/GraphIcone.png");
         jFrame.setIconImage (iconGraph);
@@ -36,6 +36,7 @@ public class FenetrePrincipale extends JFrame {
         background.add(Box.createRigidArea(new Dimension(0, 200)));
         background.add (constrPan ());
         jFrame.setBackground (black);
+        jFrame.setVisible(true);
     }
 
     public JPanel constrPan () throws IOException, ExceptionAjListeGraphe {

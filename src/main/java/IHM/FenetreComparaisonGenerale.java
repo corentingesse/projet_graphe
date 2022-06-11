@@ -13,14 +13,16 @@ import java.util.ArrayList;
 
 import static java.awt.Color.black;
 
-    public class FenetreDistance1Et2Distance extends JFrame {
+public class FenetreComparaisonGenerale extends JFrame {
         FenetrePrincipale fenetrePrincipale;
         JFrame jFrame = new JFrame ();
         private String cheminFile;
 
         CreationGraphe creationGraphe;
 
-        JPanel graph;
+        JPanel graph1;
+
+        JPanel graph2;
 
         JPanel constrPartieVisuel;
 
@@ -28,19 +30,34 @@ import static java.awt.Color.black;
 
         JPanel noeudsVoisins;
 
-        String lieuDepart;
+        String lieu1;
 
-        String lieuCherche;
+        String lieu2;
+        Graph getGraph1;
 
-        int nbDistanceRecherche;
+        Graph getGraph2;
 
-        int distanceLieuCherche;
+        int nbVilleLieu1;
+        int nbVilleLieu2;
+        int nbRestaurantLieu1;
+        int nbRestaurantLieu2;
+        int nbLoisirLieu1;
+        int nbLoisirLieu2;
 
-        public FenetreDistance1Et2Distance (String newCheminFile, FenetrePrincipale newFenetrePrincipale, String newLieuDepart, String newLieuCherche, int newNbDistanceRecherche) throws IOException, ExceptionAjListeGraphe {
+        JLabel medaille1Lieu1;
+        JLabel medaille2Lieu1;
+        JLabel medaille3Lieu1;
+
+        JLabel medaille1Lieu2;
+
+        JLabel medaille2Lieu2;
+
+        JLabel medaille3Lieu2;
+
+        public FenetreComparaisonGenerale (String newCheminFile, FenetrePrincipale newFenetrePrincipale, String newCategorie) throws IOException, ExceptionAjListeGraphe {
             super ();
-            nbDistanceRecherche = newNbDistanceRecherche;
-            lieuDepart = newLieuDepart;
-            lieuCherche = newLieuCherche;
+            lieu1 = "Annecy";
+            lieu2 = "Annecy";
             cheminFile = newCheminFile;
             fenetrePrincipale = newFenetrePrincipale;
             creationGraphe = new CreationGraphe (cheminFile);
@@ -58,17 +75,18 @@ import static java.awt.Color.black;
             constrPartieVisuel = constrPartieVisuel ();
             noeudsVoisins = noeudsVoisins ();
             background.add (constrPartieVisuel);
-            background.add (basPanel ());
+            background.add (informationsGraphe ());
             jFrame.setVisible(true);
         }
 
         public JPanel constrPartieVisuel () throws IOException, ExceptionAjListeGraphe {
             JPanel p = new JPanel ();
             p.setLayout (new BorderLayout());
-            graph = constrFenVisuel ();
-            p.add (graph, BorderLayout.CENTER);
-            p.add (constrInformationsSurLeGraphe (), BorderLayout.WEST);
-            p.add (legende (), BorderLayout.EAST);
+            graph1 = constrFenVisuel1 ();
+            graph2 = constrFenVisuel2 ();
+            p.add (graph1, BorderLayout.WEST);
+            p.add (graph2,  BorderLayout.CENTER);
+            p.add (graph2,  BorderLayout.EAST);
             p.setOpaque (false);
             return p;
         }
@@ -83,167 +101,279 @@ import static java.awt.Color.black;
             return p;
         }
 
-        public JPanel constrFenVisuel () throws IOException, ExceptionAjListeGraphe {
-            System.setProperty("org.graphstream.ui", "swing");
+        public JPanel informationsGraphe () throws IOException, ExceptionAjListeGraphe {
+            JPanel p = new JPanel ();
+            p.setLayout (new BorderLayout());
 
-            graph = creationGraphe.creerGrapheVoisins1Et2Distance (lieuDepart, lieuCherche);
-            distanceLieuCherche = creationGraphe.calcDistance1Et2Distance (lieuDepart, lieuCherche);
+            p.add (constrInformationsSurLeGraphe1 (), BorderLayout.WEST);
+            p.add (constrInformationsSurLeGraphe2 (), BorderLayout.EAST);
+            p.add (constrComparaison (), BorderLayout.CENTER);
+            p.setOpaque (false);
 
-            graph.setOpaque (false);
-
-            return graph;
+            return p;
         }
 
-        public JPanel constrInformationsSurLeGraphe () {
+        public JPanel constrFenVisuel1 () throws IOException, ExceptionAjListeGraphe {
+            System.setProperty("org.graphstream.ui", "swing");
+
+            graph1 = creationGraphe.creerGraphe2Distance (lieu1);
+
+            graph1.setOpaque (false);
+
+            return graph1;
+        }
+
+        public JPanel constrFenVisuel2 () throws IOException, ExceptionAjListeGraphe {
+            System.setProperty("org.graphstream.ui", "swing");
+
+            graph2 = creationGraphe.creerGraphe2Distance (lieu2);
+
+            graph2.setOpaque (false);
+
+            return graph2;
+        }
+
+        public JPanel constrInformationsSurLeGraphe1 () {
             JPanel p = new JPanel ();
             p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
-            JLabel informationsGraphe = new JLabel ("Informations sur la carte ");
+            JLabel informationsGraphe = new JLabel ("Informations sur  " + lieu1);
+            p.add (informationsGraphe);
+            JPanel p1 = new JPanel ();
+            p1.setLayout (new FlowLayout());
+            medaille1Lieu1 = new JLabel (" / : ouvert ");
+            medaille2Lieu1 = new JLabel ("/ : gastrnomique ");
+            medaille3Lieu1 = new JLabel (" / : culturel ");
+            p1.add (medaille1Lieu1);
+            p1.add (medaille2Lieu1);
+            p1.add (medaille3Lieu1);
+            p1.setOpaque (false);
+            p.add (p1);
+            medaille1Lieu1.setFont (new Font ("Arial", Font.BOLD, 10));
+            medaille1Lieu1.setForeground(Color.WHITE);
+            medaille2Lieu1.setFont (new Font ("Arial", Font.BOLD, 10));
+            medaille2Lieu1.setForeground(Color.WHITE);
+            medaille3Lieu1.setFont (new Font ("Arial", Font.BOLD, 10));
+            medaille3Lieu1.setForeground(Color.WHITE);
+            informationsGraphe.setFont (new Font ("Arial", Font.BOLD, 20));
+            informationsGraphe.setForeground(Color.WHITE);
+            p.add (new JLabel (" "));
+            Icon iconVille = new ImageIcon ("src/main/resources/lieuVilleIcone.png");
+            getGraph1 = creationGraphe.getGraphVoisins1Et2Distance (lieu1);
+            nbVilleLieu1 = creationGraphe.getNbVille (getGraph1);
+            nbRestaurantLieu1 = creationGraphe.getNbRestaurant (getGraph1);
+            nbLoisirLieu1 = creationGraphe.getNbVille (getGraph1);
+            switch (creationGraphe.getClasse (getGraph1, lieu1)) {
+                case "Ville":
+                    nbVilleLieu1 = nbVilleLieu1 - 1;
+                    break;
+                case "Restaurant":
+                    nbRestaurantLieu1 = nbRestaurantLieu1 - 1;
+                    break;
+                case "Loisir":
+                    nbLoisirLieu1 = nbLoisirLieu1 - 1;
+                    break;
+            }
+            JLabel nombreVilles = new JLabel ("Nombre de villes reliées ");
+            p.add (nombreVilles);
+            nombreVilles.setIcon (iconVille);
+            nombreVilles.setFont (new Font ("Arial", Font.BOLD, 15));
+            nombreVilles.setForeground(Color.WHITE);
+            JLabel nbVilles = new JLabel (String.valueOf(nbVilleLieu1));
+            p.add (nbVilles);
+            nbVilles.setForeground(Color.WHITE);
+            Icon iconRestaurant = new ImageIcon ("src/main/resources/lieuRestaurantIcone.png");
+            JLabel nombreRestaurants = new JLabel ("Nombre de restaurants reliés ");
+            p.add (nombreRestaurants);
+            nombreRestaurants.setIcon (iconRestaurant);
+            nombreRestaurants.setFont (new Font ("Arial", Font.BOLD, 15));
+            nombreRestaurants.setForeground(Color.WHITE);
+            JLabel nbRestaurants = new JLabel (String.valueOf(nbRestaurantLieu1));
+            p.add (nbRestaurants);
+            nbRestaurants.setForeground(Color.WHITE);
+            Icon iconLoisir = new ImageIcon ("src/main/resources/lieuLoisirIcone.png");
+            JLabel nombreLoisirs = new JLabel ("Nombre de loisirs reliés ");
+            p.add (nombreLoisirs);
+            nombreLoisirs.setIcon (iconLoisir);
+            nombreLoisirs.setFont (new Font ("Arial", Font.BOLD, 15));
+            nombreLoisirs.setForeground(Color.WHITE);
+            JLabel nbLoisirs = new JLabel (String.valueOf(nbLoisirLieu1));
+            p.add (nbLoisirs);
+            nbLoisirs.setForeground(Color.WHITE);
+            p.setOpaque (false);
+            return p;
+        }
+
+        public JPanel constrInformationsSurLeGraphe2 () {
+            JPanel p = new JPanel ();
+            p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
+            JLabel informationsGraphe = new JLabel ("Informations sur " + lieu2);
+            p.add (informationsGraphe);
+            JPanel p1 = new JPanel ();
+            p1.setLayout (new FlowLayout());
+            medaille1Lieu2 = new JLabel (" / : ouvert ");
+            medaille2Lieu2 = new JLabel (" / : gastronomique ");
+            medaille3Lieu2 = new JLabel (" / : culturel ");
+            p1.add (medaille1Lieu2);
+            p1.add (medaille2Lieu2);
+            p1.add (medaille3Lieu2);
+            p1.setOpaque (false);
+            p.add (p1);
+            medaille1Lieu2.setFont (new Font ("Arial", Font.BOLD, 10));
+            medaille1Lieu2.setForeground(Color.WHITE);
+            medaille2Lieu2.setFont (new Font ("Arial", Font.BOLD, 10));
+            medaille2Lieu2.setForeground(Color.WHITE);
+            medaille3Lieu2.setFont (new Font ("Arial", Font.BOLD, 10));
+            medaille3Lieu2.setForeground(Color.WHITE);
+            informationsGraphe.setFont (new Font ("Arial", Font.BOLD, 20));
+            informationsGraphe.setForeground(Color.WHITE);
+            p.add (new JLabel (" "));
+            Icon iconVille = new ImageIcon ("src/main/resources/lieuVilleIcone.png");
+            getGraph2 = creationGraphe.getGraphVoisins1Et2Distance (lieu2);
+            nbVilleLieu2 = creationGraphe.getNbVille (getGraph2);
+            nbRestaurantLieu2 = creationGraphe.getNbRestaurant (getGraph2);
+            nbLoisirLieu2 = creationGraphe.getNbVille (getGraph2);
+            switch (creationGraphe.getClasse (getGraph2, lieu2)) {
+                case "Ville":
+                    nbVilleLieu2 = nbVilleLieu2 - 1;
+                    break;
+                case "Restaurant":
+                    nbRestaurantLieu2 = nbRestaurantLieu2 - 1;
+                    break;
+                case "Loisir":
+                    nbLoisirLieu2 = nbLoisirLieu2 - 1;
+                    break;
+            }
+            JLabel nombreVilles = new JLabel ("Nombre de villes reliées ");
+            p.add (nombreVilles);
+            nombreVilles.setIcon (iconVille);
+            nombreVilles.setFont (new Font ("Arial", Font.BOLD, 15));
+            nombreVilles.setForeground(Color.WHITE);
+            JLabel nbVilles = new JLabel (String.valueOf(nbVilleLieu2));
+            p.add (nbVilles);
+            nbVilles.setForeground(Color.WHITE);
+            Icon iconRestaurant = new ImageIcon ("src/main/resources/lieuRestaurantIcone.png");
+            JLabel nombreRestaurants = new JLabel ("Nombre de restaurants reliés ");
+            p.add (nombreRestaurants);
+            nombreRestaurants.setIcon (iconRestaurant);
+            nombreRestaurants.setFont (new Font ("Arial", Font.BOLD, 15));
+            nombreRestaurants.setForeground(Color.WHITE);
+            JLabel nbRestaurants = new JLabel (String.valueOf(nbRestaurantLieu2));
+            p.add (nbRestaurants);
+            nbRestaurants.setForeground(Color.WHITE);
+            Icon iconLoisir = new ImageIcon ("src/main/resources/lieuLoisirIcone.png");
+            JLabel nombreLoisirs = new JLabel ("Nombre de loisirs reliés ");
+            p.add (nombreLoisirs);
+            nombreLoisirs.setIcon (iconLoisir);
+            nombreLoisirs.setFont (new Font ("Arial", Font.BOLD, 15));
+            nombreLoisirs.setForeground(Color.GREEN);
+            JLabel nbLoisirs = new JLabel (String.valueOf(nbLoisirLieu2));
+            p.add (nbLoisirs);
+            nbLoisirs.setForeground(Color.WHITE);
+            p.setOpaque (false);
+            return p;
+        }
+
+        public JPanel constrComparaison () {
+            JPanel p = new JPanel ();
+            p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
+            JLabel informationsGraphe = new JLabel ("Comparaison des deux lieux ");
             p.add (informationsGraphe);
             informationsGraphe.setFont (new Font ("Arial", Font.BOLD, 20));
             informationsGraphe.setForeground(Color.WHITE);
             p.add (new JLabel (" "));
             Icon iconVille = new ImageIcon ("src/main/resources/lieuVilleIcone.png");
-            Graph getGraph = creationGraphe.getGraphVoisins1Et2Distance (lieuDepart);
-            JLabel nombreVilles = new JLabel ("Nombre de villes ");
+            getGraph1 = creationGraphe.getGraphVoisins1Et2Distance (lieu1);
+            JLabel nombreVilles = new JLabel ("Lieu le plus ouvert ");
             p.add (nombreVilles);
             nombreVilles.setIcon (iconVille);
             nombreVilles.setFont (new Font ("Arial", Font.BOLD, 15));
             nombreVilles.setForeground(Color.WHITE);
-            JLabel nbVilles = new JLabel (String.valueOf (creationGraphe.getNbVille (getGraph)));
-            p.add (nbVilles);
-            nbVilles.setForeground(Color.WHITE);
+            Icon iconMedaille1 = new ImageIcon ("src/main/resources/medailleLieu.png");
+            JLabel lieuPlusOuvert;
+            if (nbVilleLieu1 > nbVilleLieu2) {
+                lieuPlusOuvert = new JLabel(lieu1 + " avec " + nbVilleLieu1 + " villes ");
+                medaille1Lieu1.setIcon(iconMedaille1);
+                medaille1Lieu1.setText (" : ouverte ");
+                medaille1Lieu1.repaint ();
+            }
+            else if (nbVilleLieu2 > nbVilleLieu1) {
+                lieuPlusOuvert = new JLabel(lieu2 + " avec " + nbVilleLieu2 + " villes ");
+                medaille1Lieu2.setIcon(iconMedaille1);
+                medaille1Lieu2.setText (" : ouverte ");
+                medaille1Lieu2.repaint ();
+            }
+            else
+                lieuPlusOuvert = new JLabel (lieu1 + " et " + lieu2 + " avec " + nbRestaurantLieu1 + " restaurants ");
+            p.add (lieuPlusOuvert);
+            lieuPlusOuvert.setForeground(Color.WHITE);
+            JLabel lieuPlusGastronomique;
             Icon iconRestaurant = new ImageIcon ("src/main/resources/lieuRestaurantIcone.png");
-            JLabel nombreRestaurants = new JLabel ("Nombre de restaurants ");
+            JLabel nombreRestaurants = new JLabel ("Lieu le plus gastronomique ");
             p.add (nombreRestaurants);
             nombreRestaurants.setIcon (iconRestaurant);
             nombreRestaurants.setFont (new Font ("Arial", Font.BOLD, 15));
             nombreRestaurants.setForeground(Color.WHITE);
-            JLabel nbRestaurants = new JLabel (String.valueOf (creationGraphe.getNbRestaurant (getGraph)));
-            p.add (nbRestaurants);
-            nbRestaurants.setForeground(Color.WHITE);
+            if (nbRestaurantLieu1 > nbRestaurantLieu2) {
+                lieuPlusGastronomique = new JLabel(lieu1 + " avec " + nbRestaurantLieu1 + " restaurants ");
+                medaille2Lieu1.setIcon(iconMedaille1);
+                medaille2Lieu1.setText(" : gastronomique ");
+                medaille2Lieu1.repaint();
+            }
+            else if (nbRestaurantLieu2 > nbRestaurantLieu1) {
+                lieuPlusGastronomique = new JLabel(lieu2 + " avec " + nbRestaurantLieu2 + " restaurants ");
+                medaille2Lieu2.setIcon(iconMedaille1);
+                medaille2Lieu2.setText(" : gastronomique ");
+                medaille2Lieu2.repaint();
+            }
+            else
+                lieuPlusGastronomique = new JLabel (lieu1 + " et " + lieu2 + " avec " + nbRestaurantLieu1 + " restaurants ");
+            JLabel nbRestaurants = new JLabel (String.valueOf (creationGraphe.getNbRestaurant (getGraph1)));
+            p.add (lieuPlusGastronomique);
+            lieuPlusGastronomique.setForeground(Color.WHITE);
             Icon iconLoisir = new ImageIcon ("src/main/resources/lieuLoisirIcone.png");
-            JLabel nombreLoisirs = new JLabel ("Nombre de loisirs ");
+            JLabel nombreLoisirs = new JLabel ("Lieu le plus culturel ");
             p.add (nombreLoisirs);
             nombreLoisirs.setIcon (iconLoisir);
             nombreLoisirs.setFont (new Font ("Arial", Font.BOLD, 15));
             nombreLoisirs.setForeground(Color.WHITE);
-            JLabel nbLoisirs = new JLabel (String.valueOf (creationGraphe.getNbLoisir (getGraph)));
-            p.add (nbLoisirs);
-            nbLoisirs.setForeground(Color.WHITE);
-            p.add (new JLabel (" "));
-            p.add (new JLabel (""));
-            Icon iconNationale = new ImageIcon ("src/main/resources/640px-Route_nationale_française_7.svg.png");
-            JLabel nombreDeNationales = new JLabel ("Nombre de nationales ");
-            p.add (nombreDeNationales);
-            nombreDeNationales.setFont (new Font ("Arial", Font.BOLD, 15));
-            nombreDeNationales.setForeground(Color.WHITE);
-            JLabel nbNationales = new JLabel (String.valueOf (creationGraphe.getNbNationale (getGraph)));
-            p.add (nbNationales);
-            nbNationales.setForeground(Color.WHITE);
-            nombreDeNationales.setIcon (iconNationale);
-            Icon iconDepertementale = new ImageIcon ("src/main/resources/routeDepartementaleIcone.png");
-            JLabel nombreDeDepartementales = new JLabel ("Nombre de departementales ");
-            p.add (nombreDeDepartementales);
-            nombreDeDepartementales.setFont (new Font ("Arial", Font.BOLD, 15));
-            nombreDeDepartementales.setForeground(Color.WHITE);
-            JLabel nbDepartementales = new JLabel (String.valueOf (creationGraphe.getNbDepartementale (getGraph)));
-            p.add (nbDepartementales);
-            nbDepartementales.setForeground(Color.WHITE);
-            nbDepartementales.setIcon (iconDepertementale);
-            Icon iconAutoroute = new ImageIcon ("src/main/resources/autorouteIcone.png");
-            JLabel nombreDeAutoroutes = new JLabel ("Nombre d'autoroutes ");
-            p.add (nombreDeAutoroutes);
-            nombreDeAutoroutes.setFont (new Font ("Arial", Font.BOLD, 15));
-            nombreDeAutoroutes.setForeground(Color.WHITE);
-            JLabel nbAutoroutes = new JLabel (String.valueOf (creationGraphe.getNbAutoroute (getGraph)));
-            p.add (nbAutoroutes);
-            nbAutoroutes.setForeground(Color.WHITE);
-            nombreDeAutoroutes.setIcon (iconAutoroute);
-            p.add (Box.createRigidArea(new Dimension(0, 20)));
-            JLabel informationSurLaRecherche = new JLabel ("Informations sur la recherche ");
-            JLabel cheminTrouve = new JLabel ("Vous avez choisi les mêmes ");
-            JLabel cheminTrouve2 = new JLabel ("lieux ");
-            cheminTrouve.setFont (new Font ("Arial", Font.BOLD, 15));
-            cheminTrouve.setForeground(Color.GREEN);
-            cheminTrouve2.setFont (new Font ("Arial", Font.BOLD, 15));
-            cheminTrouve2.setForeground(Color.GREEN);
-            JLabel cheminTrouve3 = new JLabel ("");
-            JLabel distance = new JLabel ("");
-            switch (distanceLieuCherche) {
-                case 1:
-                    cheminTrouve = new JLabel(lieuCherche);
-                    cheminTrouve2 = new JLabel(" est un voisin directe ");
-                    cheminTrouve3 = new JLabel("de " + lieuDepart);
-                    cheminTrouve.setFont (new Font ("Arial", Font.BOLD, 15));
-                    cheminTrouve.setForeground(Color.GREEN);
-                    cheminTrouve2.setFont (new Font ("Arial", Font.BOLD, 15));
-                    cheminTrouve2.setForeground(Color.GREEN);
-                    cheminTrouve3.setFont (new Font ("Arial", Font.BOLD, 15));
-                    cheminTrouve3.setForeground(Color.GREEN);
-                    distance = new JLabel ("Distance : " + distanceLieuCherche + " lieu ");
-                    distance.setFont (new Font ("Arial", Font.BOLD, 15));
-                    distance.setForeground(Color.WHITE);
-                    break;
-                case 2:
-                    cheminTrouve = new JLabel(lieuCherche);
-                    cheminTrouve2 = new JLabel(" est un voisin indirecte ");
-                    cheminTrouve3 = new JLabel("à 2 distance de " + lieuDepart);
-                    cheminTrouve.setFont (new Font ("Arial", Font.BOLD, 15));
-                    cheminTrouve.setForeground(Color.GREEN);
-                    cheminTrouve2.setFont (new Font ("Arial", Font.BOLD, 15));
-                    cheminTrouve2.setForeground(Color.GREEN);
-                    cheminTrouve3.setFont (new Font ("Arial", Font.BOLD, 15));
-                    cheminTrouve3.setForeground(Color.GREEN);
-                    distance = new JLabel ("Distance : " + distanceLieuCherche + " lieux ");
-                    distance.setFont (new Font ("Arial", Font.BOLD, 15));
-                    distance.setForeground(Color.WHITE);
-                    break;
-                case -1:
-                    cheminTrouve = new JLabel(lieuCherche + " n'est pas un voisin directe ");
-                    cheminTrouve2 = new JLabel("ou indirecte à 2 graphe de " + lieuDepart);
-                    cheminTrouve.setFont (new Font ("Arial", Font.BOLD, 15));
-                    cheminTrouve.setForeground(Color.RED);
-                    cheminTrouve2.setFont (new Font ("Arial", Font.BOLD, 15));
-                    cheminTrouve2.setForeground(Color.RED);
-                    break;
+            JLabel lieuPlusCulturel;
+            if (nbLoisirLieu1 > nbLoisirLieu2) {
+                lieuPlusCulturel = new JLabel(lieu1 + " avec " + nbLoisirLieu1 + " loisirs ");
+                medaille3Lieu2.setIcon(iconMedaille1);
+                medaille3Lieu2.setText(" : culturel ");
+                medaille3Lieu2.repaint();
             }
-            informationSurLaRecherche.setFont (new Font ("Arial", Font.BOLD, 20));
-            informationSurLaRecherche.setForeground(Color.WHITE);
-            p.add (informationSurLaRecherche);
-            p.add (cheminTrouve);
-            p.add (cheminTrouve2);
-            p.add (cheminTrouve3);
-            p.add (distance);
+            else if (nbLoisirLieu2 > nbLoisirLieu1) {
+                lieuPlusCulturel = new JLabel(lieu2 + " avec " + nbLoisirLieu2 + " loisirs ");
+                medaille3Lieu2.setIcon(iconMedaille1);
+                medaille3Lieu2.setText(" : culturel ");
+                medaille3Lieu2.repaint();
+            }
+            else
+                lieuPlusCulturel = new JLabel (lieu1 + " et " + lieu2 + " avec " + nbLoisirLieu1 + " loisirs ");
+            JLabel nbLoisirs = new JLabel (String.valueOf (creationGraphe.getNbLoisir (getGraph1)));
+            p.add (lieuPlusCulturel);
+            lieuPlusCulturel.setForeground(Color.WHITE);
             p.setOpaque (false);
             return p;
         }
+
 
         public JPanel legende () {
             JPanel p = new JPanel ();
             p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
             Icon legendeRecherche = new ImageIcon("src/main/resources/mapPinSmall.png");
-            JLabel recherche = new JLabel("Lieu départ : ");
-            JLabel recherchesuite = new JLabel(lieuDepart);
-            JLabel recherche2 = new JLabel("Lieu recherché : ");
-            JLabel recherche2suite = new JLabel(lieuCherche);
-
+            JLabel recherche = new JLabel("Lieu départ : " + lieu1);
+            JLabel recherche2 = new JLabel("Lieu recherché : " + lieu1);
             p.add(recherche);
-            p.add(recherchesuite);
             p.add (recherche2);
-            p.add (recherche2suite);
             recherche.setFont(new Font("Arial", Font.BOLD, 15));
             recherche.setForeground(Color.WHITE);
             recherche.setIcon(legendeRecherche);
 
-            recherchesuite.setFont(new Font("Arial", Font.BOLD, 15));
-            recherchesuite.setForeground(Color.WHITE);
-
             recherche2.setFont(new Font("Arial", Font.BOLD, 15));
             recherche2.setForeground(Color.WHITE);
             recherche2.setIcon(legendeRecherche);
-
-            recherche2suite.setFont(new Font("Arial", Font.BOLD, 15));
-            recherche2suite.setForeground(Color.WHITE);
 
             Icon legendeVille = new ImageIcon("src/main/resources/legendeVille.png");
             JLabel ville = new JLabel("Ville ");
@@ -314,8 +444,6 @@ import static java.awt.Color.black;
             jMenuBar.add (jMenuAPropos ());
             jMenuBar.add (jMenuAffichage ());
             jMenuBar.add (jMenuChercher ());
-            jMenuBar.add (jMenuDistance ());
-            jMenuBar.add (jMenuComparer ());
             return jMenuBar;
         }
 
@@ -395,11 +523,16 @@ import static java.awt.Color.black;
             grapheVoisin.add (choixNoeudVoisin);
             choixNoeudVoisin.addActionListener (event -> {
                 ArrayList<String> graphNode = creationGraphe.getNoeud ();
+                ArrayList<Integer> distance = new ArrayList <Integer> ();
+                distance.add (1);
+                distance.add (2);
                 JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
+                JComboBox choixDistance = new JComboBox (distance.toArray ());
+                JLabel distanceExplications = new JLabel ("A ... distance ");
                 JButton visualiser = new JButton ("visualiser ");
                 visualiser.addActionListener (event1 -> {
                     try {
-                        new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), 0);
+                        new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), (Integer) choixDistance.getSelectedItem ());
                         jFrame.setVisible (false);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -417,6 +550,8 @@ import static java.awt.Color.black;
                         null, options, null);
 
                 fenetreGraphVoisins.add(listegraphNode);
+                fenetreGraphVoisins.add (distanceExplications);
+                fenetreGraphVoisins.add (choixDistance);
                 fenetreGraphVoisins.add (visualiser);
 
                 JDialog diag = new JDialog();
@@ -439,7 +574,7 @@ import static java.awt.Color.black;
             JMenuItem chercherRestaurant = new JMenuItem ("Restaurant ", iconRestaurantRedim);
             Icon loisirIcone = new ImageIcon ("src/main/resources/lieuLoisirIcone.png");
             ImageIcon iconLoisirRedim = new ImageIcon(((ImageIcon) loisirIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-            JMenuItem chercherLoisir = new JMenuItem ("Loisir ", iconLoisirRedim);
+            JMenuItem chercherLoisir = new JMenuItem ("Restaurant ", iconLoisirRedim);
             affichage.add (chercherVille);
             affichage.add (chercherRestaurant);
             affichage.add (chercherLoisir);
@@ -453,7 +588,7 @@ import static java.awt.Color.black;
                 JButton visualiser = new JButton ("visualiser ");
                 visualiser.addActionListener (event1 -> {
                     try {
-                        new FenetreGrapheChercher ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Ville");
+                        new IHM.FenetreGrapheChercher("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Ville");
                         jFrame.setVisible (false);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -490,7 +625,7 @@ import static java.awt.Color.black;
                 JButton visualiser = new JButton ("visualiser ");
                 visualiser.addActionListener (event1 -> {
                     try {
-                        new FenetreGrapheChercher ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Restaurant");
+                        new IHM.FenetreGrapheChercher("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Restaurant");
                         jFrame.setVisible (false);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -527,7 +662,7 @@ import static java.awt.Color.black;
                 JButton visualiser = new JButton ("visualiser ");
                 visualiser.addActionListener (event1 -> {
                     try {
-                        new FenetreGrapheChercher ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Loisir");
+                        new IHM.FenetreGrapheChercher("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Loisir");
                         jFrame.setVisible (false);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -560,144 +695,6 @@ import static java.awt.Color.black;
             return affichage;
         }
 
-        public JMenu jMenuComparer () {
-            JMenu comparer = new JMenu ("Comparer ");
-            Icon villeIcone = new ImageIcon ("src/main/resources/lieuVilleIcone.png");
-            ImageIcon iconVilleRedim = new ImageIcon(((ImageIcon) villeIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-            JMenuItem comparerTousLesLieux = new JMenuItem ("Comparer tous les lieux ", iconVilleRedim);
-            Icon restaurantIcone = new ImageIcon ("src/main/resources/lieuRestaurantIcone.png");
-            ImageIcon iconRestaurantRedim = new ImageIcon(((ImageIcon) restaurantIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-            JMenuItem comparerDeuxLieux = new JMenuItem ("Comparer deux lieux ", iconRestaurantRedim);
-            comparer.add (comparerTousLesLieux);
-            comparer.add (comparerDeuxLieux);
-            comparerDeuxLieux.addActionListener (event -> {
-                JLabel premierLieu = new JLabel ("Premier lieu ");
-                JLabel deuxiemeLieu = new JLabel ("Deuxième lieu ");
-                ArrayList <String> graphNode = creationGraphe.getNoeud ();
-                JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
-                JComboBox listegraphNode2 = new JComboBox (graphNode.toArray ());
-                listegraphNode2.remove (listegraphNode.getSelectedIndex ());
-                JButton visualiser = new JButton ("visualiser ");
-                visualiser.addActionListener (event1 -> {
-                    try {
-                        new FenetreComparaisonDeuxLieux ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), listegraphNode2.getSelectedItem ().toString ());
-                        jFrame.setVisible (false);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (ExceptionAjListeGraphe e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    validate();
-                });
-                Object[] options = new Object[]{};
-                JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
-                        JOptionPane.QUESTION_MESSAGE,
-                        JOptionPane.DEFAULT_OPTION,
-                        null, options, null);
-
-                fenetreGraphVoisins.add (premierLieu);
-                fenetreGraphVoisins.add(listegraphNode);
-                fenetreGraphVoisins.add (deuxiemeLieu);
-                fenetreGraphVoisins.add (listegraphNode2);
-                fenetreGraphVoisins.add (visualiser);
-
-                JDialog diag = new JDialog();
-                diag.getContentPane().add(fenetreGraphVoisins);
-                diag.pack();
-                diag.setVisible(true);
-            });
-            comparerTousLesLieux.addActionListener (event -> {
-                JLabel aProximiteDe = new JLabel ("a proximité de : ");
-                JLabel aDistanceDe = new JLabel ("a distance de : ");
-                String [] aDistance = {"1"};
-                ArrayList <String> graphNode = creationGraphe.getNoeud ();
-                JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
-                JComboBox distance = new JComboBox (aDistance);
-                JButton visualiser = new JButton ("visualiser ");
-                visualiser.addActionListener (event1 -> {
-                    try {
-                        new FenetreGrapheChercher ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Restaurant");
-                        jFrame.setVisible (false);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (ExceptionAjListeGraphe e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    validate();
-                });
-                Object[] options = new Object[]{};
-                JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
-                        JOptionPane.QUESTION_MESSAGE,
-                        JOptionPane.DEFAULT_OPTION,
-                        null, options, null);
-
-                fenetreGraphVoisins.add (aProximiteDe);
-                fenetreGraphVoisins.add(listegraphNode);
-                fenetreGraphVoisins.add (aDistanceDe);
-                fenetreGraphVoisins.add (distance);
-                fenetreGraphVoisins.add (visualiser);
-
-                JDialog diag = new JDialog();
-                diag.getContentPane().add(fenetreGraphVoisins);
-                diag.pack();
-                diag.setVisible(true);
-            });
-
-            comparer.setForeground(Color.WHITE);
-            return comparer;
-        }
-
-        public JMenu jMenuDistance () {
-            JMenu distance = new JMenu("Distance");
-            JMenu distanceNombreLieux = new JMenu("Distance par nombre de lieux ");
-            distance.add(distanceNombreLieux);
-            JMenuItem voisinsDirectes = new JMenuItem("Savoir si deux lieux sont des voisins directes ou indirectes à 2 distance ");
-            distanceNombreLieux.add(voisinsDirectes);
-            voisinsDirectes.addActionListener(event -> {
-                JLabel villeDepart = new JLabel("ville de départ : ");
-                JLabel villeRecherchee = new JLabel("ville recherchée :  ");
-                ArrayList<String> graphNode = creationGraphe.getNoeud();
-                JComboBox listegraphNodeDepart = new JComboBox(graphNode.toArray());
-                JComboBox listegraphNodeRecherchee = new JComboBox(graphNode.toArray());
-                JButton visualiser = new JButton("visualiser ");
-                visualiser.addActionListener(event1 -> {
-                    try {
-                        new FenetreDistance1Et2Distance ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNodeDepart.getSelectedItem().toString(), listegraphNodeRecherchee.getSelectedItem().toString(), 1);
-                        jFrame.setVisible(false);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (ExceptionAjListeGraphe e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    validate();
-                });
-                Object[] options = new Object[]{};
-                JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
-                        JOptionPane.QUESTION_MESSAGE,
-                        JOptionPane.DEFAULT_OPTION,
-                        null, options, null);
-
-                fenetreGraphVoisins.add(villeDepart);
-                fenetreGraphVoisins.add(listegraphNodeDepart);
-                fenetreGraphVoisins.add(villeRecherchee);
-                fenetreGraphVoisins.add(listegraphNodeRecherchee);
-                fenetreGraphVoisins.add(visualiser);
-
-                JDialog diag = new JDialog();
-                diag.getContentPane().add(fenetreGraphVoisins);
-                diag.pack();
-                diag.setVisible(true);
-            });
-
-            distance.setForeground(Color.WHITE);
-            return distance;
-        }
-
-
-
         public JPanel noeudsVoisins () throws IOException, ExceptionAjListeGraphe {
             JPanel p = new JPanel ();
             p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -724,7 +721,6 @@ import static java.awt.Color.black;
                 } catch (ExceptionAjListeGraphe e) {
                     throw new RuntimeException(e);
                 }
-
                 validate();
             });
             p.setOpaque (false);

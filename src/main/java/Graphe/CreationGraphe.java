@@ -813,7 +813,7 @@ public class CreationGraphe {
 
     }
 
-    public JPanel creerGrapheComparaison (String lieuDepart) {
+    public JPanel creerGraphe2Distance (String lieuDepart) {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);

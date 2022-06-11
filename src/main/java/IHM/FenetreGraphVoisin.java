@@ -30,9 +30,12 @@ public class FenetreGraphVoisin extends JFrame {
 
     JPanel noeudsVoisins;
 
+    int distance;
+
     String lieuDepart;
-    public FenetreGraphVoisin (String newCheminFile, FenetrePrincipale newFenetrePrincipale, String newLieuDepart) throws IOException, ExceptionAjListeGraphe {
+    public FenetreGraphVoisin (String newCheminFile, FenetrePrincipale newFenetrePrincipale, String newLieuDepart, int newDistance) throws IOException, ExceptionAjListeGraphe {
         super ();
+        distance = newDistance;
         lieuDepart = newLieuDepart;
         cheminFile = newCheminFile;
         fenetrePrincipale = newFenetrePrincipale;
@@ -79,7 +82,10 @@ public class FenetreGraphVoisin extends JFrame {
     public JPanel constrFenVisuel () throws IOException, ExceptionAjListeGraphe {
         System.setProperty("org.graphstream.ui", "swing");
 
-        graph = creationGraphe.creerGrapheVoisins (lieuDepart);
+        if (distance == 1)
+            graph = creationGraphe.creerGrapheVoisins (lieuDepart);
+        else
+            graph = creationGraphe.creerGraphe2Distance (lieuDepart);
 
         graph.setOpaque (false);
 
@@ -95,7 +101,11 @@ public class FenetreGraphVoisin extends JFrame {
         informationsGraphe.setForeground(Color.WHITE);
         p.add (new JLabel (" "));
         Icon iconVille = new ImageIcon ("src/main/resources/lieuVilleIcone.png");
-        Graph getGraph = creationGraphe.getGraphVoisin (lieuDepart);
+        Graph getGraph;
+        if (distance == 1)
+            getGraph = creationGraphe.getGraphVoisin (lieuDepart);
+        else
+            getGraph = creationGraphe.getGraphVoisins1Et2Distance (lieuDepart);
         JLabel nombreVilles = new JLabel ("Nombre de villes ");
         p.add (nombreVilles);
         nombreVilles.setIcon (iconVille);
@@ -287,7 +297,7 @@ public class FenetreGraphVoisin extends JFrame {
         JMenuItem graphePrincipal = new JMenuItem ("graphe principal ", iconMapRedim);
         Icon voisinIcone = new ImageIcon ("src/main/resources/voisinIcone.jpg");
         ImageIcon iconVoisinRedim = new ImageIcon(((ImageIcon) voisinIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-        JMenu grapheVoisin = new JMenu ("graphe des voisins directes d'un lieu ");
+        JMenu grapheVoisin = new JMenu ("graphe des voisins d'un lieu ");
         grapheVoisin.setIcon (iconVoisinRedim);
         JMenuItem choixNoeudVoisin = new JMenuItem ("Allez à la fenètre dédiée ");
         affichage.add (graphePrincipal);
@@ -305,11 +315,16 @@ public class FenetreGraphVoisin extends JFrame {
         grapheVoisin.add (choixNoeudVoisin);
         choixNoeudVoisin.addActionListener (event -> {
             ArrayList<String> graphNode = creationGraphe.getNoeud ();
+            ArrayList<Integer> distance = new ArrayList <Integer> ();
+            distance.add (1);
+            distance.add (2);
             JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
+            JComboBox choixDistance = new JComboBox (distance.toArray ());
+            JLabel distanceExplications = new JLabel ("A ... distance ");
             JButton visualiser = new JButton ("visualiser ");
             visualiser.addActionListener (event1 -> {
                 try {
-                    new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString ());
+                    new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), (Integer) choixDistance.getSelectedItem ());
                     jFrame.setVisible (false);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -327,6 +342,8 @@ public class FenetreGraphVoisin extends JFrame {
                     null, options, null);
 
             fenetreGraphVoisins.add(listegraphNode);
+            fenetreGraphVoisins.add (distanceExplications);
+            fenetreGraphVoisins.add (choixDistance);
             fenetreGraphVoisins.add (visualiser);
 
             JDialog diag = new JDialog();
@@ -627,7 +644,7 @@ public class FenetreGraphVoisin extends JFrame {
         p.add (visualiser);
         visualiser.addActionListener (event -> {
             try {
-                new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString ());
+                new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), 0);
                 jFrame.setVisible (false);
             } catch (IOException e) {
                 throw new RuntimeException(e);

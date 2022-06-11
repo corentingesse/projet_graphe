@@ -150,6 +150,13 @@ public class FenetreGraphe extends JFrame {
         p.add (nbAutoroutes);
         nbAutoroutes.setForeground(Color.WHITE);
         nombreDeAutoroutes.setIcon (iconAutoroute);
+        p.add (new JLabel (" "));
+        JButton boutonListerNoeuds = new JButton ("Lister les noeuds ");
+        p.add (boutonListerNoeuds);
+        p.add (new JLabel (" "));
+        p.add (new JLabel (" "));
+        JButton boutonListerLiens = new JButton ("Lister les liens ");
+        p.add (boutonListerLiens);
         p.setOpaque (false);
         return p;
     }
@@ -279,7 +286,7 @@ public class FenetreGraphe extends JFrame {
         JMenuItem graphePrincipal = new JMenuItem ("graphe principal ", iconMapRedim);
         Icon voisinIcone = new ImageIcon ("src/main/resources/voisinIcone.jpg");
         ImageIcon iconVoisinRedim = new ImageIcon(((ImageIcon) voisinIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-        JMenu grapheVoisin = new JMenu ("graphe des voisins directes d'un lieu ");
+        JMenu grapheVoisin = new JMenu ("graphe des voisins d'un lieu ");
         grapheVoisin.setIcon (iconVoisinRedim);
         JMenuItem choixNoeudVoisin = new JMenuItem ("Allez à la fenètre dédiée ");
         affichage.add (graphePrincipal);
@@ -289,12 +296,17 @@ public class FenetreGraphe extends JFrame {
         affichage.add (grapheVoisin);
         grapheVoisin.add (choixNoeudVoisin);
         choixNoeudVoisin.addActionListener (event -> {
-            ArrayList <String> graphNode = creationGraphe.getNoeud ();
+            ArrayList<String> graphNode = creationGraphe.getNoeud ();
+            ArrayList<Integer> distance = new ArrayList <Integer> ();
+            distance.add (1);
+            distance.add (2);
             JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
+            JComboBox choixDistance = new JComboBox (distance.toArray ());
+            JLabel distanceExplications = new JLabel ("A ... distance ");
             JButton visualiser = new JButton ("visualiser ");
             visualiser.addActionListener (event1 -> {
                 try {
-                    new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString ());
+                    new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), (Integer) choixDistance.getSelectedItem ());
                     jFrame.setVisible (false);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -312,6 +324,8 @@ public class FenetreGraphe extends JFrame {
                     null, options, null);
 
             fenetreGraphVoisins.add(listegraphNode);
+            fenetreGraphVoisins.add (distanceExplications);
+            fenetreGraphVoisins.add (choixDistance);
             fenetreGraphVoisins.add (visualiser);
 
             JDialog diag = new JDialog();
@@ -503,16 +517,16 @@ public class FenetreGraphe extends JFrame {
             diag.setVisible(true);
         });
         comparerTousLesLieux.addActionListener (event -> {
-            JLabel aProximiteDe = new JLabel ("a proximité de : ");
-            JLabel aDistanceDe = new JLabel ("a distance de : ");
-            String [] aDistance = {"1"};
-            ArrayList <String> graphNode = creationGraphe.getNoeud ();
+            JLabel categorie = new JLabel ("Categorie de lieu ");
+            ArrayList <String> graphNode = new ArrayList<> ();
+            graphNode.add ("Ville");
+            graphNode.add ("Restaurant");
+            graphNode.add ("Loisir");
             JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
-            JComboBox distance = new JComboBox (aDistance);
             JButton visualiser = new JButton ("visualiser ");
             visualiser.addActionListener (event1 -> {
                 try {
-                    new FenetreGrapheChercher ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Restaurant");
+                    new FenetreComparaisonGenerale ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString ());
                     jFrame.setVisible (false);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -523,15 +537,13 @@ public class FenetreGraphe extends JFrame {
                 validate();
             });
             Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreGraphVoisins = new JOptionPane("Selectionnez la catégorie que vous souhaitez comparer ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);
 
-            fenetreGraphVoisins.add (aProximiteDe);
+            fenetreGraphVoisins.add (categorie);
             fenetreGraphVoisins.add(listegraphNode);
-            fenetreGraphVoisins.add (aDistanceDe);
-            fenetreGraphVoisins.add (distance);
             fenetreGraphVoisins.add (visualiser);
 
             JDialog diag = new JDialog();
@@ -612,7 +624,7 @@ public class FenetreGraphe extends JFrame {
         p.add (visualiser);
         visualiser.addActionListener (event -> {
             try {
-                new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString ());
+                new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), 0);
                 jFrame.setVisible (false);
             } catch (IOException e) {
                 throw new RuntimeException(e);

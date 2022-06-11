@@ -259,7 +259,7 @@ public class CreationGraphe {
         return graph;
     }
 
-    public ArrayList<String> getNoeud() {
+    public ArrayList<String> getNoeud (Graph graph) {
         int i;
         ArrayList<String> graphNode = new ArrayList();
         int indexGraphNode = 1;
@@ -924,6 +924,141 @@ public class CreationGraphe {
                     }
                 }
             }
+
+        graph.setAttribute("ui.stylesheet", "node {" +
+                "size: 20px;" +
+                "text-color: white;" +
+                "text-style: bold;" +
+                "}" +
+                "edge{" +
+                "text-color: white;" +
+                "text-style: bold;" +
+                "text-alignment: along;" +
+                "}" +
+                "graph{" +
+                "fill-color: black;" +
+                "}");
+
+        graphLayout.compute();
+
+        viewer.enableAutoLayout();
+
+        graphPanel.add(view);
+
+        return graphPanel;
+    }
+
+    public JPanel creerGraphe2DistanceTailleRéduit (String lieuDepart) {
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+
+        Layout graphLayout = new SpringBox(false);
+        graph = new SingleGraph("embedded");
+        SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
+
+
+        JPanel graphPanel = new JPanel();
+
+        DefaultView view = (DefaultView) viewer.addDefaultView(false);
+        view.setPreferredSize(new Dimension(400, 300));
+        // view.getCamera().setViewPercent(1);
+
+        int i = 0;
+        int minimum = 0;
+
+        for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) { // on cherche le lieu de départ
+            if (lieuParcour.getNomLieu().equals(lieuDepart)) {
+                graph.addNode(lieuParcour.getNomLieu());
+                Node n = graph.getNode(lieuParcour.getNomLieu());
+                n.setAttribute("ui.label", n.getId());
+                switch (lieuParcour.getClass().getSimpleName()) {
+                    case "Ville":
+                        n.setAttribute("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                        break;
+                    case "Restaurant":
+                        n.setAttribute("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                        break;
+                    case "Loisir":
+                        n.setAttribute("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                        break;
+                }
+                for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
+                    graph.addNode(lieuVoisin.getNomLieu());
+                    Node n1 = graph.getNode(lieuVoisin.getNomLieu());
+                    n1.setAttribute("ui.label", n1.getId());
+                    switch (lieuVoisin.getClass().getSimpleName()) {
+                        case "Ville":
+                            n1.setAttribute("ui.style", "fill-color: red; ");
+                            break;
+                        case "Restaurant":
+                            n1.setAttribute("ui.style", "fill-color: #0CAF09; ");
+                            break;
+                        case "Loisir":
+                            n1.setAttribute("ui.style", "fill-color: orange; ");
+                            break;
+                    }
+                    if (graph.getNode(lieuParcour.getNomLieu()).hasEdgeBetween(lieuVoisin.getNomLieu()) == false) {
+                        graph.addEdge(String.valueOf(i), lieuVoisin.getNomLieu(), lieuParcour.getNomLieu());
+                        Edge edge = graph.getEdge(String.valueOf(i));
+                        edge.setAttribute("ui.label", listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getNomRoute() + ", " + listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getDistanceKm() + "km");
+                        switch (listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getClass().getSimpleName()) {
+                            case "Nationale":
+                                edge.setAttribute("ui.style", "fill-color: red; ");
+                                break;
+                            case "Departementale":
+                                edge.setAttribute("ui.style", "fill-color: yellow; ");
+                                break;
+                            case "Autoroute":
+                                edge.setAttribute("ui.style", "fill-color: blue; ");
+                                break;
+                        }
+                    }
+                    i = i + 1;
+                }
+                for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
+                    for (Lieu lieuParcourP1Graphe : listeGraphe.getListeGraphe().keySet()) { // on cherche le lieu de départ
+                        if (lieuParcourP1Graphe.getNomLieu().equals(lieuVoisin.getNomLieu())) {
+                            for (Lieu lieuVoisinP1Graphe : listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().keySet()) {
+                                if (graph.getNode(lieuVoisinP1Graphe.getNomLieu()) == null) {
+                                    graph.addNode(lieuVoisinP1Graphe.getNomLieu());
+                                    n = graph.getNode(lieuVoisinP1Graphe.getNomLieu());
+                                    n.setAttribute("ui.label", n.getId());
+                                    switch (lieuVoisinP1Graphe.getClass().getSimpleName()) {
+                                        case "Ville":
+                                            n.setAttribute("ui.style", "fill-color: red; ");
+                                            break;
+                                        case "Restaurant":
+                                            n.setAttribute("ui.style", "fill-color: #0CAF09; ");
+                                            break;
+                                        case "Loisir":
+                                            n.setAttribute("ui.style", "fill-color: orange; ");
+                                            break;
+                                    }
+                                    if (graph.getNode(lieuParcourP1Graphe.getNomLieu()).hasEdgeBetween(lieuVoisinP1Graphe.getNomLieu()) == false) {
+                                        graph.addEdge(String.valueOf(i), lieuVoisinP1Graphe.getNomLieu(), lieuParcourP1Graphe.getNomLieu());
+                                        Edge edge = graph.getEdge(String.valueOf(i));
+                                        edge.setAttribute("ui.label", listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().get(lieuVoisinP1Graphe).getNomRoute() + ", " + listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().get(lieuVoisinP1Graphe).getDistanceKm() + "km");
+                                        switch (listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().get(lieuVoisinP1Graphe).getClass().getSimpleName()) {
+                                            case "Nationale":
+                                                edge.setAttribute("ui.style", "fill-color: red; ");
+                                                break;
+                                            case "Departementale":
+                                                edge.setAttribute("ui.style", "fill-color: yellow; ");
+                                                break;
+                                            case "Autoroute":
+                                                edge.setAttribute("ui.style", "fill-color: blue; ");
+                                                break;
+                                        }
+                                    }
+                                    i = i + 1;
+
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         graph.setAttribute("ui.stylesheet", "node {" +
                 "size: 20px;" +

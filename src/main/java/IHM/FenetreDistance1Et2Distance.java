@@ -394,7 +394,7 @@ import static java.awt.Color.black;
             affichage.add (grapheVoisin);
             grapheVoisin.add (choixNoeudVoisin);
             choixNoeudVoisin.addActionListener (event -> {
-                ArrayList<String> graphNode = creationGraphe.getNoeud ();
+                ArrayList<String> graphNode = creationGraphe.getNoeud (creationGraphe.getGraphe ());
                 JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
                 JButton visualiser = new JButton ("visualiser ");
                 visualiser.addActionListener (event1 -> {
@@ -430,7 +430,7 @@ import static java.awt.Color.black;
         }
 
         public JMenu jMenuChercher () {
-            JMenu affichage = new JMenu ("Chercher lieu à proximité ");
+            JMenu chercher = new JMenu ("Chercher lieu à proximité ");
             Icon villeIcone = new ImageIcon ("src/main/resources/lieuVilleIcone.png");
             ImageIcon iconVilleRedim = new ImageIcon(((ImageIcon) villeIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
             JMenuItem chercherVille = new JMenuItem ("Ville ", iconVilleRedim);
@@ -440,14 +440,14 @@ import static java.awt.Color.black;
             Icon loisirIcone = new ImageIcon ("src/main/resources/lieuLoisirIcone.png");
             ImageIcon iconLoisirRedim = new ImageIcon(((ImageIcon) loisirIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
             JMenuItem chercherLoisir = new JMenuItem ("Loisir ", iconLoisirRedim);
-            affichage.add (chercherVille);
-            affichage.add (chercherRestaurant);
-            affichage.add (chercherLoisir);
+            chercher.add (chercherVille);
+            chercher.add (chercherRestaurant);
+            chercher.add (chercherLoisir);
             chercherVille.addActionListener (event -> {
                 JLabel aProximiteDe = new JLabel ("a proximité de : ");
                 JLabel aDistanceDe = new JLabel ("a distance de : ");
                 String [] aDistance = {"1"};
-                ArrayList <String> graphNode = creationGraphe.getNoeud ();
+                ArrayList <String> graphNode = creationGraphe.getNoeud (creationGraphe.getGraphe ());
                 JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
                 JComboBox distance = new JComboBox (aDistance);
                 JButton visualiser = new JButton ("visualiser ");
@@ -484,7 +484,7 @@ import static java.awt.Color.black;
                 JLabel aProximiteDe = new JLabel ("a proximité de : ");
                 JLabel aDistanceDe = new JLabel ("a distance de : ");
                 String [] aDistance = {"1"};
-                ArrayList <String> graphNode = creationGraphe.getNoeud ();
+                ArrayList <String> graphNode = creationGraphe.getNoeud (creationGraphe.getGraphe ());
                 JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
                 JComboBox distance = new JComboBox (aDistance);
                 JButton visualiser = new JButton ("visualiser ");
@@ -521,7 +521,7 @@ import static java.awt.Color.black;
                 JLabel aProximiteDe = new JLabel ("a proximité de : ");
                 JLabel aDistanceDe = new JLabel ("a distance de : ");
                 String [] aDistance = {"1"};
-                ArrayList <String> graphNode = creationGraphe.getNoeud ();
+                ArrayList <String> graphNode = creationGraphe.getNoeud (creationGraphe.getGraphe ());
                 JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
                 JComboBox distance = new JComboBox (aDistance);
                 JButton visualiser = new JButton ("visualiser ");
@@ -556,8 +556,8 @@ import static java.awt.Color.black;
                 diag.setVisible(true);
             });
 
-            affichage.setForeground(Color.WHITE);
-            return affichage;
+            chercher.setForeground(Color.WHITE);
+            return chercher;
         }
 
         public JMenu jMenuComparer () {
@@ -573,7 +573,7 @@ import static java.awt.Color.black;
             comparerDeuxLieux.addActionListener (event -> {
                 JLabel premierLieu = new JLabel ("Premier lieu ");
                 JLabel deuxiemeLieu = new JLabel ("Deuxième lieu ");
-                ArrayList <String> graphNode = creationGraphe.getNoeud ();
+                ArrayList <String> graphNode = creationGraphe.getNoeud (creationGraphe.getGraphe ());
                 JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
                 JComboBox listegraphNode2 = new JComboBox (graphNode.toArray ());
                 listegraphNode2.remove (listegraphNode.getSelectedIndex ());
@@ -611,7 +611,7 @@ import static java.awt.Color.black;
                 JLabel aProximiteDe = new JLabel ("a proximité de : ");
                 JLabel aDistanceDe = new JLabel ("a distance de : ");
                 String [] aDistance = {"1"};
-                ArrayList <String> graphNode = creationGraphe.getNoeud ();
+                ArrayList <String> graphNode = creationGraphe.getNoeud (creationGraphe.getGraphe ());
                 JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
                 JComboBox distance = new JComboBox (aDistance);
                 JButton visualiser = new JButton ("visualiser ");
@@ -658,7 +658,7 @@ import static java.awt.Color.black;
             voisinsDirectes.addActionListener(event -> {
                 JLabel villeDepart = new JLabel("ville de départ : ");
                 JLabel villeRecherchee = new JLabel("ville recherchée :  ");
-                ArrayList<String> graphNode = creationGraphe.getNoeud();
+                ArrayList<String> graphNode = creationGraphe.getNoeud(creationGraphe.getGraphe ());
                 JComboBox listegraphNodeDepart = new JComboBox(graphNode.toArray());
                 JComboBox listegraphNodeRecherchee = new JComboBox(graphNode.toArray());
                 JButton visualiser = new JButton("visualiser ");
@@ -701,7 +701,7 @@ import static java.awt.Color.black;
         public JPanel noeudsVoisins () throws IOException, ExceptionAjListeGraphe {
             JPanel p = new JPanel ();
             p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
-            ArrayList <String> graphNode = creationGraphe.getNoeud ();
+            ArrayList <String> graphNode = creationGraphe.getNoeud (creationGraphe.getGraphe ());
             JLabel titreVisualiserNoeudsVoisins = new JLabel ("Visualiser les noeuds voisins directes d'un noeud ");
             JLabel explicationsNoeudsVoisins = new JLabel ("Commencez par choisir le noeud dont vous souhaitez afficher les voisins directes ");
             titreVisualiserNoeudsVoisins.setForeground(Color.WHITE);

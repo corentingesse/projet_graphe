@@ -94,6 +94,7 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
         p.add (graph1, BorderLayout.WEST);
         p.add (graph2,  BorderLayout.CENTER);
         p.add (graph3,  BorderLayout.EAST);
+        p.add (boutonsDeVisualisation (), BorderLayout.SOUTH);
         p.setOpaque (false);
         return p;
     }
@@ -457,9 +458,11 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
 
     public JPanel boutonsDeVisualisation () {
         JPanel p = new JPanel ();
-        p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.setLayout (new FlowLayout ());
         JButton revenirAuGraphePrincipal = new JButton ("Revenir au graphe principal ");
+        JButton montrerLegende = new JButton ("Legende ");
         p.add (revenirAuGraphePrincipal);
+        p.add (montrerLegende);
         revenirAuGraphePrincipal.addActionListener (event -> {
             try {
                 FenetreGraphe fenetreGraphe = new FenetreGraphe (cheminFile, fenetrePrincipale);
@@ -469,6 +472,20 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
             } catch (ExceptionAjListeGraphe e) {
                 throw new RuntimeException(e);
             }
+        });
+
+        montrerLegende.addActionListener (event -> {
+            Object[] options = new Object[]{};
+            JOptionPane fenetremontrerlegende = new JOptionPane ("Montrer la légende ",
+                    JOptionPane.QUESTION_MESSAGE,
+                    JOptionPane.DEFAULT_OPTION,
+                    null, options, null);
+            fenetremontrerlegende.add (legende ());
+
+            JDialog diag = new JDialog();
+            diag.getContentPane().add(fenetremontrerlegende);
+            diag.pack();
+            diag.setVisible(true);
         });
         p.setOpaque (false);
         return p;
@@ -602,7 +619,7 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
     }
 
     public JMenu jMenuChercher () {
-        JMenu chercher = new JMenu ("Chercher lieu à proximité ");
+        JMenu affichage = new JMenu ("Chercher lieu à proximité ");
         Icon villeIcone = new ImageIcon ("src/main/resources/lieuVilleIcone.png");
         ImageIcon iconVilleRedim = new ImageIcon(((ImageIcon) villeIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
         JMenuItem chercherVille = new JMenuItem ("Ville ", iconVilleRedim);
@@ -611,10 +628,10 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
         JMenuItem chercherRestaurant = new JMenuItem ("Restaurant ", iconRestaurantRedim);
         Icon loisirIcone = new ImageIcon ("src/main/resources/lieuLoisirIcone.png");
         ImageIcon iconLoisirRedim = new ImageIcon(((ImageIcon) loisirIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-        JMenuItem chercherLoisir = new JMenuItem ("Restaurant ", iconLoisirRedim);
-        chercher.add (chercherVille);
-        chercher.add (chercherRestaurant);
-        chercher.add (chercherLoisir);
+        JMenuItem chercherLoisir = new JMenuItem ("Loisir ", iconLoisirRedim);
+        affichage.add (chercherVille);
+        affichage.add (chercherRestaurant);
+        affichage.add (chercherLoisir);
         chercherVille.addActionListener (event -> {
             JLabel aProximiteDe = new JLabel ("a proximité de : ");
             JLabel aDistanceDe = new JLabel ("a distance de : ");
@@ -625,7 +642,7 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
             JButton visualiser = new JButton ("visualiser ");
             visualiser.addActionListener (event1 -> {
                 try {
-                    new IHM.FenetreGrapheChercher("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Ville");
+                    new FenetreGrapheChercher ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Ville");
                     jFrame.setVisible (false);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -636,7 +653,7 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
                 validate();
             });
             Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les villes voisines ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);
@@ -662,7 +679,7 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
             JButton visualiser = new JButton ("visualiser ");
             visualiser.addActionListener (event1 -> {
                 try {
-                    new IHM.FenetreGrapheChercher("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Restaurant");
+                    new FenetreGrapheChercher ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Restaurant");
                     jFrame.setVisible (false);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -673,7 +690,7 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
                 validate();
             });
             Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les restaurants voisins ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);
@@ -699,7 +716,7 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
             JButton visualiser = new JButton ("visualiser ");
             visualiser.addActionListener (event1 -> {
                 try {
-                    new IHM.FenetreGrapheChercher("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Loisir");
+                    new FenetreGrapheChercher ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), "Loisir");
                     jFrame.setVisible (false);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -711,7 +728,7 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
             });
 
             Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les loisirs voiisns ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);
@@ -728,9 +745,149 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
             diag.setVisible(true);
         });
 
-        chercher.setForeground(Color.WHITE);
-        return chercher;
+        affichage.setForeground(Color.WHITE);
+        return affichage;
     }
+
+    public JMenu jMenuComparer () {
+        JMenu comparer = new JMenu ("Comparer ");
+        Icon villeIcone = new ImageIcon ("src/main/resources/lieuVilleIcone.png");
+        ImageIcon iconVilleRedim = new ImageIcon(((ImageIcon) villeIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
+        JMenuItem comparerTousLesLieux = new JMenuItem ("Comparer tous les lieux ", iconVilleRedim);
+        Icon restaurantIcone = new ImageIcon ("src/main/resources/lieuRestaurantIcone.png");
+        ImageIcon iconRestaurantRedim = new ImageIcon(((ImageIcon) restaurantIcone).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
+        JMenuItem comparerDeuxLieux = new JMenuItem ("Comparer deux lieux ", iconRestaurantRedim);
+        comparer.add (comparerTousLesLieux);
+        comparer.add (comparerDeuxLieux);
+        comparerDeuxLieux.addActionListener (event -> {
+            JLabel premierLieu = new JLabel ("Premier lieu ");
+            JLabel deuxiemeLieu = new JLabel ("Deuxième lieu ");
+            ArrayList <String> graphNode = creationGraphe.getNoeud (creationGraphe.getGraphe ());
+            JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
+            JComboBox listegraphNode2 = new JComboBox (graphNode.toArray ());
+            listegraphNode2.remove (listegraphNode.getSelectedIndex ());
+            JButton visualiser = new JButton ("visualiser ");
+            visualiser.addActionListener (event1 -> {
+                try {
+                    new FenetreComparaisonDeuxLieux ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), listegraphNode2.getSelectedItem ().toString ());
+                    jFrame.setVisible (false);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ExceptionAjListeGraphe e) {
+                    throw new RuntimeException(e);
+                }
+
+                validate();
+            });
+            Object[] options = new Object[]{};
+            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+                    JOptionPane.QUESTION_MESSAGE,
+                    JOptionPane.DEFAULT_OPTION,
+                    null, options, null);
+
+            fenetreGraphVoisins.add (premierLieu);
+            fenetreGraphVoisins.add(listegraphNode);
+            fenetreGraphVoisins.add (deuxiemeLieu);
+            fenetreGraphVoisins.add (listegraphNode2);
+            fenetreGraphVoisins.add (visualiser);
+
+            JDialog diag = new JDialog();
+            diag.getContentPane().add(fenetreGraphVoisins);
+            diag.pack();
+            diag.setVisible(true);
+        });
+        comparerTousLesLieux.addActionListener (event -> {
+            JLabel categorie = new JLabel ("Categorie de lieu ");
+            ArrayList <String> graphNode = new ArrayList<> ();
+            graphNode.add ("toutes les catégories ");
+            graphNode.add ("Ville");
+            graphNode.add ("Restaurant");
+            graphNode.add ("Loisir");
+            JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
+            JButton visualiser = new JButton ("visualiser ");
+            visualiser.addActionListener (event1 -> {
+                try {
+                    if (listegraphNode.getSelectedItem ().toString ().equals ("toutes les catégories "))
+                        new FenetreComparaisonGenerale ("src/main/resources/graphe.csv", fenetrePrincipale);
+                    else
+                        new FenetreComparaisonGeneraleCategorie ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString ());
+                    jFrame.setVisible (false);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ExceptionAjListeGraphe e) {
+                    throw new RuntimeException(e);
+                }
+
+                validate();
+            });
+            Object[] options = new Object[]{};
+            JOptionPane fenetreGraphVoisins = new JOptionPane("Selectionnez la catégorie que vous souhaitez comparer ",
+                    JOptionPane.QUESTION_MESSAGE,
+                    JOptionPane.DEFAULT_OPTION,
+                    null, options, null);
+
+            fenetreGraphVoisins.add (categorie);
+            fenetreGraphVoisins.add(listegraphNode);
+            fenetreGraphVoisins.add (visualiser);
+
+            JDialog diag = new JDialog();
+            diag.getContentPane().add(fenetreGraphVoisins);
+            diag.pack();
+            diag.setVisible(true);
+        });
+
+        comparer.setForeground(Color.WHITE);
+        return comparer;
+    }
+
+    public JMenu jMenuDistance () {
+        JMenu distance = new JMenu("Distance");
+        JMenu distanceNombreLieux = new JMenu("Distance par nombre de lieux ");
+        distance.add(distanceNombreLieux);
+        JMenuItem voisinsDirectes = new JMenuItem("Savoir si deux lieux sont des voisins directes ou indirectes à 2 distance ");
+        distanceNombreLieux.add(voisinsDirectes);
+        voisinsDirectes.addActionListener(event -> {
+            JLabel villeDepart = new JLabel("ville de départ : ");
+            JLabel villeRecherchee = new JLabel("ville recherchée :  ");
+            ArrayList<String> graphNode = creationGraphe.getNoeud (creationGraphe.getGraphe ());
+            JComboBox listegraphNodeDepart = new JComboBox(graphNode.toArray());
+            JComboBox listegraphNodeRecherchee = new JComboBox(graphNode.toArray());
+            JButton visualiser = new JButton("visualiser ");
+            visualiser.addActionListener(event1 -> {
+                try {
+                    new FenetreDistance1Et2Distance ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNodeDepart.getSelectedItem().toString(), listegraphNodeRecherchee.getSelectedItem().toString(), 1);
+                    jFrame.setVisible(false);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ExceptionAjListeGraphe e) {
+                    throw new RuntimeException(e);
+                }
+
+                validate();
+            });
+            Object[] options = new Object[]{};
+            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+                    JOptionPane.QUESTION_MESSAGE,
+                    JOptionPane.DEFAULT_OPTION,
+                    null, options, null);
+
+            fenetreGraphVoisins.add(villeDepart);
+            fenetreGraphVoisins.add(listegraphNodeDepart);
+            fenetreGraphVoisins.add(villeRecherchee);
+            fenetreGraphVoisins.add(listegraphNodeRecherchee);
+            fenetreGraphVoisins.add(visualiser);
+
+            JDialog diag = new JDialog();
+            diag.getContentPane().add(fenetreGraphVoisins);
+            diag.pack();
+            diag.setVisible(true);
+        });
+
+        distance.setForeground(Color.WHITE);
+        return distance;
+    }
+
+
 
     public JPanel noeudsVoisins () throws IOException, ExceptionAjListeGraphe {
         JPanel p = new JPanel ();
@@ -758,6 +915,7 @@ public class FenetreComparaisonGeneraleCategorie extends JFrame {
             } catch (ExceptionAjListeGraphe e) {
                 throw new RuntimeException(e);
             }
+
             validate();
         });
         p.setOpaque (false);

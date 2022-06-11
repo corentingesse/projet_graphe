@@ -1,9 +1,7 @@
 package IHM;
 
 import Graphe.ConfigListe.Exceptions.ExceptionAjListeGraphe;
-import Graphe.ConfigListe.ListeGraphe;
 import Graphe.CreationGraphe;
-import Graphe.CreationListe;
 import org.graphstream.graph.Graph;
 
 import javax.swing.*;
@@ -12,8 +10,6 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimerTask;
 
 import static java.awt.Color.black;
 
@@ -28,15 +24,12 @@ public class FenetreGraphe extends JFrame {
 
     JPanel constrPartieVisuel;
 
-    JLabel background = new JLabel ();
-
     JPanel noeudsVoisins;
     public FenetreGraphe (String newCheminFile, FenetrePrincipale newFenetrePrincipale) throws IOException, ExceptionAjListeGraphe {
         super ();
         cheminFile = newCheminFile;
         fenetrePrincipale = newFenetrePrincipale;
         creationGraphe = new CreationGraphe (cheminFile);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         ImageIcon imageFond = new ImageIcon("src/main/resources/Graph_Plan.png");
         jFrame.setMinimumSize(new Dimension(1650, 1080));
         jFrame.setExtendedState(this.MAXIMIZED_BOTH);
@@ -54,7 +47,7 @@ public class FenetreGraphe extends JFrame {
         jFrame.setVisible(true);
     }
 
-    public JPanel constrPartieVisuel () throws IOException, ExceptionAjListeGraphe {
+    public JPanel constrPartieVisuel () {
         JPanel p = new JPanel ();
         p.setLayout (new BorderLayout());
         graph = constrFenVisuel ();
@@ -75,7 +68,7 @@ public class FenetreGraphe extends JFrame {
         return p;
     }
 
-    public JPanel constrFenVisuel () throws IOException, ExceptionAjListeGraphe {
+    public JPanel constrFenVisuel () {
         System.setProperty("org.graphstream.ui", "swing");
 
         graph = creationGraphe.creerGraphe();
@@ -157,6 +150,36 @@ public class FenetreGraphe extends JFrame {
         p.add (new JLabel (" "));
         JButton boutonListerLiens = new JButton ("Lister les liens ");
         p.add (boutonListerLiens);
+        boutonListerNoeuds.addActionListener (event -> {
+            Object[] options = new Object[]{};
+            JOptionPane fenetreNoeuds = new JOptionPane ("Liste des lieux ",
+                    JOptionPane.QUESTION_MESSAGE,
+                    JOptionPane.DEFAULT_OPTION,
+                    null, options, null);
+            for (String lieu : creationGraphe.getNoeud (creationGraphe.getGraphe ())) {
+                JLabel texteLieu = new JLabel(lieu);
+                fenetreNoeuds.add(texteLieu);
+            }
+            JDialog diag = new JDialog();
+            diag.getContentPane().add(fenetreNoeuds);
+            diag.pack();
+            diag.setVisible(true);
+        });
+        boutonListerLiens.addActionListener (event -> {
+            Object[] options = new Object[]{};
+            JOptionPane fenetreLiens = new JOptionPane ("Liste des liens ",
+                    JOptionPane.QUESTION_MESSAGE,
+                    JOptionPane.DEFAULT_OPTION,
+                    null, options, null);
+            for (String lien : creationGraphe.getEdge (creationGraphe.getGraphe ())) {
+                JLabel texteLieu = new JLabel(lien);
+                fenetreLiens.add(texteLieu);
+            }
+            JDialog diag = new JDialog();
+            diag.getContentPane().add(fenetreLiens);
+            diag.pack();
+            diag.setVisible(true);
+        });
         p.setOpaque (false);
         return p;
     }
@@ -206,11 +229,26 @@ public class FenetreGraphe extends JFrame {
 
     public JPanel boutonsDeVisualisation () {
         JPanel p = new JPanel ();
-        p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.setLayout (new FlowLayout ());
         JButton revenirAuGraphePrincipal = new JButton ("Revenir au graphe principal ");
+        JButton montrerLegende = new JButton ("Legende ");
         p.add (revenirAuGraphePrincipal);
+        p.add (montrerLegende);
         revenirAuGraphePrincipal.addActionListener (event -> {
             JOptionPane.showMessageDialog(new JFrame(), "Vous êtes déjà sur le graphe principal", "Erreur", JOptionPane.ERROR_MESSAGE);
+        });
+        montrerLegende.addActionListener (event -> {
+            Object[] options = new Object[]{};
+            JOptionPane fenetremontrerlegende = new JOptionPane ("Montrer la légende ",
+                    JOptionPane.QUESTION_MESSAGE,
+                    JOptionPane.DEFAULT_OPTION,
+                    null, options, null);
+            fenetremontrerlegende.add (legende ());
+
+            JDialog diag = new JDialog();
+            diag.getContentPane().add(fenetremontrerlegende);
+            diag.pack();
+            diag.setVisible(true);
         });
         p.setOpaque (false);
         return p;
@@ -373,19 +411,19 @@ public class FenetreGraphe extends JFrame {
                 validate();
             });
             Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreVille = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les villes voisines ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);
 
-            fenetreGraphVoisins.add (aProximiteDe);
-            fenetreGraphVoisins.add(listegraphNode);
-            fenetreGraphVoisins.add (aDistanceDe);
-            fenetreGraphVoisins.add (distance);
-            fenetreGraphVoisins.add (visualiser);
+            fenetreVille.add (aProximiteDe);
+            fenetreVille.add(listegraphNode);
+            fenetreVille.add (aDistanceDe);
+            fenetreVille.add (distance);
+            fenetreVille.add (visualiser);
 
             JDialog diag = new JDialog();
-            diag.getContentPane().add(fenetreGraphVoisins);
+            diag.getContentPane().add(fenetreVille);
             diag.pack();
             diag.setVisible(true);
         });
@@ -410,19 +448,19 @@ public class FenetreGraphe extends JFrame {
                 validate();
             });
             Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreRestaurant = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les restaurants voisins ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);
 
-            fenetreGraphVoisins.add (aProximiteDe);
-            fenetreGraphVoisins.add(listegraphNode);
-            fenetreGraphVoisins.add (aDistanceDe);
-            fenetreGraphVoisins.add (distance);
-            fenetreGraphVoisins.add (visualiser);
+            fenetreRestaurant.add (aProximiteDe);
+            fenetreRestaurant.add(listegraphNode);
+            fenetreRestaurant.add (aDistanceDe);
+            fenetreRestaurant.add (distance);
+            fenetreRestaurant.add (visualiser);
 
             JDialog diag = new JDialog();
-            diag.getContentPane().add(fenetreGraphVoisins);
+            diag.getContentPane().add(fenetreRestaurant);
             diag.pack();
             diag.setVisible(true);
         });
@@ -448,19 +486,19 @@ public class FenetreGraphe extends JFrame {
             });
 
             Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreLoisir = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les loisirs voiisns ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);
 
-            fenetreGraphVoisins.add (aProximiteDe);
-            fenetreGraphVoisins.add(listegraphNode);
-            fenetreGraphVoisins.add (aDistanceDe);
-            fenetreGraphVoisins.add (distance);
-            fenetreGraphVoisins.add (visualiser);
+            fenetreLoisir.add (aProximiteDe);
+            fenetreLoisir.add(listegraphNode);
+            fenetreLoisir.add (aDistanceDe);
+            fenetreLoisir.add (distance);
+            fenetreLoisir.add (visualiser);
 
             JDialog diag = new JDialog();
-            diag.getContentPane().add(fenetreGraphVoisins);
+            diag.getContentPane().add(fenetreLoisir);
             diag.pack();
             diag.setVisible(true);
         });
@@ -500,19 +538,19 @@ public class FenetreGraphe extends JFrame {
                 validate();
             });
             Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreComparerDeuxLieux = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);
 
-            fenetreGraphVoisins.add (premierLieu);
-            fenetreGraphVoisins.add(listegraphNode);
-            fenetreGraphVoisins.add (deuxiemeLieu);
-            fenetreGraphVoisins.add (listegraphNode2);
-            fenetreGraphVoisins.add (visualiser);
+            fenetreComparerDeuxLieux.add (premierLieu);
+            fenetreComparerDeuxLieux.add(listegraphNode);
+            fenetreComparerDeuxLieux.add (deuxiemeLieu);
+            fenetreComparerDeuxLieux.add (listegraphNode2);
+            fenetreComparerDeuxLieux.add (visualiser);
 
             JDialog diag = new JDialog();
-            diag.getContentPane().add(fenetreGraphVoisins);
+            diag.getContentPane().add(fenetreComparerDeuxLieux);
             diag.pack();
             diag.setVisible(true);
         });
@@ -541,17 +579,17 @@ public class FenetreGraphe extends JFrame {
                 validate();
             });
             Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Selectionnez la catégorie que vous souhaitez comparer ",
+            JOptionPane fenetreComparaisonGenerale = new JOptionPane("Selectionnez la catégorie que vous souhaitez comparer ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);
 
-            fenetreGraphVoisins.add (categorie);
-            fenetreGraphVoisins.add(listegraphNode);
-            fenetreGraphVoisins.add (visualiser);
+            fenetreComparaisonGenerale.add (categorie);
+            fenetreComparaisonGenerale.add(listegraphNode);
+            fenetreComparaisonGenerale.add (visualiser);
 
             JDialog diag = new JDialog();
-            diag.getContentPane().add(fenetreGraphVoisins);
+            diag.getContentPane().add(fenetreComparaisonGenerale);
             diag.pack();
             diag.setVisible(true);
         });

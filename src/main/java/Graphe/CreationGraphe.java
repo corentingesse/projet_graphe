@@ -270,6 +270,16 @@ public class CreationGraphe {
 
     }
 
+    public ArrayList<String> getEdge (Graph graph) {
+        int i;
+        ArrayList<String> graphEdge = new ArrayList();
+        for (int indexGraphEdge = 0; indexGraphEdge < graph.getEdgeCount (); indexGraphEdge++) {
+            graphEdge.add (graph.getEdge (indexGraphEdge).getAttribute("ui.label").toString());
+        }
+        return graphEdge;
+
+    }
+
     public static JPanel creerGrapheChercher(String lieu, String lieuCherche) {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 

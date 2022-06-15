@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import static java.awt.Color.black;
 
-public class FenetreGraphe extends JFrame {
+public class APropos extends JFrame {
     FenetrePrincipale fenetrePrincipale;
     JFrame jFrame = new JFrame ();
     private String cheminFile;
@@ -25,7 +25,8 @@ public class FenetreGraphe extends JFrame {
     JPanel constrPartieVisuel;
 
     JPanel noeudsVoisins;
-    public FenetreGraphe (String newCheminFile, FenetrePrincipale newFenetrePrincipale) throws IOException, ExceptionAjListeGraphe {
+
+    public APropos (String newCheminFile, FenetrePrincipale newFenetrePrincipale) throws IOException, ExceptionAjListeGraphe {
         super ();
         cheminFile = newCheminFile;
         fenetrePrincipale = newFenetrePrincipale;
@@ -43,252 +44,27 @@ public class FenetreGraphe extends JFrame {
         constrPartieVisuel = constrPartieVisuel ();
         noeudsVoisins = noeudsVoisins ();
         background.add (constrPartieVisuel);
-        background.add (basPanel ());
         jFrame.setVisible(true);
     }
 
     public JPanel constrPartieVisuel () {
         JPanel p = new JPanel ();
-        p.setLayout (new BorderLayout());
-        graph = constrFenVisuel ();
-        p.add (graph, BorderLayout.CENTER);
-        p.add (constrInformationsSurLeGraphe (), BorderLayout.WEST);
-        p.add (legende (), BorderLayout.EAST);
-        p.setOpaque (false);
-        return p;
-    }
-
-    public JPanel basPanel () {
-        JPanel p = new JPanel ();
-        p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
-        p.add (boutonsDeVisualisation ());
-        p.add (Box.createRigidArea(new Dimension(0, 60)));
-        p.add (noeudsVoisins);
-        p.setOpaque (false);
-        return p;
-    }
-
-    public JPanel constrFenVisuel () {
-        System.setProperty("org.graphstream.ui", "swing");
-
-        graph = creationGraphe.creerGraphe();
-
-        graph.setOpaque (false);
-
-        return graph;
-    }
-
-    public JPanel constrInformationsSurLeGraphe () {
-        JPanel p = new JPanel ();
-        p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
-        JLabel informationsGraphe = new JLabel ("Informations sur la carte ");
-        p.add (informationsGraphe);
-        informationsGraphe.setFont (new Font ("Arial", Font.BOLD, 20));
-        informationsGraphe.setForeground(Color.WHITE);
-        p.add (new JLabel (" "));
-        Icon iconVille = new ImageIcon ("src/main/resources/lieuVilleIcone.png");
-        Graph getGraph = creationGraphe.getGraphe ();
-        JLabel nombreVilles = new JLabel ("Nombre de villes ");
-        p.add (nombreVilles);
-        nombreVilles.setIcon (iconVille);
-        nombreVilles.setFont (new Font ("Arial", Font.BOLD, 15));
-        nombreVilles.setForeground(Color.WHITE);
-        JLabel nbVilles = new JLabel (String.valueOf (creationGraphe.getNbVille (getGraph)));
-        p.add (nbVilles);
-        nbVilles.setForeground(Color.WHITE);
-        Icon iconRestaurant = new ImageIcon ("src/main/resources/lieuRestaurantIcone.png");
-        JLabel nombreRestaurants = new JLabel ("Nombre de restaurants ");
-        p.add (nombreRestaurants);
-        nombreRestaurants.setIcon (iconRestaurant);
-        nombreRestaurants.setFont (new Font ("Arial", Font.BOLD, 15));
-        nombreRestaurants.setForeground(Color.WHITE);
-        JLabel nbRestaurants = new JLabel (String.valueOf (creationGraphe.getNbRestaurant (getGraph)));
-        p.add (nbRestaurants);
-        nbRestaurants.setForeground(Color.WHITE);
-        Icon iconLoisir = new ImageIcon ("src/main/resources/lieuLoisirIcone.png");
-        JLabel nombreLoisirs = new JLabel ("Nombre de loisirs ");
-        p.add (nombreLoisirs);
-        nombreLoisirs.setIcon (iconLoisir);
-        nombreLoisirs.setFont (new Font ("Arial", Font.BOLD, 15));
-        nombreLoisirs.setForeground(Color.WHITE);
-        JLabel nbLoisirs = new JLabel (String.valueOf (creationGraphe.getNbLoisir (getGraph)));
-        p.add (nbLoisirs);
-        nbLoisirs.setForeground(Color.WHITE);
-        p.add (new JLabel (" "));
-        p.add (new JLabel (""));
-        Icon iconNationale = new ImageIcon ("src/main/resources/640px-Route_nationale_française_7.svg.png");
-        JLabel nombreDeNationales = new JLabel ("Nombre de nationales ");
-        p.add (nombreDeNationales);
-        nombreDeNationales.setFont (new Font ("Arial", Font.BOLD, 15));
-        nombreDeNationales.setForeground(Color.WHITE);
-        JLabel nbNationales = new JLabel (String.valueOf (creationGraphe.getNbNationale (getGraph)));
-        p.add (nbNationales);
-        nbNationales.setForeground(Color.WHITE);
-        nombreDeNationales.setIcon (iconNationale);
-        Icon iconDepertementale = new ImageIcon ("src/main/resources/routeDepartementaleIcone.png");
-        JLabel nombreDeDepartementales = new JLabel ("Nombre de departementales ");
-        p.add (nombreDeDepartementales);
-        nombreDeDepartementales.setFont (new Font ("Arial", Font.BOLD, 15));
-        nombreDeDepartementales.setForeground(Color.WHITE);
-        JLabel nbDepartementales = new JLabel (String.valueOf (creationGraphe.getNbDepartementale (getGraph)));
-        p.add (nbDepartementales);
-        nbDepartementales.setForeground(Color.WHITE);
-        nbDepartementales.setIcon (iconDepertementale);
-        Icon iconAutoroute = new ImageIcon ("src/main/resources/autorouteIcone.png");
-        JLabel nombreDeAutoroutes = new JLabel ("Nombre d'autoroutes ");
-        p.add (nombreDeAutoroutes);
-        nombreDeAutoroutes.setFont (new Font ("Arial", Font.BOLD, 15));
-        nombreDeAutoroutes.setForeground(Color.WHITE);
-        JLabel nbAutoroutes = new JLabel (String.valueOf (creationGraphe.getNbAutoroute (getGraph)));
-        p.add (nbAutoroutes);
-        nbAutoroutes.setForeground(Color.WHITE);
-        nombreDeAutoroutes.setIcon (iconAutoroute);
-        p.add (new JLabel (" "));
-        JButton boutonListerNoeuds = new JButton ("Lister les noeuds ");
-        p.add (boutonListerNoeuds);
-        p.add (new JLabel (" "));
-        p.add (new JLabel (" "));
-        JButton boutonListerLiens = new JButton ("Lister les liens ");
-        p.add (boutonListerLiens);
-        boutonListerNoeuds.addActionListener (event -> {
-            Object[] options = new Object[]{};
-            JOptionPane fenetreNoeuds = new JOptionPane ("Liste des lieux ",
-                    JOptionPane.QUESTION_MESSAGE,
-                    JOptionPane.DEFAULT_OPTION,
-                    null, options, null);
-            for (String lieu : creationGraphe.getNoeud (creationGraphe.getGraphe ())) {
-                JLabel texteLieu = new JLabel(lieu);
-                fenetreNoeuds.add(texteLieu);
-            }
-            JDialog diag = new JDialog();
-            diag.getContentPane().add(fenetreNoeuds);
-            diag.pack();
-            diag.setVisible(true);
-        });
-        boutonListerLiens.addActionListener (event -> {
-            Object[] options = new Object[]{};
-            JOptionPane fenetreLiens = new JOptionPane ("Liste des liens ",
-                    JOptionPane.QUESTION_MESSAGE,
-                    JOptionPane.DEFAULT_OPTION,
-                    null, options, null);
-            for (String lien : creationGraphe.getEdge (creationGraphe.getGraphe ())) {
-                JLabel texteLieu = new JLabel (lien);
-                JButton boutonLieu = new JButton ("savoir quels lieux sont reliés par cette route");
-                fenetreLiens.add (texteLieu);
-                fenetreLiens.add (boutonLieu);
-
-                boutonLieu.addActionListener (event1 -> {
-                    Object[] options1 = new Object[]{};
-                    JOptionPane fenetreLieux = new JOptionPane ("Lieux reliés par : " + lien,
-                            JOptionPane.QUESTION_MESSAGE,
-                            JOptionPane.DEFAULT_OPTION,
-                            null, options, null);
-                    JLabel lieu1 = new JLabel(creationGraphe.getLieu1Edge (creationGraphe.getGraphe (), lien));
-                    JLabel lieu2 = new JLabel(creationGraphe.getLieu2Edge (creationGraphe.getGraphe (), lien));
-                    JButton visualiser = new JButton ("visualiser ");
-                    fenetreLieux.add (lieu1);
-                    fenetreLieux.add (lieu2);
-                    fenetreLieux.add (visualiser);
-
-                    visualiser.addActionListener (event2 -> {
-                        try {
-                            FenetreLien fenetreLien = new FenetreLien (cheminFile, fenetrePrincipale, lien);
-                            // fenetreLieux.setVisible (false);
-                            // fenetreLiens.setVisible (false);
-                            jFrame.setVisible (false);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        } catch (ExceptionAjListeGraphe e) {
-                            throw new RuntimeException(e);
-                        }
-                        JDialog diag = new JDialog();
-                        diag.getContentPane().add(fenetreLieux);
-                        diag.pack();
-                        diag.setVisible(true);
-                    });
-                    JDialog diag = new JDialog();
-                    diag.getContentPane().add(fenetreLieux);
-                    diag.pack();
-                    diag.setVisible(true);
-                });
-            }
-            JScrollPane vertical = new JScrollPane(fenetreLiens);
-            vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-            JDialog diag = new JDialog();
-            diag.getContentPane().add(fenetreLiens);
-            diag.pack();
-            diag.setVisible(true);
-        });
-        p.setOpaque (false);
-        return p;
-    }
-
-    public JPanel legende () {
-        JPanel p = new JPanel ();
-        p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
-        Icon legendeVille = new ImageIcon ("src/main/resources/legendeVille.png");
-        JLabel ville = new JLabel ("Ville ");
-        p.add (ville);
-        ville.setFont (new Font ("Arial", Font.BOLD, 15));
-        ville.setForeground(Color.WHITE);
-        ville.setIcon (legendeVille);
-        Icon legendeRestaurant = new ImageIcon ("src/main/resources/legendeRestaurant.png");
-        JLabel restaurant = new JLabel ("Restaurants ");
-        p.add (restaurant);
-        restaurant.setFont (new Font ("Arial", Font.BOLD, 15));
-        restaurant.setForeground(Color.WHITE);
-        restaurant.setIcon (legendeRestaurant);
-        Icon legendeLoisir = new ImageIcon ("src/main/resources/legendeLoisir.png");
-        JLabel loisir = new JLabel ("Loisir ");
-        p.add (loisir);
-        loisir.setFont (new Font ("Arial", Font.BOLD, 15));
-        loisir.setForeground(Color.WHITE);
-        loisir.setIcon (legendeLoisir);
-        Icon lgendeNationale = new ImageIcon ("src/main/resources/legendeNationale.png");
-        JLabel nationale = new JLabel ("Nationale ");
-        p.add (nationale);
-        nationale.setFont (new Font ("Arial", Font.BOLD, 15));
-        nationale.setForeground(Color.WHITE);
-        nationale.setIcon (lgendeNationale);
-        Icon legendeDepartementale = new ImageIcon ("src/main/resources/legendeDepartementale.png");
-        JLabel departementale = new JLabel ("Departementale ");
-        p.add (departementale);
-        departementale.setFont (new Font ("Arial", Font.BOLD, 15));
-        departementale.setForeground(Color.WHITE);
-        departementale.setIcon (legendeDepartementale);
-        Icon legendeAutoroute = new ImageIcon ("src/main/resources/legendeAutoroute.png");
-        JLabel autoroute = new JLabel ("Autoroute ");
-        p.add (autoroute);
-        autoroute.setFont (new Font ("Arial", Font.BOLD, 15));
-        autoroute.setForeground(Color.WHITE);
-        autoroute.setIcon (legendeAutoroute);
-        p.setOpaque (false);
-        return p;
-    }
-
-    public JPanel boutonsDeVisualisation () {
-        JPanel p = new JPanel ();
-        p.setLayout (new FlowLayout ());
-        JButton revenirAuGraphePrincipal = new JButton ("Revenir au graphe principal ");
-        JButton montrerLegende = new JButton ("Legende ");
-        p.add (revenirAuGraphePrincipal);
-        p.add (montrerLegende);
-        revenirAuGraphePrincipal.addActionListener (event -> {
-            JOptionPane.showMessageDialog(new JFrame(), "Vous êtes déjà sur le graphe principal", "Erreur", JOptionPane.ERROR_MESSAGE);
-        });
-        montrerLegende.addActionListener (event -> {
-            Object[] options = new Object[]{};
-            JOptionPane fenetremontrerlegende = new JOptionPane ("Montrer la légende ",
-                    JOptionPane.QUESTION_MESSAGE,
-                    JOptionPane.DEFAULT_OPTION,
-                    null, options, null);
-            fenetremontrerlegende.add (legende ());
-
-            JDialog diag = new JDialog();
-            diag.getContentPane().add(fenetremontrerlegende);
-            diag.pack();
-            diag.setVisible(true);
-        });
+        p.setLayout (new BoxLayout (p, BoxLayout.Y_AXIS));
+        JLabel aproposexplications = new JLabel ("Cette application a été crée dans le cadre d'une SAE dans la formation du BUT Informatique à l'IUT de Lyon 1. ");
+        JLabel aproposexplications1 = new JLabel ("Nous sommes Corentin GESSE--ENTRESSANGLE et Nicolas DE SAINT JEAN, les programmeurs de ce logiciel. ");
+        JLabel aproposexplications2 = new JLabel ("Ce logiciel vous permettra de générer le visuel d'une carte géographique préalablement écrit sous forme d'un fichier txt ou csv ");
+        JLabel aproposexplications3 = new JLabel ("dans un format spécifique. Vous pourrez alors effectuer quelques manipulations comme la recherche des voisins directes ou indirectes d'un lieu, la distance en nombres ");
+        JLabel aproposexplications4 = new JLabel ("de lieux d'un lieu ou encore comparer plusieurs lieux. Nous esperons que notre logiciel correspondra à vos attentes et qu'il sera facile d'utilisation ");
+        p.add (aproposexplications);
+        p.add (aproposexplications1);
+        p.add (aproposexplications2);
+        p.add (aproposexplications3);
+        p.add (aproposexplications4);
+        aproposexplications.setForeground(Color.WHITE);
+        aproposexplications1.setForeground(Color.WHITE);
+        aproposexplications2.setForeground(Color.WHITE);
+        aproposexplications3.setForeground(Color.WHITE);
+        aproposexplications4.setForeground(Color.WHITE);
         p.setOpaque (false);
         return p;
     }
@@ -297,7 +73,7 @@ public class FenetreGraphe extends JFrame {
         JMenuBar jMenuBar = new JMenuBar ();
         jMenuBar.setBackground (black);
         jMenuBar.add (jMenuFichier ());
-        jMenuBar.add (jMenuAPropos());
+        jMenuBar.add (jMenuAPropos ());
         jMenuBar.add (jMenuAffichage ());
         jMenuBar.add (jMenuChercher ());
         jMenuBar.add (jMenuDistance ());
@@ -750,19 +526,6 @@ public class FenetreGraphe extends JFrame {
     public JMenu jMenuAPropos () {
         JMenu APropos = new JMenu ("A propos ");
         APropos.setForeground(Color.WHITE);
-        JMenuItem aproposvoir = new JMenuItem ("Voir les informations ");
-        APropos.add (aproposvoir);
-        aproposvoir.addActionListener (event -> {
-            try {
-                APropos apropos = new APropos(cheminFile, fenetrePrincipale);
-                jFrame.setVisible (false);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ExceptionAjListeGraphe e) {
-                throw new RuntimeException(e);
-            }
-        });
-
         return APropos;
-            }
+    }
 }

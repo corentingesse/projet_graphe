@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import static java.awt.Color.black;
 
-public class FenetreGraphe extends JFrame {
+public class FenetreLien extends JFrame {
     FenetrePrincipale fenetrePrincipale;
     JFrame jFrame = new JFrame ();
     private String cheminFile;
@@ -24,12 +24,21 @@ public class FenetreGraphe extends JFrame {
 
     JPanel constrPartieVisuel;
 
+    String lien;
+
     JPanel noeudsVoisins;
-    public FenetreGraphe (String newCheminFile, FenetrePrincipale newFenetrePrincipale) throws IOException, ExceptionAjListeGraphe {
+
+    String lieu1 = "";
+
+    String lieu2 = "";
+
+    public FenetreLien (String newCheminFile, FenetrePrincipale newFenetrePrincipale, String newLien) throws IOException, ExceptionAjListeGraphe {
         super ();
+        lien = newLien;
         cheminFile = newCheminFile;
         fenetrePrincipale = newFenetrePrincipale;
         creationGraphe = new CreationGraphe (cheminFile);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         ImageIcon imageFond = new ImageIcon("src/main/resources/Graph_Plan.png");
         jFrame.setMinimumSize(new Dimension(1650, 1080));
         jFrame.setExtendedState(this.MAXIMIZED_BOTH);
@@ -41,13 +50,13 @@ public class FenetreGraphe extends JFrame {
         background.setLayout (new FlowLayout ());
         jFrame.add (background);
         constrPartieVisuel = constrPartieVisuel ();
-        noeudsVoisins = noeudsVoisins ();
+        noeudsVoisins = noeudsVoisins();
         background.add (constrPartieVisuel);
         background.add (basPanel ());
         jFrame.setVisible(true);
     }
 
-    public JPanel constrPartieVisuel () {
+    public JPanel constrPartieVisuel () throws IOException, ExceptionAjListeGraphe {
         JPanel p = new JPanel ();
         p.setLayout (new BorderLayout());
         graph = constrFenVisuel ();
@@ -68,10 +77,14 @@ public class FenetreGraphe extends JFrame {
         return p;
     }
 
-    public JPanel constrFenVisuel () {
+    public JPanel constrFenVisuel () throws IOException, ExceptionAjListeGraphe {
         System.setProperty("org.graphstream.ui", "swing");
 
-        graph = creationGraphe.creerGraphe();
+        graph = creationGraphe.creerGrapheLien (creationGraphe.getGraphe (), lien);
+
+        lieu1 = creationGraphe.getLieu1Edge (creationGraphe.getGraphe (), lien);
+
+        lieu2 = creationGraphe.getLieu2Edge (creationGraphe.getGraphe (), lien);
 
         graph.setOpaque (false);
 
@@ -87,7 +100,7 @@ public class FenetreGraphe extends JFrame {
         informationsGraphe.setForeground(Color.WHITE);
         p.add (new JLabel (" "));
         Icon iconVille = new ImageIcon ("src/main/resources/lieuVilleIcone.png");
-        Graph getGraph = creationGraphe.getGraphe ();
+        Graph getGraph = creationGraphe.getGrapheLien (creationGraphe.getGraphe (), lien);
         JLabel nombreVilles = new JLabel ("Nombre de villes ");
         p.add (nombreVilles);
         nombreVilles.setIcon (iconVille);
@@ -143,82 +156,29 @@ public class FenetreGraphe extends JFrame {
         p.add (nbAutoroutes);
         nbAutoroutes.setForeground(Color.WHITE);
         nombreDeAutoroutes.setIcon (iconAutoroute);
+        p.add (Box.createRigidArea(new Dimension(0, 20)));
+        JLabel informationSurLaRecherche = new JLabel ("Informations sur la recherche ");
+        JLabel lieux = new JLabel ("Les deux lieux qui sont reliés par : ");
+        JLabel lieux1 = new JLabel (lien + " sont : ");
+        JLabel lieuDepart = new JLabel (lieu1);
+        JLabel lieuFin = new JLabel (lieu2);
+        p.add (informationSurLaRecherche);
         p.add (new JLabel (" "));
-        JButton boutonListerNoeuds = new JButton ("Lister les noeuds ");
-        p.add (boutonListerNoeuds);
-        p.add (new JLabel (" "));
-        p.add (new JLabel (" "));
-        JButton boutonListerLiens = new JButton ("Lister les liens ");
-        p.add (boutonListerLiens);
-        boutonListerNoeuds.addActionListener (event -> {
-            Object[] options = new Object[]{};
-            JOptionPane fenetreNoeuds = new JOptionPane ("Liste des lieux ",
-                    JOptionPane.QUESTION_MESSAGE,
-                    JOptionPane.DEFAULT_OPTION,
-                    null, options, null);
-            for (String lieu : creationGraphe.getNoeud (creationGraphe.getGraphe ())) {
-                JLabel texteLieu = new JLabel(lieu);
-                fenetreNoeuds.add(texteLieu);
-            }
-            JDialog diag = new JDialog();
-            diag.getContentPane().add(fenetreNoeuds);
-            diag.pack();
-            diag.setVisible(true);
-        });
-        boutonListerLiens.addActionListener (event -> {
-            Object[] options = new Object[]{};
-            JOptionPane fenetreLiens = new JOptionPane ("Liste des liens ",
-                    JOptionPane.QUESTION_MESSAGE,
-                    JOptionPane.DEFAULT_OPTION,
-                    null, options, null);
-            for (String lien : creationGraphe.getEdge (creationGraphe.getGraphe ())) {
-                JLabel texteLieu = new JLabel (lien);
-                JButton boutonLieu = new JButton ("savoir quels lieux sont reliés par cette route");
-                fenetreLiens.add (texteLieu);
-                fenetreLiens.add (boutonLieu);
+        p.add (lieux);
+        p.add (lieux1);
+        p.add (lieuDepart);
+        p.add (lieuFin);
 
-                boutonLieu.addActionListener (event1 -> {
-                    Object[] options1 = new Object[]{};
-                    JOptionPane fenetreLieux = new JOptionPane ("Lieux reliés par : " + lien,
-                            JOptionPane.QUESTION_MESSAGE,
-                            JOptionPane.DEFAULT_OPTION,
-                            null, options, null);
-                    JLabel lieu1 = new JLabel(creationGraphe.getLieu1Edge (creationGraphe.getGraphe (), lien));
-                    JLabel lieu2 = new JLabel(creationGraphe.getLieu2Edge (creationGraphe.getGraphe (), lien));
-                    JButton visualiser = new JButton ("visualiser ");
-                    fenetreLieux.add (lieu1);
-                    fenetreLieux.add (lieu2);
-                    fenetreLieux.add (visualiser);
-
-                    visualiser.addActionListener (event2 -> {
-                        try {
-                            FenetreLien fenetreLien = new FenetreLien (cheminFile, fenetrePrincipale, lien);
-                            // fenetreLieux.setVisible (false);
-                            // fenetreLiens.setVisible (false);
-                            jFrame.setVisible (false);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        } catch (ExceptionAjListeGraphe e) {
-                            throw new RuntimeException(e);
-                        }
-                        JDialog diag = new JDialog();
-                        diag.getContentPane().add(fenetreLieux);
-                        diag.pack();
-                        diag.setVisible(true);
-                    });
-                    JDialog diag = new JDialog();
-                    diag.getContentPane().add(fenetreLieux);
-                    diag.pack();
-                    diag.setVisible(true);
-                });
-            }
-            JScrollPane vertical = new JScrollPane(fenetreLiens);
-            vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-            JDialog diag = new JDialog();
-            diag.getContentPane().add(fenetreLiens);
-            diag.pack();
-            diag.setVisible(true);
-        });
+        lieux.setFont (new Font ("Arial", Font.BOLD, 15));
+        lieux.setForeground(Color.WHITE);
+        lieux1.setFont (new Font ("Arial", Font.BOLD, 15));
+        lieux1.setForeground(Color.WHITE);
+        informationSurLaRecherche.setFont (new Font ("Arial", Font.BOLD, 20));
+        informationSurLaRecherche.setForeground(Color.WHITE);
+        lieuDepart.setFont (new Font ("Arial", Font.BOLD, 15));
+        lieuDepart.setForeground(Color.GREEN);
+        lieuFin.setFont (new Font ("Arial", Font.BOLD, 15));
+        lieuFin.setForeground(Color.GREEN);
         p.setOpaque (false);
         return p;
     }
@@ -226,24 +186,28 @@ public class FenetreGraphe extends JFrame {
     public JPanel legende () {
         JPanel p = new JPanel ();
         p.setLayout (new BoxLayout(p, BoxLayout.Y_AXIS));
-        Icon legendeVille = new ImageIcon ("src/main/resources/legendeVille.png");
-        JLabel ville = new JLabel ("Ville ");
-        p.add (ville);
-        ville.setFont (new Font ("Arial", Font.BOLD, 15));
+
+        Icon legendeVille = new ImageIcon("src/main/resources/legendeVille.png");
+        JLabel ville = new JLabel("Ville ");
+        p.add(ville);
+        ville.setFont(new Font("Arial", Font.BOLD, 15));
         ville.setForeground(Color.WHITE);
-        ville.setIcon (legendeVille);
-        Icon legendeRestaurant = new ImageIcon ("src/main/resources/legendeRestaurant.png");
-        JLabel restaurant = new JLabel ("Restaurants ");
-        p.add (restaurant);
-        restaurant.setFont (new Font ("Arial", Font.BOLD, 15));
+        ville.setIcon(legendeVille);
+
+        Icon legendeRestaurant = new ImageIcon("src/main/resources/legendeRestaurant.png");
+        JLabel restaurant = new JLabel("Restaurants ");
+        p.add(restaurant);
+        restaurant.setFont(new Font("Arial", Font.BOLD, 15));
         restaurant.setForeground(Color.WHITE);
-        restaurant.setIcon (legendeRestaurant);
-        Icon legendeLoisir = new ImageIcon ("src/main/resources/legendeLoisir.png");
-        JLabel loisir = new JLabel ("Loisir ");
-        p.add (loisir);
-        loisir.setFont (new Font ("Arial", Font.BOLD, 15));
+        restaurant.setIcon(legendeRestaurant);
+
+        Icon legendeLoisir = new ImageIcon("src/main/resources/legendeLoisir.png");
+        JLabel loisir = new JLabel("Loisir ");
+        p.add(loisir);
+        loisir.setFont(new Font("Arial", Font.BOLD, 15));
         loisir.setForeground(Color.WHITE);
-        loisir.setIcon (legendeLoisir);
+        loisir.setIcon(legendeLoisir);
+
         Icon lgendeNationale = new ImageIcon ("src/main/resources/legendeNationale.png");
         JLabel nationale = new JLabel ("Nationale ");
         p.add (nationale);
@@ -274,8 +238,16 @@ public class FenetreGraphe extends JFrame {
         p.add (revenirAuGraphePrincipal);
         p.add (montrerLegende);
         revenirAuGraphePrincipal.addActionListener (event -> {
-            JOptionPane.showMessageDialog(new JFrame(), "Vous êtes déjà sur le graphe principal", "Erreur", JOptionPane.ERROR_MESSAGE);
+            try {
+                FenetreGraphe fenetreGraphe = new FenetreGraphe (cheminFile, fenetrePrincipale);
+                jFrame.setVisible (false);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ExceptionAjListeGraphe e) {
+                throw new RuntimeException(e);
+            }
         });
+
         montrerLegende.addActionListener (event -> {
             Object[] options = new Object[]{};
             JOptionPane fenetremontrerlegende = new JOptionPane ("Montrer la légende ",
@@ -297,12 +269,11 @@ public class FenetreGraphe extends JFrame {
         JMenuBar jMenuBar = new JMenuBar ();
         jMenuBar.setBackground (black);
         jMenuBar.add (jMenuFichier ());
-        jMenuBar.add (jMenuAPropos());
+        jMenuBar.add (jMenuAPropos ());
         jMenuBar.add (jMenuAffichage ());
         jMenuBar.add (jMenuChercher ());
         jMenuBar.add (jMenuDistance ());
         jMenuBar.add (jMenuComparer ());
-        jMenuBar.add (jMenuRoute ());
         return jMenuBar;
     }
 
@@ -363,22 +334,24 @@ public class FenetreGraphe extends JFrame {
         JMenuItem choixNoeudVoisin = new JMenuItem ("Allez à la fenètre dédiée ");
         affichage.add (graphePrincipal);
         graphePrincipal.addActionListener (event -> {
-            JOptionPane.showMessageDialog(new JFrame(), "Vous êtes déjà sur le graphe principal", "Erreur", JOptionPane.ERROR_MESSAGE);
+            try {
+                FenetreGraphe fenetreGraphe = new FenetreGraphe (cheminFile, fenetrePrincipale);
+                jFrame.setVisible (false);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ExceptionAjListeGraphe e) {
+                throw new RuntimeException(e);
+            }
         });
         affichage.add (grapheVoisin);
         grapheVoisin.add (choixNoeudVoisin);
         choixNoeudVoisin.addActionListener (event -> {
             ArrayList<String> graphNode = creationGraphe.getNoeud (creationGraphe.getGraphe ());
-            ArrayList<Integer> distance = new ArrayList <Integer> ();
-            distance.add (1);
-            distance.add (2);
             JComboBox listegraphNode = new JComboBox (graphNode.toArray ());
-            JComboBox choixDistance = new JComboBox (distance.toArray ());
-            JLabel distanceExplications = new JLabel ("A ... distance ");
             JButton visualiser = new JButton ("visualiser ");
             visualiser.addActionListener (event1 -> {
                 try {
-                    new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), (Integer) choixDistance.getSelectedItem ());
+                    new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), 0);
                     jFrame.setVisible (false);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -396,8 +369,6 @@ public class FenetreGraphe extends JFrame {
                     null, options, null);
 
             fenetreGraphVoisins.add(listegraphNode);
-            fenetreGraphVoisins.add (distanceExplications);
-            fenetreGraphVoisins.add (choixDistance);
             fenetreGraphVoisins.add (visualiser);
 
             JDialog diag = new JDialog();
@@ -764,5 +735,6 @@ public class FenetreGraphe extends JFrame {
         });
 
         return APropos;
-            }
+    }
+
 }

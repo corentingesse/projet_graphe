@@ -108,7 +108,7 @@ public class CreationGraphe {
 
     }
 
-    public static Graph getGraphe () {
+    public static Graph getGraphe() {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -230,7 +230,7 @@ public class CreationGraphe {
         return graphPanel;
     }
 
-    public static Graph getGraphVoisin (String lieu) {
+    public static Graph getGraphVoisin(String lieu) {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -259,7 +259,7 @@ public class CreationGraphe {
         return graph;
     }
 
-    public ArrayList<String> getNoeud (Graph graph) {
+    public ArrayList<String> getNoeud(Graph graph) {
         int i;
         ArrayList<String> graphNode = new ArrayList();
         int indexGraphNode = 1;
@@ -270,15 +270,33 @@ public class CreationGraphe {
 
     }
 
-    public ArrayList<String> getEdge (Graph graph) {
-        int i;
+    public ArrayList<String> getEdge(Graph graph) {
         ArrayList<String> graphEdge = new ArrayList();
-        for (int indexGraphEdge = 0; indexGraphEdge < graph.getEdgeCount (); indexGraphEdge++) {
-            graphEdge.add (graph.getEdge (indexGraphEdge).getAttribute("ui.label").toString());
+        for (int indexGraphEdge = 0; indexGraphEdge < graph.getEdgeCount(); indexGraphEdge++) {
+            graphEdge.add(graph.getEdge(indexGraphEdge).getAttribute("ui.label").toString());
         }
         return graphEdge;
 
     }
+
+    public String getLieu1Edge(Graph graph, String nomRoute) {
+        for (int indexGraphEdge = 0; indexGraphEdge < graph.getEdgeCount(); indexGraphEdge++) {
+            if (graph.getEdge(indexGraphEdge).getAttribute("ui.label").toString().equals(nomRoute))
+                return graph.getEdge(indexGraphEdge).getNode0().getAttribute("ui.label").toString();
+        }
+
+        return "";
+    }
+
+    public String getLieu2Edge(Graph graph, String nomRoute) {
+        for (int indexGraphEdge = 0; indexGraphEdge < graph.getEdgeCount(); indexGraphEdge++) {
+            if (graph.getEdge(indexGraphEdge).getAttribute("ui.label").toString().equals(nomRoute))
+                return graph.getEdge(indexGraphEdge).getNode1().getAttribute("ui.label").toString();
+        }
+
+        return "";
+    }
+
 
     public static JPanel creerGrapheChercher(String lieu, String lieuCherche) {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -389,7 +407,7 @@ public class CreationGraphe {
         return graphPanel;
     }
 
-    public static Graph getGraphChercher (String lieu, String lieuCherche) {
+    public static Graph getGraphChercher(String lieu, String lieuCherche) {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -519,8 +537,7 @@ public class CreationGraphe {
                     }
                 }
             }
-        }
-        else {
+        } else {
             for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) { // on cherche le lieu de départ
                 if (lieuParcour.getNomLieu().equals(lieuDepart)) {
                     graph.addNode(lieuParcour.getNomLieu());
@@ -644,30 +661,30 @@ public class CreationGraphe {
             }
         }
 
-            graph.setAttribute("ui.stylesheet", "node {" +
-                    "size: 20px;" +
-                    "text-color: white;" +
-                    "text-style: bold;" +
-                    "}" +
-                    "edge{" +
-                    "text-color: white;" +
-                    "text-style: bold;" +
-                    "text-alignment: along;" +
-                    "}" +
-                    "graph{" +
-                    "fill-color: black;" +
-                    "}");
+        graph.setAttribute("ui.stylesheet", "node {" +
+                "size: 20px;" +
+                "text-color: white;" +
+                "text-style: bold;" +
+                "}" +
+                "edge{" +
+                "text-color: white;" +
+                "text-style: bold;" +
+                "text-alignment: along;" +
+                "}" +
+                "graph{" +
+                "fill-color: black;" +
+                "}");
 
-            graphLayout.compute();
+        graphLayout.compute();
 
-            viewer.enableAutoLayout();
+        viewer.enableAutoLayout();
 
-            graphPanel.add(view);
+        graphPanel.add(view);
 
         return graphPanel;
     }
 
-    public Graph getGraphVoisins1Et2Distance (String lieuDepart) {
+    public Graph getGraphVoisins1Et2Distance(String lieuDepart) {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -706,19 +723,19 @@ public class CreationGraphe {
                                         edge.setAttribute("ui.label", listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().get(lieuVoisinP1Graphe).getNomRoute() + ", " + listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().get(lieuVoisinP1Graphe).getDistanceKm() + "km");
                                     }
                                     i = i + 1;
-                                    }
-
                                 }
 
                             }
+
                         }
                     }
                 }
             }
-            return graph;
+        }
+        return graph;
     }
 
-    public int getNbVille (Graph graphCherche) {
+    public int getNbVille(Graph graphCherche) {
         int nbVille = 0;
         int nbNode = graphCherche.getNodeCount();
 
@@ -738,7 +755,7 @@ public class CreationGraphe {
 
     }
 
-    public int getNbRestaurant (Graph graphCherche) {
+    public int getNbRestaurant(Graph graphCherche) {
         int nbRestaurant = 0;
         int nbNode = graphCherche.getNodeCount();
 
@@ -746,7 +763,7 @@ public class CreationGraphe {
             for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) { // on cherche le lieu de départ
                 if (lieuParcour.getNomLieu().equals(graphCherche.getNode(i).getId())) {
                     switch (lieuParcour.getClass().getSimpleName()) {
-                        case "Restaurant" :
+                        case "Restaurant":
                             nbRestaurant = nbRestaurant + 1;
                             break;
                     }
@@ -758,7 +775,7 @@ public class CreationGraphe {
 
     }
 
-    public int getNbLoisir (Graph graphCherche) {
+    public int getNbLoisir(Graph graphCherche) {
         int nbLoisir = 0;
         int nbNode = graphCherche.getNodeCount();
 
@@ -766,7 +783,7 @@ public class CreationGraphe {
             for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) { // on cherche le lieu de départ
                 if (lieuParcour.getNomLieu().equals(graphCherche.getNode(i).getId())) {
                     switch (lieuParcour.getClass().getSimpleName()) {
-                        case "Loisir" :
+                        case "Loisir":
                             nbLoisir = nbLoisir + 1;
                             break;
                     }
@@ -778,12 +795,12 @@ public class CreationGraphe {
 
     }
 
-    public int getNbNationale (Graph graphCherche) {
+    public int getNbNationale(Graph graphCherche) {
         int nbNationale = 0;
-        int nbEdge = graphCherche.getEdgeCount ();
+        int nbEdge = graphCherche.getEdgeCount();
 
         for (int i = 0; i < nbEdge; i++) {
-            switch (graphCherche.getEdge(i).getAttribute("ui.label").toString().charAt (0)) {
+            switch (graphCherche.getEdge(i).getAttribute("ui.label").toString().charAt(0)) {
                 case 'N':
                     nbNationale = nbNationale + 1;
             }
@@ -793,13 +810,13 @@ public class CreationGraphe {
 
     }
 
-    public int getNbDepartementale (Graph graphCherche) {
+    public int getNbDepartementale(Graph graphCherche) {
         int nbDepartementale = 0;
-        int nbEdge = graphCherche.getEdgeCount ();
+        int nbEdge = graphCherche.getEdgeCount();
 
         for (int i = 0; i < nbEdge; i++) {
-            switch (graphCherche.getEdge(i).getAttribute("ui.label").toString().charAt (0)) {
-                case 'D' :
+            switch (graphCherche.getEdge(i).getAttribute("ui.label").toString().charAt(0)) {
+                case 'D':
                     nbDepartementale = nbDepartementale + 1;
             }
         }
@@ -808,13 +825,13 @@ public class CreationGraphe {
 
     }
 
-    public int getNbAutoroute (Graph graphCherche) {
+    public int getNbAutoroute(Graph graphCherche) {
         int nbAutoroute = 0;
-        int nbEdge = graphCherche.getEdgeCount ();
+        int nbEdge = graphCherche.getEdgeCount();
 
         for (int i = 0; i < nbEdge; i++) {
-            switch (graphCherche.getEdge(i).getAttribute("ui.label").toString().charAt (0)) {
-                case 'A' :
+            switch (graphCherche.getEdge(i).getAttribute("ui.label").toString().charAt(0)) {
+                case 'A':
                     nbAutoroute = nbAutoroute + 1;
             }
         }
@@ -823,7 +840,7 @@ public class CreationGraphe {
 
     }
 
-    public JPanel creerGraphe2Distance (String lieuDepart) {
+    public JPanel creerGraphe2Distance(String lieuDepart) {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -840,100 +857,100 @@ public class CreationGraphe {
         int i = 0;
         int minimum = 0;
 
-            for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) { // on cherche le lieu de départ
-                if (lieuParcour.getNomLieu().equals(lieuDepart)) {
-                    graph.addNode(lieuParcour.getNomLieu());
-                    Node n = graph.getNode(lieuParcour.getNomLieu());
-                    n.setAttribute("ui.label", n.getId());
-                    switch (lieuParcour.getClass().getSimpleName()) {
+        for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) { // on cherche le lieu de départ
+            if (lieuParcour.getNomLieu().equals(lieuDepart)) {
+                graph.addNode(lieuParcour.getNomLieu());
+                Node n = graph.getNode(lieuParcour.getNomLieu());
+                n.setAttribute("ui.label", n.getId());
+                switch (lieuParcour.getClass().getSimpleName()) {
+                    case "Ville":
+                        n.setAttribute("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                        break;
+                    case "Restaurant":
+                        n.setAttribute("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                        break;
+                    case "Loisir":
+                        n.setAttribute("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                        break;
+                }
+                for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
+                    graph.addNode(lieuVoisin.getNomLieu());
+                    Node n1 = graph.getNode(lieuVoisin.getNomLieu());
+                    n1.setAttribute("ui.label", n1.getId());
+                    switch (lieuVoisin.getClass().getSimpleName()) {
                         case "Ville":
-                            n.setAttribute("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                            n1.setAttribute("ui.style", "fill-color: red; ");
                             break;
                         case "Restaurant":
-                            n.setAttribute("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                            n1.setAttribute("ui.style", "fill-color: #0CAF09; ");
                             break;
                         case "Loisir":
-                            n.setAttribute("ui.style", "fill-mode: image-scaled; " + "fill-image : url ('file:///C:/Users/cocog/sae-graphes/src/main/resources/mapPinSmall.png');");
+                            n1.setAttribute("ui.style", "fill-color: orange; ");
                             break;
                     }
-                    for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
-                        graph.addNode(lieuVoisin.getNomLieu());
-                        Node n1 = graph.getNode(lieuVoisin.getNomLieu());
-                        n1.setAttribute("ui.label", n1.getId());
-                        switch (lieuVoisin.getClass().getSimpleName()) {
-                            case "Ville":
-                                n1.setAttribute("ui.style", "fill-color: red; ");
+                    if (graph.getNode(lieuParcour.getNomLieu()).hasEdgeBetween(lieuVoisin.getNomLieu()) == false) {
+                        graph.addEdge(String.valueOf(i), lieuVoisin.getNomLieu(), lieuParcour.getNomLieu());
+                        Edge edge = graph.getEdge(String.valueOf(i));
+                        edge.setAttribute("ui.label", listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getNomRoute() + ", " + listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getDistanceKm() + "km");
+                        switch (listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getClass().getSimpleName()) {
+                            case "Nationale":
+                                edge.setAttribute("ui.style", "fill-color: red; ");
                                 break;
-                            case "Restaurant":
-                                n1.setAttribute("ui.style", "fill-color: #0CAF09; ");
+                            case "Departementale":
+                                edge.setAttribute("ui.style", "fill-color: yellow; ");
                                 break;
-                            case "Loisir":
-                                n1.setAttribute("ui.style", "fill-color: orange; ");
+                            case "Autoroute":
+                                edge.setAttribute("ui.style", "fill-color: blue; ");
                                 break;
                         }
-                        if (graph.getNode(lieuParcour.getNomLieu()).hasEdgeBetween(lieuVoisin.getNomLieu()) == false) {
-                            graph.addEdge(String.valueOf(i), lieuVoisin.getNomLieu(), lieuParcour.getNomLieu());
-                            Edge edge = graph.getEdge(String.valueOf(i));
-                            edge.setAttribute("ui.label", listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getNomRoute() + ", " + listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getDistanceKm() + "km");
-                            switch (listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().get(lieuVoisin).getClass().getSimpleName()) {
-                                case "Nationale":
-                                    edge.setAttribute("ui.style", "fill-color: red; ");
-                                    break;
-                                case "Departementale":
-                                    edge.setAttribute("ui.style", "fill-color: yellow; ");
-                                    break;
-                                case "Autoroute":
-                                    edge.setAttribute("ui.style", "fill-color: blue; ");
-                                    break;
-                            }
-                        }
-                        i = i + 1;
                     }
-                    for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
-                        for (Lieu lieuParcourP1Graphe : listeGraphe.getListeGraphe().keySet()) { // on cherche le lieu de départ
-                            if (lieuParcourP1Graphe.getNomLieu().equals(lieuVoisin.getNomLieu())) {
-                                for (Lieu lieuVoisinP1Graphe : listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().keySet()) {
-                                    if (graph.getNode(lieuVoisinP1Graphe.getNomLieu()) == null) {
-                                        graph.addNode(lieuVoisinP1Graphe.getNomLieu());
-                                        n = graph.getNode(lieuVoisinP1Graphe.getNomLieu());
-                                        n.setAttribute("ui.label", n.getId());
-                                        switch (lieuVoisinP1Graphe.getClass().getSimpleName()) {
-                                            case "Ville":
-                                                n.setAttribute("ui.style", "fill-color: red; ");
-                                                break;
-                                            case "Restaurant":
-                                                n.setAttribute("ui.style", "fill-color: #0CAF09; ");
-                                                break;
-                                            case "Loisir":
-                                                n.setAttribute("ui.style", "fill-color: orange; ");
-                                                break;
-                                        }
-                                        if (graph.getNode(lieuParcourP1Graphe.getNomLieu()).hasEdgeBetween(lieuVoisinP1Graphe.getNomLieu()) == false) {
-                                            graph.addEdge(String.valueOf(i), lieuVoisinP1Graphe.getNomLieu(), lieuParcourP1Graphe.getNomLieu());
-                                            Edge edge = graph.getEdge(String.valueOf(i));
-                                            edge.setAttribute("ui.label", listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().get(lieuVoisinP1Graphe).getNomRoute() + ", " + listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().get(lieuVoisinP1Graphe).getDistanceKm() + "km");
-                                            switch (listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().get(lieuVoisinP1Graphe).getClass().getSimpleName()) {
-                                                case "Nationale":
-                                                    edge.setAttribute("ui.style", "fill-color: red; ");
-                                                    break;
-                                                case "Departementale":
-                                                    edge.setAttribute("ui.style", "fill-color: yellow; ");
-                                                    break;
-                                                case "Autoroute":
-                                                    edge.setAttribute("ui.style", "fill-color: blue; ");
-                                                    break;
-                                            }
-                                        }
-                                        i = i + 1;
-
+                    i = i + 1;
+                }
+                for (Lieu lieuVoisin : listeGraphe.getListeGraphe().get(lieuParcour).getListeVoisin().keySet()) {
+                    for (Lieu lieuParcourP1Graphe : listeGraphe.getListeGraphe().keySet()) { // on cherche le lieu de départ
+                        if (lieuParcourP1Graphe.getNomLieu().equals(lieuVoisin.getNomLieu())) {
+                            for (Lieu lieuVoisinP1Graphe : listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().keySet()) {
+                                if (graph.getNode(lieuVoisinP1Graphe.getNomLieu()) == null) {
+                                    graph.addNode(lieuVoisinP1Graphe.getNomLieu());
+                                    n = graph.getNode(lieuVoisinP1Graphe.getNomLieu());
+                                    n.setAttribute("ui.label", n.getId());
+                                    switch (lieuVoisinP1Graphe.getClass().getSimpleName()) {
+                                        case "Ville":
+                                            n.setAttribute("ui.style", "fill-color: red; ");
+                                            break;
+                                        case "Restaurant":
+                                            n.setAttribute("ui.style", "fill-color: #0CAF09; ");
+                                            break;
+                                        case "Loisir":
+                                            n.setAttribute("ui.style", "fill-color: orange; ");
+                                            break;
                                     }
+                                    if (graph.getNode(lieuParcourP1Graphe.getNomLieu()).hasEdgeBetween(lieuVoisinP1Graphe.getNomLieu()) == false) {
+                                        graph.addEdge(String.valueOf(i), lieuVoisinP1Graphe.getNomLieu(), lieuParcourP1Graphe.getNomLieu());
+                                        Edge edge = graph.getEdge(String.valueOf(i));
+                                        edge.setAttribute("ui.label", listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().get(lieuVoisinP1Graphe).getNomRoute() + ", " + listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().get(lieuVoisinP1Graphe).getDistanceKm() + "km");
+                                        switch (listeGraphe.getListeGraphe().get(lieuParcourP1Graphe).getListeVoisin().get(lieuVoisinP1Graphe).getClass().getSimpleName()) {
+                                            case "Nationale":
+                                                edge.setAttribute("ui.style", "fill-color: red; ");
+                                                break;
+                                            case "Departementale":
+                                                edge.setAttribute("ui.style", "fill-color: yellow; ");
+                                                break;
+                                            case "Autoroute":
+                                                edge.setAttribute("ui.style", "fill-color: blue; ");
+                                                break;
+                                        }
+                                    }
+                                    i = i + 1;
 
                                 }
+
                             }
                         }
                     }
                 }
             }
+        }
 
         graph.setAttribute("ui.stylesheet", "node {" +
                 "size: 20px;" +
@@ -958,7 +975,7 @@ public class CreationGraphe {
         return graphPanel;
     }
 
-    public JPanel creerGraphe2DistanceTailleRéduit (String lieuDepart) {
+    public JPanel creerGraphe2DistanceTailleRéduit(String lieuDepart) {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -1093,22 +1110,137 @@ public class CreationGraphe {
         return graphPanel;
     }
 
-    public String getClasse (Graph graph, String lieuCherche) {
-            for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) { // on cherche le lieu de départ
-                if (lieuParcour.getNomLieu().equals(lieuCherche)) {
-                    switch (lieuParcour.getClass().getSimpleName()) {
-                        case "Ville":
-                            return "Ville";
-                        case "Restaurant":
-                            return "Restaurant";
-                        case "Loisir":
-                            return "Loisir";
+    public String getClasse(Graph graph, String lieuCherche) {
+        for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) { // on cherche le lieu de départ
+            if (lieuParcour.getNomLieu().equals(lieuCherche)) {
+                switch (lieuParcour.getClass().getSimpleName()) {
+                    case "Ville":
+                        return "Ville";
+                    case "Restaurant":
+                        return "Restaurant";
+                    case "Loisir":
+                        return "Loisir";
 
-                    }
                 }
             }
+        }
 
-            return "";
+        return "";
     }
 
-}
+    public Graph getGrapheLien (Graph graphCherche, String lien) {
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+
+        Layout graphLayout = new SpringBox(false);
+        graph = new SingleGraph("embedded");
+
+        for (int indexGraphEdge = 0; indexGraphEdge < graphCherche.getEdgeCount(); indexGraphEdge++) {
+            if (graphCherche.getEdge(indexGraphEdge).getAttribute("ui.label").toString().equals(lien)) {
+                Node lieuDebut = graphCherche.getEdge (indexGraphEdge).getNode0 ();
+                Node lieuFin = graphCherche.getEdge (indexGraphEdge).getNode1 ();
+                graph.addNode(lieuDebut.getId ());
+                Node n = graph.getNode(lieuDebut.getId ());
+                n.setAttribute("ui.label", n.getId());
+                graph.addNode(lieuFin.getId ());
+                Node n1 = graph.getNode(lieuFin.getId ());
+                n1.setAttribute("ui.label", n1.getId());
+                int i = 0;
+                graph.addEdge(String.valueOf(i), n, n1);
+                Edge edge = graph.getEdge (i);
+                edge.setAttribute("ui.label", lieuDebut.getEdgeBetween (lieuFin).getAttribute("ui.label"));
+            }
+        }
+
+        return graph;
+    }
+
+    public JPanel creerGrapheLien(Graph graphCherche, String lien) {
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+
+        Layout graphLayout = new SpringBox(false);
+        graph = new SingleGraph("embedded");
+        SwingViewer viewer = new SwingViewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
+
+
+        JPanel graphPanel = new JPanel();
+
+        DefaultView view = (DefaultView) viewer.addDefaultView(false);
+        view.setPreferredSize(new Dimension(980, 460));
+        // view.getCamera().setViewPercent(1);
+
+        for (int indexGraphEdge = 0; indexGraphEdge < graphCherche.getEdgeCount(); indexGraphEdge++) {
+            if (graphCherche.getEdge(indexGraphEdge).getAttribute("ui.label").toString().equals(lien)) {
+                Node lieuDebut = graphCherche.getEdge (indexGraphEdge).getNode0 ();
+                Node lieuFin = graphCherche.getEdge (indexGraphEdge).getNode1 ();
+                graph.addNode(lieuDebut.getId ());
+                Node n = graph.getNode(lieuDebut.getId ());
+                n.setAttribute("ui.label", n.getId());
+                switch (getClasse (graphCherche, lieuDebut.getId ().toString ())) {
+                    case "Ville" :
+                        n.setAttribute("ui.style", "fill-color: red; ");
+                        break;
+                    case "Restaurant" :
+                        n.setAttribute("ui.style", "fill-color: #0CAF09; ");
+                        break;
+                    case "Loisir" :
+                        n.setAttribute("ui.style", "fill-color: orange; ");
+                        break;
+                }
+                graph.addNode(lieuFin.getId ());
+                Node n1 = graph.getNode(lieuFin.getId ());
+                n1.setAttribute("ui.label", n1.getId());
+                switch (getClasse (graphCherche, lieuFin.toString ())) {
+                    case "Ville" :
+                        n1.setAttribute("ui.style", "fill-color: red; ");
+                        break;
+                    case "Restaurant" :
+                        n1.setAttribute("ui.style", "fill-color: #0CAF09; ");
+                        break;
+                    case "Loisir" :
+                        n1.setAttribute("ui.style", "fill-color: orange; ");
+                        break;
+                }
+                int i = 0;
+                graph.addEdge(String.valueOf(i), n, n1);
+                Edge edge = graph.getEdge (i);
+                edge.setAttribute("ui.label", lieuDebut.getEdgeBetween (lieuFin).getAttribute("ui.label"));
+                switch (edge.getAttribute("ui.label").toString ().charAt (0)) {
+                    case 'N':
+                        edge.setAttribute("ui.style", "fill-color: red; ");
+                        break;
+                    case 'D':
+                        edge.setAttribute("ui.style", "fill-color: yellow; ");
+                        break;
+                    case 'A':
+                        edge.setAttribute("ui.style", "fill-color: blue; ");
+                        break;
+                }
+
+                graph.setAttribute("ui.stylesheet", "node {" +
+                        "size: 20px;" +
+                        "text-color: white;" +
+                        "text-style: bold;" +
+                        "}" +
+                        "edge{" +
+                        "text-color: white;" +
+                        "text-style: bold;" +
+                        "text-alignment: along;" +
+                        "}" +
+                        "graph{" +
+                        "fill-color: black;" +
+                        "}");
+
+                graphLayout.compute();
+
+                viewer.enableAutoLayout();
+
+                graphPanel.add(view);
+
+                return graphPanel;
+            }
+        }
+
+        return graphPanel;
+        }
+
+    }

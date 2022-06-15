@@ -68,13 +68,9 @@ public class FenetrePrincipale extends JFrame {
             if (res == JFileChooser.APPROVE_OPTION) {
                 try {
                     FenetreGraphe fenetreGraphe = new FenetreGraphe(choose.getSelectedFile().getPath(), this);
-                    jFrame.setVisible (false);
-                } catch (IOException e) {
-                    JOptionPane.showMessageDialog(jFrame,"Aucun fichier csv ou txt choisi ", "Erreur ", ERROR_MESSAGE);
-                    throw new RuntimeException(e);
-                } catch (ExceptionAjListeGraphe e) {
-                    JOptionPane.showMessageDialog(jFrame,"Erreur dans le fichier, il ne correspond pas à la syntaxe prévue ", "Erreur ", ERROR_MESSAGE);
-                    throw new RuntimeException(e); 
+                    jFrame.setVisible(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Le fichier contenant le graphe comporte des erreurs, il doit être sous la forme : type,nomLieu:typeRouteVoisin1,routeVoisin1::typeVoisin1,voisin1[;typeRouteVoisinN,routeVoisinN::typeVoisinN,voisinN];;  ", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }});
 
@@ -99,12 +95,10 @@ public class FenetrePrincipale extends JFrame {
         boutonTestGraphe.setForeground(Color.WHITE);
         boutonTestGraphe.addActionListener (event -> {
             try {
-                FenetreGraphe fenetreGraphe = new FenetreGraphe("src/main/resources/graphe.csv",  this);
-                jFrame.setVisible (false);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ExceptionAjListeGraphe e) {
-                throw new RuntimeException(e);
+                FenetreGraphe fenetreGraphe = new FenetreGraphe("src/main/resources/graphe.csv", this);
+                jFrame.setVisible(false);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(new JFrame(), "Le fichier contenant le graphe comporte des erreurs, il doit être sous la forme : type,nomLieu:typeRouteVoisin1,routeVoisin1::typeVoisin1,voisin1[;typeRouteVoisinN,routeVoisinN::typeVoisinN,voisinN];;  ", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         });
         boutonTestGraphe.setOpaque (false);
@@ -118,7 +112,7 @@ public class FenetrePrincipale extends JFrame {
         boutonSortie.setOpaque (false);
         boutonSortie.setContentAreaFilled (false);
         boutonSortie.setBorderPainted (false);
-        boutonSortie.addActionListener (event -> {this.dispose ();});
+        boutonSortie.addActionListener (event -> {jFrame.dispose ();});
         p.setOpaque (false);
         return p;
     }
@@ -162,11 +156,9 @@ public class FenetrePrincipale extends JFrame {
             if (res == JFileChooser.APPROVE_OPTION) {
                 try {
                     FenetreGraphe fenetreGraphe = new FenetreGraphe(choose.getSelectedFile().getPath(), this);
-                    jFrame.setVisible (false);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (ExceptionAjListeGraphe e) {
-                    throw new RuntimeException(e);
+                    jFrame.setVisible(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Le fichier contenant le graphe comporte des erreurs, il doit être sous la forme : type,nomLieu:typeRouteVoisin1,routeVoisin1::typeVoisin1,voisin1[;typeRouteVoisinN,routeVoisinN::typeVoisinN,voisinN];;  ", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }});
         fichier.add (enregistrer);
@@ -184,7 +176,19 @@ public class FenetrePrincipale extends JFrame {
     public JMenu jMenuAPropos () {
         JMenu APropos = new JMenu ("A propos ");
         APropos.setForeground(Color.WHITE);
-        return APropos;
+        JMenuItem aproposvoir = new JMenuItem ("Voir les informations ");
+        APropos.add (aproposvoir);
+        aproposvoir.addActionListener (event -> {
+            try {
+                AProposPrincipal aproposprincipalgraphe = new AProposPrincipal(this);
+                jFrame.setVisible (false);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ExceptionAjListeGraphe e) {
+                throw new RuntimeException(e);
+            }
+        });
+            return APropos;
     }
 
     public JFrame getJFrame () {

@@ -6,8 +6,9 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static java.awt.Color.black;
 
@@ -36,6 +37,7 @@ public class FenetreCreer extends JFrame {
     public JPanel constrPan () {
         JPanel p = new JPanel ();
         p.setLayout (new BoxLayout (p, BoxLayout.Y_AXIS));
+        // JComboBox typeRoute;
         JLabel formatExplications = new JLabel ("Le format du fichier doit être comme suit : ");
         p.add (formatExplications);
         JLabel formatExplicationsSuite = new JLabel ("typeLieuOrigine,lieuOrigine:typeRouteVoisin,nomRouteVoisin::TypeLieuVoisin,nomLieuVoisin[;typeRouteVoisin,nomRouteVoisin::TypeLieuVoisin,nomLieuVoisin...];;");
@@ -48,7 +50,7 @@ public class FenetreCreer extends JFrame {
                 FileWriter myFileEcriture = new FileWriter ("src/main/resources/NouveauFichier.txt");
                 System.out.println("Le fichier est créé.");
 
-        AtomicReference<String> ligneFichier = new AtomicReference<>("");
+        String ligneFichier = "";
         p.add (new JLabel ("Ajouter une ligne : "));
         p.add (new JLabel ("Choisissez le type de lieu que vous souhaitez ajouter : "));
         String [] listeTypeLieux = {"ville", "Loisir", "Restaurant"};
@@ -59,58 +61,58 @@ public class FenetreCreer extends JFrame {
         p.add (nouveauLieuGraphe);
         switch (type.getSelectedItem ().toString ()) {
             case "Ville":
-                ligneFichier.set(ligneFichier + "V");
+                ligneFichier = ligneFichier + "V";
                 break;
             case "Restaurant":
-                ligneFichier.set(ligneFichier + "R");
+                ligneFichier = ligneFichier + "R";
                 break;
             case "loisir":
-                ligneFichier.set(ligneFichier + "L");
+                ligneFichier = ligneFichier + "L";
                 break;
         }
-        ligneFichier.set(ligneFichier + "," + nouveauLieuGraphe.getText());
+        ligneFichier = ligneFichier + "," + nouveauLieuGraphe.getText();
         p.add (new JLabel ("Choisissez le type de route qui relie votre lieu avec son premier voisin : "));
         String [] listeTypeRoute = {"Nationale", "Departementale", "Autoroute"};
         JComboBox typeRoute = new JComboBox (listeTypeRoute);
         p.add (typeRoute);
         switch (typeRoute.getSelectedItem ().toString ()) {
             case "Nationale" :
-                ligneFichier.set(ligneFichier + ":N");
+                ligneFichier = ligneFichier + ":N";
                 break;
             case "Departementale" :
-                ligneFichier.set(ligneFichier + ":D");
+                ligneFichier = ligneFichier + ":D";
                 break;
             case "Autoroute" :
-                ligneFichier.set(ligneFichier + ":A");
+                ligneFichier = ligneFichier + ":A";
                 break;
         }
         p.add (new JLabel ("Nom de la route reliant le lieu avec votre premier voisin : "));
         JTextField nomRouteVoisin = new JTextField (30);
         p.add (nomRouteVoisin);
-        ligneFichier.set(ligneFichier + nomRouteVoisin.getText());
+        ligneFichier = ligneFichier + nomRouteVoisin.getText();
         p.add (new JLabel ("Nombre de kilometre de la route reliant le lieu avec votre premier voisin : "));
         JTextField nombreKilometreRouteVoisin = new JTextField(30);
         p.add (nombreKilometreRouteVoisin);
-        ligneFichier.set(ligneFichier + "," + nombreKilometreRouteVoisin.getText());
+        ligneFichier = ligneFichier + "," + nombreKilometreRouteVoisin.getText();
         p.add (new JLabel ("Type de votre premier voisin : "));
         JComboBox typeVoisin = new JComboBox (listeTypeLieux);
         p.add (typeVoisin);
-        ligneFichier.set(ligneFichier + "::");
+        ligneFichier = ligneFichier + "::";
         switch (typeVoisin.getSelectedItem ().toString ()) {
             case "Ville":
-                ligneFichier.set(ligneFichier + "V");
+                ligneFichier = ligneFichier + "V";
                 break;
             case "Restaurant":
-                ligneFichier.set(ligneFichier + "R");
+                ligneFichier = ligneFichier + "R";
                 break;
             case "loisir":
-                ligneFichier.set(ligneFichier + "L");
+                ligneFichier = ligneFichier + "L";
                 break;
         }
         p.add (new JLabel ("Nom de votre premier voisin : "));
         JTextField nomVoisin = new JTextField (30);
         p.add (nomVoisin);
-        ligneFichier.set(ligneFichier + "," + nomVoisin.getText());
+        ligneFichier = ligneFichier + "," + nomVoisin.getText();
 
         p.add (new JLabel ("Vous pouvez ajouter d'autres voisins : "));
         p.add (new JLabel ("Choisissez le type de route qui relie votre lieu avec son nouveau voisin : "));
@@ -128,55 +130,53 @@ public class FenetreCreer extends JFrame {
         p.add (new JLabel ("Nom de son nouveau voisin : "));
         nomVoisin = new JTextField (30);
         p.add (nomVoisin);
-        JButton ajouterLeVoisin = new JButton ("Ajouter le nouveau voisin ");
-                JComboBox finalTypeRoute = typeRoute;
-                JTextField finalNomRouteVoisin = nomRouteVoisin;
-                JTextField finalNombreKilometreRouteVoisin = nombreKilometreRouteVoisin;
-                JComboBox finalTypeVoisin = typeVoisin;
-                JTextField finalNomVoisin = nomVoisin;
-                ajouterLeVoisin.addActionListener (event -> {
-                    ligneFichier.set(ligneFichier + ";");
-                    switch (finalTypeRoute.getSelectedItem().toString()) {
+
+                    ligneFichier = ligneFichier + ";";
+                    switch (typeRoute.getSelectedItem().toString()) {
                         case "Nationale":
-                            ligneFichier.set(ligneFichier + ":N");
+                            ligneFichier = ligneFichier + ":N";
                             break;
                         case "Departementale":
-                            ligneFichier.set(ligneFichier + ":D");
+                            ligneFichier = ligneFichier + ":D";
                             break;
                         case "Autoroute":
-                            ligneFichier.set(ligneFichier + ":A");
+                            ligneFichier = ligneFichier + ":A";
                             break;
                     }
-                    ligneFichier.set(ligneFichier + finalNomRouteVoisin.getText());
-                    ligneFichier.set(ligneFichier + "," + finalNombreKilometreRouteVoisin.getText());
-                    ligneFichier.set(ligneFichier + "::");
-                    switch (finalTypeVoisin.getSelectedItem().toString()) {
+                    ligneFichier = ligneFichier + nomRouteVoisin.getText();
+                    ligneFichier = ligneFichier + "," + nombreKilometreRouteVoisin.getText();
+                    ligneFichier = ligneFichier + "::";
+                    switch (typeVoisin.getSelectedItem().toString()) {
                         case "Ville":
-                            ligneFichier.set(ligneFichier + "V");
+                            ligneFichier = ligneFichier + "V";
                             break;
                         case "Restaurant":
-                            ligneFichier.set(ligneFichier + "R");
+                            ligneFichier = ligneFichier + "R";
                             break;
                         case "loisir":
-                            ligneFichier.set(ligneFichier + "L");
+                            ligneFichier = ligneFichier + "L";
                             break;
                     }
-                    ligneFichier.set(ligneFichier + "," + finalNomVoisin.getText());
-                    ligneFichier.set(ligneFichier + ";;");
-                    ligneFichier.set(ligneFichier + "/n");
-                });
+                    JButton ajouerLaLigne = new JButton ("Ajouter la ligne ");
+                                ligneFichier = ligneFichier + "," + nomVoisin.getText();
+                                ligneFichier = ligneFichier + ";;";
+                                ligneFichier = ligneFichier + "/n";
+                        try {
+                            myFileEcriture.write(String.valueOf(ligneFichier));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                 JButton enregistrerFichier = new JButton ("enregistrer ");
                 p.add (enregistrerFichier);
                 enregistrerFichier.addActionListener (event -> {
                     try {
-                        myFileEcriture.write(String.valueOf(ligneFichier));
                         myFileEcriture.close ();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     jFrame.setVisible(false);
                         });
-        p.add (ajouterLeVoisin);
+       // p.add (ajouterLeVoisin);
             }else{
                 System.out.println("Le fichier existe déjà.");
             }

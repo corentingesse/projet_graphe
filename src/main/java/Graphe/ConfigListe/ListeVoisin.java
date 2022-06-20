@@ -13,7 +13,7 @@ public class ListeVoisin {
             listeVoisin = new TreeMap <Lieu, Route> ();
         }
 
-        public void ajLieu (Lieu lieu, Route liaison) throws ExceptionAjListeGraphe {
+        public void ajLieu (Lieu lieu, Route liaison) throws ExceptionAjListeGraphe {    // ajoute un voisin à la liste des voisins
             if (lieu != null)
                 listeVoisin.put (lieu, liaison);
             else

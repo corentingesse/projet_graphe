@@ -22,13 +22,13 @@ public class CreationGraphe {
     static ListeGraphe listeGraphe;
     private static Graph graph = null;
 
-    public CreationGraphe(String cheminFile) throws IOException, ExceptionAjListeGraphe {
+    public CreationGraphe(String cheminFile) throws IOException, ExceptionAjListeGraphe {      // crée la liste du graphe
         listeGraphe = new ListeGraphe();
         listeGraphe.afficher();
         CreationListe.creerListe(listeGraphe, cheminFile);
     }
 
-    public static JPanel creerGraphe() {
+    public static JPanel creerGraphe() {    // crée un panel ou le graphe principal est présent
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -108,7 +108,7 @@ public class CreationGraphe {
 
     }
 
-    public static Graph getGraphe() {
+    public static Graph getGraphe() {    // retourne le graphe principal
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         graph = new SingleGraph("embedded");
@@ -138,7 +138,7 @@ public class CreationGraphe {
 
     }
 
-    public static JPanel creerGrapheVoisins(String lieu) {
+    public static JPanel creerGrapheVoisins(String lieu) {    // crée le panel ou le graphe contenant les voisins directes d'un lieu est présent
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -229,7 +229,7 @@ public class CreationGraphe {
         return graphPanel;
     }
 
-    public static Graph getGraphVoisin(String lieu) {
+    public static Graph getGraphVoisin(String lieu) {      // retourne le graphe des voisins directes d'un lieu
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -258,7 +258,7 @@ public class CreationGraphe {
         return graph;
     }
 
-    public ArrayList<String> getNoeud(Graph graph) {
+    public ArrayList<String> getNoeud(Graph graph) {     // retourne les lieux d'un graphe passé en paramètre
         int i;
         ArrayList<String> graphNode = new ArrayList();
         int indexGraphNode = 1;
@@ -269,7 +269,7 @@ public class CreationGraphe {
 
     }
 
-    public ArrayList<String> getEdge(Graph graph) {
+    public ArrayList<String> getEdge(Graph graph) {        // retourne les liens d'un graphe entré en paramètre
         ArrayList<String> graphEdge = new ArrayList();
         for (int indexGraphEdge = 0; indexGraphEdge < graph.getEdgeCount(); indexGraphEdge++) {
             graphEdge.add(graph.getEdge(indexGraphEdge).getAttribute("ui.label").toString());
@@ -278,7 +278,7 @@ public class CreationGraphe {
 
     }
 
-    public String getLieu1Edge(Graph graph, String nomRoute) {
+    public String getLieu1Edge(Graph graph, String nomRoute) {    // retourne le premier lieu qui est relié par la route qui se nomme nomRoute situé dans le graphe passé en paramètre
         for (int indexGraphEdge = 0; indexGraphEdge < graph.getEdgeCount(); indexGraphEdge++) {
             if (graph.getEdge(indexGraphEdge).getAttribute("ui.label").toString().equals(nomRoute))
                 return graph.getEdge(indexGraphEdge).getNode0().getAttribute("ui.label").toString();
@@ -287,7 +287,7 @@ public class CreationGraphe {
         return "";
     }
 
-    public String getLieu2Edge(Graph graph, String nomRoute) {
+    public String getLieu2Edge(Graph graph, String nomRoute) {     // retourne le deuxième lieu qui est relié par la route qui se nomme nomRoute situé dans le graphe passé en paramètre
         for (int indexGraphEdge = 0; indexGraphEdge < graph.getEdgeCount(); indexGraphEdge++) {
             if (graph.getEdge(indexGraphEdge).getAttribute("ui.label").toString().equals(nomRoute))
                 return graph.getEdge(indexGraphEdge).getNode1().getAttribute("ui.label").toString();
@@ -297,7 +297,7 @@ public class CreationGraphe {
     }
 
 
-    public static JPanel creerGrapheChercher(String lieu, String lieuCherche) {
+    public static JPanel creerGrapheChercher(String lieu, String lieuCherche) {    // crée le panel du graphe qqui recherche un lieu entré en paramètre
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -406,7 +406,7 @@ public class CreationGraphe {
         return graphPanel;
     }
 
-    public static Graph getGraphChercher(String lieu, String lieuCherche) {
+    public static Graph getGraphChercher(String lieu, String lieuCherche) {   // crée le graphe qui cherche un lieu entré en paramètre
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -469,7 +469,7 @@ public class CreationGraphe {
         return -1;
     }
 
-    public int calcDistance1Et2Distance(String lieuDepart, String lieuRecherche) {
+    public int calcDistance1Et2Distance(String lieuDepart, String lieuRecherche) {  // retourne 0 si le lieu départ et le lieuRecherche sont les mêmes, retourne 1 si ils sont à une distance et retourne 2 si ils sont à deux distance
         int distance = 0;
 
         if (lieuDepart.equals(lieuRecherche))
@@ -499,7 +499,7 @@ public class CreationGraphe {
         return -1;
     }
 
-    public JPanel creerGrapheVoisins1Et2Distance(String lieuDepart, String lieuRecherche) {
+    public JPanel creerGrapheVoisins1Et2Distance(String lieuDepart, String lieuRecherche) {        //retourne le panel du graphe qui calacul la distance entre deux lieux
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -683,7 +683,7 @@ public class CreationGraphe {
         return graphPanel;
     }
 
-    public Graph getGraphVoisins1Et2Distance(String lieuDepart) {
+    public Graph getGraphVoisins1Et2Distance(String lieuDepart) {  // retourne le graphe qui calcule la distance entre deux lieux
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -734,7 +734,7 @@ public class CreationGraphe {
         return graph;
     }
 
-    public int getNbVille(Graph graphCherche) {
+    public int getNbVille(Graph graphCherche) {  // retourne le nombre de ville situées dans le graphe passé en paramètre
         int nbVille = 0;
         int nbNode = graphCherche.getNodeCount();
 
@@ -754,7 +754,7 @@ public class CreationGraphe {
 
     }
 
-    public int getNbRestaurant(Graph graphCherche) {
+    public int getNbRestaurant(Graph graphCherche) {  // retourne le nombre de restaurants situées dans le graphe passé en paramètre
         int nbRestaurant = 0;
         int nbNode = graphCherche.getNodeCount();
 
@@ -774,7 +774,7 @@ public class CreationGraphe {
 
     }
 
-    public int getNbLoisir(Graph graphCherche) {
+    public int getNbLoisir(Graph graphCherche) {    // retourne le nombre de loisirs situées dans le graphe passé en paramètre
         int nbLoisir = 0;
         int nbNode = graphCherche.getNodeCount();
 
@@ -794,7 +794,7 @@ public class CreationGraphe {
 
     }
 
-    public int getNbNationale(Graph graphCherche) {
+    public int getNbNationale(Graph graphCherche) {     // retourne le nombre de nationales situées dans le graphe passé en paramètre
         int nbNationale = 0;
         int nbEdge = graphCherche.getEdgeCount();
 
@@ -809,7 +809,7 @@ public class CreationGraphe {
 
     }
 
-    public int getNbDepartementale(Graph graphCherche) {
+    public int getNbDepartementale(Graph graphCherche) {  // retourne le nombre de départementales situées dans le graphe passé en paramètre
         int nbDepartementale = 0;
         int nbEdge = graphCherche.getEdgeCount();
 
@@ -824,7 +824,7 @@ public class CreationGraphe {
 
     }
 
-    public int getNbAutoroute(Graph graphCherche) {
+    public int getNbAutoroute(Graph graphCherche) {   // retourne le nombre d'autoroute situées dans le graphe passé en paramètre
         int nbAutoroute = 0;
         int nbEdge = graphCherche.getEdgeCount();
 
@@ -839,7 +839,7 @@ public class CreationGraphe {
 
     }
 
-    public JPanel creerGraphe2Distance(String lieuDepart) {
+    public JPanel creerGraphe2Distance(String lieuDepart) {    // crée le panel contenant le graph à 2 distance
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -974,7 +974,7 @@ public class CreationGraphe {
         return graphPanel;
     }
 
-    public JPanel creerGraphe2DistanceTailleRéduit(String lieuDepart) {
+    public JPanel creerGraphe2DistanceTailleRéduit(String lieuDepart) {    // retourne le graphe à 2 distance en taille réduit
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -1109,7 +1109,7 @@ public class CreationGraphe {
         return graphPanel;
     }
 
-    public String getClasse(Graph graph, String lieuCherche) {
+    public String getClasse(Graph graph, String lieuCherche) {   // retourne la class du lieu passé en paramètre
         for (Lieu lieuParcour : listeGraphe.getListeGraphe().keySet()) { // on cherche le lieu de départ
             if (lieuParcour.getNomLieu().equals(lieuCherche)) {
                 switch (lieuParcour.getClass().getSimpleName()) {
@@ -1127,7 +1127,7 @@ public class CreationGraphe {
         return "";
     }
 
-    public Graph getGrapheLien (Graph graphCherche, String lien) {
+    public Graph getGrapheLien (Graph graphCherche, String lien) {   // retourne le graphe qui recherche un lien
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);
@@ -1153,7 +1153,7 @@ public class CreationGraphe {
         return graph;
     }
 
-    public JPanel creerGrapheLien(Graph graphCherche, String lien) {
+    public JPanel creerGrapheLien(Graph graphCherche, String lien) {    // crée le panel contenant le graphe qui recherche un lien
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         Layout graphLayout = new SpringBox(false);

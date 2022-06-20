@@ -15,7 +15,7 @@ public class Restaurant extends Lieu {
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Object o) {    // compare deux restaurants pour savoir ou les placer dans la liste
         Lieu o1 = (Lieu) o;
         return getNomLieu ().compareTo (o1.getNomLieu ());
     }

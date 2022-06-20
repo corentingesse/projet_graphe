@@ -13,7 +13,7 @@ public class ListeGraphe {
         listeGraphe = new TreeMap <Lieu, ListeVoisin> ();
     }
 
-    public void ajLieu (Lieu lieu) throws ExceptionAjListeGraphe {
+    public void ajLieu (Lieu lieu) throws ExceptionAjListeGraphe {  // ajoute un lieu sans voisin dans la liste
         if (lieu != null) {
             ListeVoisin listeVoisin = new ListeVoisin ();
             listeGraphe.put (lieu, listeVoisin);
@@ -23,7 +23,7 @@ public class ListeGraphe {
 
     }
 
-    public void ajListeVoisin (Lieu lieuOrigine, Lieu lieu, Route route) throws ExceptionAjListeGraphe {
+    public void ajListeVoisin (Lieu lieuOrigine, Lieu lieu, Route route) throws ExceptionAjListeGraphe {    // ajoute un voisin à un lieu deja présent dans la liste
         if (lieuOrigine != null && lieu != null) {
             ListeVoisin listeVoisin = listeGraphe.get(lieuOrigine);
             listeVoisin.ajLieu (lieu, route);

@@ -16,7 +16,7 @@ public class Autoroute extends Route {
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Object o) {    // compare deux autoroutes pour savoir ou les placer dans la listes des voisins
         Route o1 = (Route) o;
         return getNomRoute ().compareTo (o1.getNomRoute ());
     }

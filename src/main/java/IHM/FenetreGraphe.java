@@ -212,10 +212,11 @@ public class FenetreGraphe extends JFrame {
                     diag.setVisible(true);
                 });
             }
-            JScrollPane vertical = new JScrollPane(fenetreLiens);
-            vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
             JDialog diag = new JDialog();
             diag.getContentPane().add(fenetreLiens);
+            JScrollPane scroll = new JScrollPane(fenetreLiens, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+            scroll.setBounds(0, 20, 600, 600);
+            diag.getContentPane().add(scroll);
             diag.pack();
             diag.setVisible(true);
         });
@@ -568,7 +569,7 @@ public class FenetreGraphe extends JFrame {
                 validate();
             });
             Object[] options = new Object[]{};
-            JOptionPane fenetreComparerDeuxLieux = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreComparerDeuxLieux = new JOptionPane("Veuillez selectionner les lieux que vous voulez comparer ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);
@@ -693,7 +694,7 @@ public class FenetreGraphe extends JFrame {
                 validate();
             });
             Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner les lieux dont vous voulez savoir s'il sont voisins directes ou voisin indirectes à 2 distance ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);
@@ -735,7 +736,7 @@ public class FenetreGraphe extends JFrame {
         p.add (visualiser);
         visualiser.addActionListener (event -> {
             try {
-                new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), 0);
+                new FenetreGraphVoisin ("src/main/resources/graphe.csv", fenetrePrincipale, listegraphNode.getSelectedItem ().toString (), 1);
                 jFrame.setVisible (false);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(), "Le fichier contenant le graphe comporte des erreurs, il doit être sous la forme : type,nomLieu:typeRouteVoisin1,routeVoisin1::typeVoisin1,voisin1[;typeRouteVoisinN,routeVoisinN::typeVoisinN,voisinN];;  ", "Erreur", JOptionPane.ERROR_MESSAGE);

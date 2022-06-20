@@ -539,7 +539,7 @@ public class FenetreLien extends JFrame {
                 validate();
             });
             Object[] options = new Object[]{};
-            JOptionPane fenetreComparerDeuxLieux = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreComparerDeuxLieux = new JOptionPane("Veuillez selectionner les lieux que vous voulez comparer ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);

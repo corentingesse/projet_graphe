@@ -756,7 +756,7 @@ public class FenetreComparaisonGenerale extends JFrame {
                 validate();
             });
             Object[] options = new Object[]{};
-            JOptionPane fenetreComparerDeuxLieux = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreComparerDeuxLieux = new JOptionPane("Veuillez selectionner les lieux que vous voulez comparer ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);
@@ -881,7 +881,7 @@ public class FenetreComparaisonGenerale extends JFrame {
                 validate();
             });
             Object[] options = new Object[]{};
-            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner le lieu dont vous voulez connaitre les voisins directes ",
+            JOptionPane fenetreGraphVoisins = new JOptionPane("Veuillez selectionner les lieux dont vous voulez savoir s'il sont voisins directes ou voisin indirectes à 2 distance ",
                     JOptionPane.QUESTION_MESSAGE,
                     JOptionPane.DEFAULT_OPTION,
                     null, options, null);

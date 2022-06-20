@@ -82,10 +82,6 @@ public class AProposPrincipal extends JFrame {
         Icon iconOuverture = new ImageIcon ("src/main/resources/ouverture.png");
         ImageIcon iconOuvrirRedim = new ImageIcon(((ImageIcon) iconOuverture).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
         JMenuItem ouvrir = new JMenuItem ("ouvrir ", iconOuvrirRedim);
-        Icon enregistrerIcon = new ImageIcon ("src/main/resources/enregistrer.png");
-        ImageIcon iconEnregistrerRedim = new ImageIcon(((ImageIcon) enregistrerIcon).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-        JMenuItem enregistrer = new JMenuItem ("enregistrer ", iconEnregistrerRedim);
-        JMenuItem enregistrerSous = new JMenuItem ("enregistrer-sous ");
         Icon fermerIcon = new ImageIcon ("src/main/resources/fermer.png");
         ImageIcon iconFermerRedim = new ImageIcon(((ImageIcon) fermerIcon).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
         JMenuItem fermer = new JMenuItem ("fermer ", iconFermerRedim);
@@ -110,8 +106,6 @@ public class AProposPrincipal extends JFrame {
                     JOptionPane.showMessageDialog(new JFrame(), "Le fichier contenant le graphe comporte des erreurs, il doit être sous la forme : type,nomLieu:typeRouteVoisin1,routeVoisin1::typeVoisin1,voisin1[;typeRouteVoisinN,routeVoisinN::typeVoisinN,voisinN];;  ", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }});
-        fichier.add (enregistrer);
-        fichier.add (enregistrerSous);
         fichier.add (new JSeparator ());
         fichier.add (fermer);
         fermer.addActionListener (event -> {

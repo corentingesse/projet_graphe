@@ -7,7 +7,7 @@ import Graphe.ConfigRoute.Route;
 import java.util.TreeMap;
 
 public class ListeVoisin {
-        private TreeMap<Lieu, Route> listeVoisin;
+        private final TreeMap<Lieu, Route> listeVoisin;
 
         public ListeVoisin () {
             listeVoisin = new TreeMap <Lieu, Route> ();

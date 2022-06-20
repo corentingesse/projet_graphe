@@ -7,7 +7,7 @@ import Graphe.ConfigRoute.Route;
 import java.util.TreeMap;
 
 public class ListeGraphe {
-    private TreeMap <Lieu, ListeVoisin> listeGraphe;
+    private final TreeMap <Lieu, ListeVoisin> listeGraphe;
 
     public ListeGraphe () {
         listeGraphe = new TreeMap <Lieu, ListeVoisin> ();
@@ -35,7 +35,6 @@ public class ListeGraphe {
     }
 
     public void afficher(){
-        Lieu lieu = null;
         for (Lieu lieuParcour : listeGraphe.keySet ()) {
             System.out.println("----------------------------------------------------------");
             System.out.println ("Origine : ");

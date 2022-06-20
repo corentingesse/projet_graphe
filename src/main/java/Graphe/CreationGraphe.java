@@ -111,7 +111,6 @@ public class CreationGraphe {
     public static Graph getGraphe() {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
-        Layout graphLayout = new SpringBox(false);
         graph = new SingleGraph("embedded");
 
         // view.getCamera().setViewPercent(1);

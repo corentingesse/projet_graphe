@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class VilleTest {
 
-    class RestaurantTest {
-
         static Lieu lieu = new Ville ("Lyon");
 
         @Test
@@ -21,4 +19,3 @@ class VilleTest {
             assertEquals (0, lieu.compareTo (lieu));
         }
     }
-}

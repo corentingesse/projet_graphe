@@ -1,7 +1,5 @@
 package Graphe.ConfigRoute;
 
-import Graphe.ConfigLieu.Lieu;
-import Graphe.ConfigLieu.Loisir;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

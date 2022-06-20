@@ -7,6 +7,10 @@ public class Ville extends Lieu {
         super();
     }
 
+    public Ville (String nomLieu) {
+        super(nomLieu);
+    }
+
     @Override
     public String toString() {
         return "Nom : " + super.getNomLieu() + ", Type : Ville";

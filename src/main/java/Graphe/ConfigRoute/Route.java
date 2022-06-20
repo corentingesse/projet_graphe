@@ -9,6 +9,11 @@ public class Route implements Comparable {
         this.distanceKm = 0;
     }
 
+    public Route (String nomRoute, int distance) {
+        this.nomRoute = nomRoute;
+        this.distanceKm = distance;
+    }
+
     public String getNomRoute() {
         return nomRoute;
     }

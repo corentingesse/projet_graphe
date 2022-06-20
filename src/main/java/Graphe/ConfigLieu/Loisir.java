@@ -5,6 +5,10 @@ public class Loisir extends Lieu {
         super();
     }
 
+    public Loisir(String nomLieu) {
+        super(nomLieu);
+    }
+
     @Override
     public String toString() {
         return "Nom : " + super.getNomLieu() + ", Type : Loisir";

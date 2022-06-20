@@ -7,11 +7,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class VilleTest {
 
-    @Test
-    void testToString() {
-    }
+    class RestaurantTest {
 
-    @Test
-    void compareTo() {
+        static Lieu lieu = new Ville ("Lyon");
+
+        @Test
+        void testToString() {
+            assertEquals ("Nom : Lyon, Type : Ville", lieu.toString ());
+        }
+
+        @Test
+        void compareTo() {
+            assertEquals (0, lieu.compareTo (lieu));
+        }
     }
 }

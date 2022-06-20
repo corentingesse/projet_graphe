@@ -5,6 +5,11 @@ public class Departementale extends Route{
         super();
     }
 
+    public Departementale (String nomRoute, int distance) {
+        super.setNomRoute(nomRoute);
+        super.setDistanceKm(distance);
+    }
+
     @Override
     public String toString() {
         return "Nom : " + super.getNomRoute() + ", Distance : " + super.getDistanceKm() + "km, Type : Departementale";

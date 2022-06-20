@@ -1,20 +1,34 @@
 package Graphe.ConfigLieu;
 
+import Graphe.ConfigListe.Exceptions.ExceptionAjListeGraphe;
+import Graphe.CreationGraphe;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LieuTest {
 
-    @Test
-    void getNomLieu() {
-    }
+    static Lieu lieu = new Lieu ("Lyon");
 
-    @Test
-    void setNomLieu() {
+    @BeforeClass
+    public static void setUpClass() throws IOException, ExceptionAjListeGraphe {
     }
+        @Test
+        void getNomLieu() {
+            assertEquals("Lyon",lieu.getNomLieu());
+        }
 
-    @Test
-    void compareTo() {
+        @Test
+        void setNomLieu() {
+            lieu.setNomLieu("Marseille");
+            assertEquals("Marseille",lieu.getNomLieu());
+        }
+
+        @Test
+        void compareTo() {
+            assertEquals (0, lieu.compareTo (lieu));
+        }
     }
-}

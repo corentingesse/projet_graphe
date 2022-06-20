@@ -7,6 +7,10 @@ public class Lieu implements Comparable {
         this.nomLieu = null;
     }
 
+    public Lieu(String nomLieu) {
+        this.nomLieu = nomLieu;
+    }
+
     public String getNomLieu() {
         return nomLieu;
     }

@@ -5,6 +5,10 @@ public class Restaurant extends Lieu {
         super();
     }
 
+    public Restaurant (String nomLieu) {
+        super(nomLieu);
+    }
+
     @Override
     public String toString() {
         return "Nom : " + super.getNomLieu() + ", Type : Restaurant";
